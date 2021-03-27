@@ -14,7 +14,12 @@ import RecruiterVisitPage from './ApplicantPages/RecruiterVisitPage'
 import PostJobPage from './RecruiterPages/PostJobPage'
 import JobManagerPage from './RecruiterPages/JobManagerPage'
 import CandidateSearch from './RecruiterPages/CandidateSearchPage'
-
+import SearchCampaignPage from './RecruiterPages/SearchCampaignPage'
+import ViewCandidatesPage from './RecruiterPages/ViewCandidatesPage'
+import CandidateManagePage from './RecruiterPages/CandidateManagePage'
+import SchedulePage from './RecruiterPages/SchedulePage'
+import CompanyInfoPage from './RecruiterPages/CompanyInfoPage'
+import AddCompanyPage from './RecruiterPages/AddCompanyPage'
 export const routes = [
   {
     path: '/',
@@ -79,6 +84,36 @@ export const routes = [
   {
     path: '/recruiter/candidate-search',
     component: CandidateSearch,
+    exact: true
+  },
+  {
+    path: '/recruiter/search-campaign',
+    component: SearchCampaignPage,
+    exact: true
+  },
+  {
+    path: '/recruiter/view-candidates',
+    component: ViewCandidatesPage,
+    exact: true
+  },
+  {
+    path: '/recruiter/candidate-manage',
+    component: CandidateManagePage,
+    exact: true
+  },
+  {
+    path: '/recruiter/schedule',
+    component: SchedulePage,
+    exact: true
+  },
+  {
+    path: '/recruiter/company-info',
+    component: CompanyInfoPage,
+    exact: true
+  },
+  {
+    path: '/recruiter/add-company',
+    component: AddCompanyPage,
     exact: true
   },
 ];
