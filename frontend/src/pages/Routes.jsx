@@ -20,6 +20,13 @@ import CandidateManagePage from './RecruiterPages/CandidateManagePage'
 import SchedulePage from './RecruiterPages/SchedulePage'
 import CompanyInfoPage from './RecruiterPages/CompanyInfoPage'
 import AddCompanyPage from './RecruiterPages/AddCompanyPage'
+import VerifyCompanyPage from './EmployeePages/VerifyCompanyPage'
+import VerifyJobPage from './EmployeePages/VerifyJobPage'
+import CvTemplatePage from './EmployeePages/CvTemplatePage'
+import AccountPage from './ManagerPages/AccountPage'
+import ReportPage from './ManagerPages/ReportPage'
+import StatisticPage from './ManagerPages/StatisticPage'
+import WorkhistoryPage from './ManagerPages/WorkHistoryPage'
 export const routes = [
   {
     path: '/',
@@ -114,6 +121,41 @@ export const routes = [
   {
     path: '/recruiter/add-company',
     component: AddCompanyPage,
+    exact: true
+  },
+  {
+    path: '/employee/cv-template',
+    component: CvTemplatePage,
+    exact: true
+  },
+  {
+    path: '/employee/verify-company',
+    component: VerifyCompanyPage,
+    exact: true
+  },
+  {
+    path: '/employee/verify-job',
+    component: VerifyJobPage,
+    exact: true
+  },
+  {
+    path: '/manager/account',
+    component: AccountPage,
+    exact: true
+  },
+  {
+    path: '/manager/report',
+    component: ReportPage,
+    exact: true
+  },
+  {
+    path: '/manager/statistic',
+    component: StatisticPage,
+    exact: true
+  },
+  {
+    path: '/manager/work-history',
+    component: WorkhistoryPage,
     exact: true
   },
 ];
