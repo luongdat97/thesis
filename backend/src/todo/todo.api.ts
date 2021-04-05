@@ -8,6 +8,7 @@ export function NewTodoAPI(userAuthBLL: UserAuthNS.BLL, todoBLL: TodoNS.BLL) {
   const app = express();
   app.use(NewAuthMiddleware(userAuthBLL));
   app.post("/todo/create", async (req, res) => {
+    console.log("huuuuuuuuuuuuuuu")
     const { user_id } = GetAuthData(req);
     const title = HttpParamValidators.MustBeString(req.body, "title", 2);
     const params: TodoNS.CreateTodoParams = {

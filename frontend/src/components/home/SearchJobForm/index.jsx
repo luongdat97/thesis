@@ -40,7 +40,7 @@ const SearchJobForm = () => {
                             noStyle
                             name="username"
                         >
-                            <Input size="large" prefix={<i class="far fa-user"></i>} placeholder="Tên công việc, vị trí bạn muốn ứng tuyển..." />
+                            <Input size="large" prefix={<i className="far fa-user"></i>} placeholder="Tên công việc, vị trí bạn muốn ứng tuyển..." />
                         </Form.Item>
 
                     </Col>
@@ -57,7 +57,7 @@ const SearchJobForm = () => {
                                 <Option value="1"
                                     label={
                                         <React.Fragment>
-                                            <i class="fas fa-map-marked"></i>
+                                            <i className="fas fa-map-marked"></i>
                                         &nbsp;
                                         {"Tất cả địa điểm"}
                                         </React.Fragment>
@@ -84,7 +84,7 @@ const SearchJobForm = () => {
                                 <Option value="1"
                                     label={
                                         <React.Fragment>
-                                            <i class="fas fa-tools"></i>
+                                            <i className="fas fa-tools"></i>
                                         &nbsp;
                                         {"Tất cả ngành nghề"}
                                         </React.Fragment>
@@ -104,7 +104,7 @@ const SearchJobForm = () => {
                                 size="large"
                                 type="primary"
                                 htmlType="submit"
-                                icon={<i class="fas fa-search text-white" ></i>}
+                                icon={<i className="fas fa-search text-white" ></i>}
                                 shape="round"
                             >
                                 &nbsp;Tìm kiếm
@@ -116,7 +116,7 @@ const SearchJobForm = () => {
 
                 <Row>
                     <Collapse ghost className="w-100" expandIconPosition="right">
-                        <Panel header={<div class="d-flex justify-content-end">Tìm kiếm nâng cao</div>} key="1">
+                        <Panel header={<div className="d-flex justify-content-end">Tìm kiếm nâng cao</div>} key="1">
                             <Row gutter={16}>
                                 <Col span={6}>
                                     <Form.Item
@@ -129,7 +129,7 @@ const SearchJobForm = () => {
                                             <Option value="1"
                                                 label={
                                                     <React.Fragment>
-                                                        <i class="fas fa-money-bill-wave"></i>
+                                                        <i className="fas fa-money-bill-wave"></i>
                                                 &nbsp;
                                                 {"Tất cả mức lương"}
                                                     </React.Fragment>
@@ -154,7 +154,7 @@ const SearchJobForm = () => {
                                             <Option value="1"
                                                 label={
                                                     <React.Fragment>
-                                                        <i class="fas fa-business-time"></i>
+                                                        <i className="fas fa-business-time"></i>
                                                 &nbsp;
                                                 {"Tất cả kinh nghiệm"}
                                                     </React.Fragment>
@@ -179,7 +179,7 @@ const SearchJobForm = () => {
                                             <Option value="1"
                                                 label={
                                                     <React.Fragment>
-                                                        <i class="far fa-clock"></i>
+                                                        <i className="far fa-clock"></i>
                                                 &nbsp;
                                                 {"Tất cả loại hình"}
                                                     </React.Fragment>
@@ -204,7 +204,7 @@ const SearchJobForm = () => {
                                             <Option value="1"
                                                 label={
                                                     <React.Fragment>
-                                                        <i class="far fa-building"></i>
+                                                        <i className="far fa-building"></i>
                                                 &nbsp;
                                                 {"Tất cả lĩnh vực"}
                                                     </React.Fragment>

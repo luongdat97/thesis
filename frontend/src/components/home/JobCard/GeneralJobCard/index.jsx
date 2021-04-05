@@ -17,11 +17,11 @@ const GeneralJobCard = (props) => {
                 <Text strong type="secondary">Công ty FPT</Text>
                 <Row>
                     <Col span={24}>
-                        <i class="fas fa-dollar-sign"></i>&nbsp;
+                        <i className="fas fa-dollar-sign"></i>&nbsp;
                         11-21 triệu
                     </Col>
                     <Col span={24}>
-                        <i class="fas fa-map-marked-alt"></i>&nbsp;
+                        <i className="fas fa-map-marked-alt"></i>&nbsp;
                         Phú thọ, Vĩnh Phúc
                     </Col>
                 </Row>

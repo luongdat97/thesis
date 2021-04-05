@@ -12,6 +12,7 @@ import SettingJobPage from './ApplicantPages/SettingJobPage'
 import SuitableJobPage from './ApplicantPages/SuitableJobPage'
 import RecruiterVisitPage from './ApplicantPages/RecruiterVisitPage'
 import PostJobPage from './RecruiterPages/PostJobPage'
+import EditJobPage from './RecruiterPages/EditJobPage'
 import JobManagerPage from './RecruiterPages/JobManagerPage'
 import CandidateSearch from './RecruiterPages/CandidateSearchPage'
 import SearchCampaignPage from './RecruiterPages/SearchCampaignPage'
@@ -81,6 +82,11 @@ export const routes = [
   {
     path: '/recruiter/post-job',
     component: PostJobPage,
+    exact: true
+  },
+  {
+    path: '/recruiter/edit-job/:id',
+    component: EditJobPage,
     exact: true
   },
   {

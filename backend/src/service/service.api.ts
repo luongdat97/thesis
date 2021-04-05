@@ -26,6 +26,7 @@ export function NewServiceAPI(
 
     //get list service
     app.get("/service/list", async (req, res) => {
+        console.log("hahahahuuuuuuuuuuuuuuuuuuu")
         const docs = await serviceBLL.ListService();
         res.json(docs);
     });

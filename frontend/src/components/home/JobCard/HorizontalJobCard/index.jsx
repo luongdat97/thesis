@@ -16,11 +16,11 @@ const HorizontalJobCard = (props) => {
                 <Text>Công ty FPT</Text>
             </Col>
             <Col span={4}>
-                <i class="fas fa-dollar-sign"></i>&nbsp;
+                <i className="fas fa-dollar-sign"></i>&nbsp;
                 11-21 triệu
             </Col>
             <Col span={5}>
-                <i class="fas fa-map-marker-alt"></i>&nbsp;
+                <i className="fas fa-map-marker-alt"></i>&nbsp;
                 Phú thọ, Vĩnh Phúc
             </Col>
         </Row>

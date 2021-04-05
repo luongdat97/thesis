@@ -21,10 +21,10 @@ const Home = () => {
                         <Title level={2}>Tạo CV cá nhân</Title>
                         <div className="mt-4 mb-3">
                             <Space>
-                                <Button type="primary" size="large" icon={<i class="fas fa-exchange-alt light-icon"></i>}>&nbsp;Đổi mẫu</Button>
-                                <Button type="primary" size="large" icon={<i class="far fa-eye light-icon"></i>}>&nbsp;Xem trước</Button>
-                                <Button type="primary" size="large" icon={<i class="fas fa-download light-icon"></i>}>&nbsp;Tải xuống</Button>
-                                <Button type="primary" className="btn-success" size="large" icon={<i class="far fa-save light-icon"></i>}>&nbsp;Lưu</Button>
+                                <Button type="primary" size="large" icon={<i className="fas fa-exchange-alt light-icon"></i>}>&nbsp;Đổi mẫu</Button>
+                                <Button type="primary" size="large" icon={<i className="far fa-eye light-icon"></i>}>&nbsp;Xem trước</Button>
+                                <Button type="primary" size="large" icon={<i className="fas fa-download light-icon"></i>}>&nbsp;Tải xuống</Button>
+                                <Button type="primary" className="btn-success" size="large" icon={<i className="far fa-save light-icon"></i>}>&nbsp;Lưu</Button>
                             </Space>
                         </div>
 
@@ -42,17 +42,17 @@ const Home = () => {
                             <Col span={8} className="border pl-3">
                                 Cỡ chữ
                         <div className="d-flex align-items-end pb-1">
-                                    <i class="fas fa-font"></i>
+                                    <i className="fas fa-font"></i>
                                     <Slider defaultValue={0} min={0} max={3} style={{ width: 120, margin: "0px 15px 3px" }}/>
-                                    <i style={{ fontSize: '1.5em' }} class="fas fa-font"></i>
+                                    <i style={{ fontSize: '1.5em' }} className="fas fa-font"></i>
                                 </div>
                             </Col>
                             <Col span={8} className="border pl-3">
                                 Khoảng cách dòng
                         <div className="d-flex align-items-end pb-1">
-                                    <i class="fas fa-text-height"></i>
+                                    <i className="fas fa-text-height"></i>
                                     <Slider defaultValue={0} min={0} max={3} style={{ width: 120, margin: "0px 15px 3px" }}/>
-                                    <i style={{ fontSize: '1.5em' }} class="fas fa-text-height"></i>
+                                    <i style={{ fontSize: '1.5em' }} className="fas fa-text-height"></i>
                                 </div>
                             </Col>
                         </Row>
@@ -103,7 +103,7 @@ const Home = () => {
                             <div className="section">
                                 <SectionTool />
                                 <div className="d-flex align-items-center section-title">
-                                    <i class="fas fa-bullseye ml-3"></i>
+                                    <i className="fas fa-bullseye ml-3"></i>
                                     <Input placeholder="Mục tiêu nghề nghiệp" className="section-title" defaultValue="Mục tiêu nghề nghiệp" />
                                 </div>
 
@@ -116,7 +116,7 @@ const Home = () => {
                             <div className="section">
                                 <SectionTool />
                                 <div className="d-flex align-items-center section-title">
-                                    <i class="fas fa-graduation-cap ml-3"></i>
+                                    <i className="fas fa-graduation-cap ml-3"></i>
                                     <Input placeholder="Học vấn" className="section-title" defaultValue="Học vấn" />
                                 </div>
                                 <Row className="section-item">
@@ -146,7 +146,7 @@ const Home = () => {
                             <div className="section">
                                 <SectionTool />
                                 <div className="d-flex align-items-center section-title">
-                                    <i class="fas fa-briefcase ml-3"></i>
+                                    <i className="fas fa-briefcase ml-3"></i>
                                     <Input placeholder="Kinh nghiệm làm việc" defaultValue="Kinh nghiệm làm việc" className="section-title" />
                                 </div>
                                 <Row>
@@ -189,9 +189,9 @@ function SectionTool(props) {
     return (
         <div className="section-tool">
             <Space size="small">
-                <Button type="primary"><i class="fas fa-arrow-up light-icon"></i></Button>
-                <Button type="primary"><i class="fas fa-arrow-down light-icon"></i></Button>
-                <Button type="primary"><i class="fas fa-trash light-icon"></i></Button>
+                <Button type="primary"><i className="fas fa-arrow-up light-icon"></i></Button>
+                <Button type="primary"><i className="fas fa-arrow-down light-icon"></i></Button>
+                <Button type="primary"><i className="fas fa-trash light-icon"></i></Button>
             </Space>
         </div>
     )
@@ -201,10 +201,10 @@ function ItemTool(props) {
     return (
         <div className="section-item-tool">
             <Space size="small">
-                <Button type="primary" size="small"><i class="fas fa-arrow-up light-icon"></i></Button>
-                <Button type="primary" size="small"><i class="fas fa-arrow-down light-icon"></i></Button>
-                <Button type="primary" size="small"><i class="fas fa-plus light-icon"></i></Button>
-                <Button type="primary" size="small"><i class="fas fa-trash light-icon"></i></Button>
+                <Button type="primary" size="small"><i className="fas fa-arrow-up light-icon"></i></Button>
+                <Button type="primary" size="small"><i className="fas fa-arrow-down light-icon"></i></Button>
+                <Button type="primary" size="small"><i className="fas fa-plus light-icon"></i></Button>
+                <Button type="primary" size="small"><i className="fas fa-trash light-icon"></i></Button>
             </Space>
         </div>
     )

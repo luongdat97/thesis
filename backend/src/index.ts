@@ -1,3 +1,4 @@
+import { JobDALMongo } from './job/job.dal.mongo';
 import { ReadConfig } from "./config";
 import * as express from "express";
 import "./lib/express";
@@ -8,11 +9,12 @@ import { UserAuthBLLBase } from "./auth/auth.bll.base";
 import { NewAuthAPI } from "./auth/auth.api";
 import { TodoDALMongo } from "./todo/todo.dal.mongo";
 import { TodoBLLBase } from "./todo/todo.bll.base";
+import { JobBLLBase } from "./job/job.bll.base";
 import { CustomerDALMongo } from "./customer/customer.dal.mongo";
 import { CustomerBLLBase } from "./customer/customer.bll.base";
 import { NewTodoAPI } from "./todo/todo.api";
 import { NewCustomerAPI } from "./customer/customer.api";
-
+import { NewJobAPI} from "./job/job.api";
 import { NewServiceAPI } from './service/service.api';
 import { ServiceBLLBase } from './service/service.bll.base'
 import { ServiceDALMongo } from './service/service.dal.mongo';
@@ -45,6 +47,11 @@ async function main() {
   await customerDAL.init();
   const customerBLL = new CustomerBLLBase(customerDAL);
   await customerBLL.init();
+  //--------
+  const jobDAL = new JobDALMongo(database);
+  await jobDAL.init();
+  const jobBLL = new JobBLLBase(jobDAL);
+  await jobBLL.init();
   /****************************************************** */
   const app = require('express')();
   app.disable('x-powered-by');
@@ -57,6 +64,7 @@ async function main() {
   app.use('/api/service', NewServiceAPI(serviceBLL));
   app.use("/api/customer/", NewCustomerAPI(customerBLL));
   app.use('/api/todo/', NewTodoAPI(userAuthBLL, todoBLL));
+  app.use('/api/job/', NewJobAPI(jobBLL));
 
 
   /******************************************************* */

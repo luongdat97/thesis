@@ -15,8 +15,8 @@ export default function JobSumary() {
             <Col span={12}>
                 <Title level={3} className="text-uppercase text-success">Nhân viên tư vấn mỹ phẩm</Title>
                 <Title level={5}>Công ty TNHH AmorePacific Việt Nam</Title>
-                <Text><i class="fas fa-map-marker-alt"></i> Vincom Smart City, Đai Mỗ, Từ Liêm, Hà Nội/ Aeon Long Biên, Hà Nội</Text><br />
-                <Text><i class="far fa-clock"></i> Hạn nộp hồ sơ: 08/04/2021</Text>
+                <Text><i className="fas fa-map-marker-alt"></i> Vincom Smart City, Đai Mỗ, Từ Liêm, Hà Nội/ Aeon Long Biên, Hà Nội</Text><br />
+                <Text><i className="far fa-clock"></i> Hạn nộp hồ sơ: 08/04/2021</Text>
             </Col>
             <Col span={8}>
                 <Space direction="vertical" size="large">

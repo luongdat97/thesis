@@ -1,59 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, Checkbox, Button } from 'antd';
 import jobApi from "../../../api/jobApi"
+import {useParams} from "react-router-dom"
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
 
-const SettingJob = (props) => {
+
+const EditJob = (props) => {
+    let { id } = useParams();
+    const [job, setJob] = useState(null)
+    console.log("..........")
+    console.log(id)
+
+    const fetchJob = (jobId) => {
+        jobApi.getJobById(jobId).then((res) => {
+            console.log(".............res", res)
+            setJob(res.data)
+        })
+    }
+
+    useEffect(() =>{
+        fetchJob(id)
+    },[] )
+
     return (
         <>
-            <Title level={2}>Đăng tin tuyển dụng</Title>
+            <Title level={2}>Cập nhật tin tuyển dụng</Title>
             <Row>
                 <Col md={16} className="p-4 bg-white">
                     <Demo></Demo>
                 </Col>
                 <Col></Col>
             </Row>
-
         </>
     )
-}
-const children = [];
-for (let i = 10; i < 36; i++) {
-    children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
-
-function handleChange(value) {
-    console.log(`selected ${value}`);
-}
-
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
-
-const postJob = (job) => {
-    return jobApi.postJob(job)
 }
 
 const Demo = () => {
     const onFinish = (values) => {
         console.log('Success:', values);
-        postJob(values).then((res) => {
-            console.log("...........")
-            console.log(res)
-        })
+        // postJob(values).then((res) => {
+        //     console.log("...........")
+        //     console.log(res)
+        // })
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -263,11 +253,11 @@ const Demo = () => {
                 <TextArea rows={4} />
             </Form.Item>
             <Button type="primary" htmlType="submit">
-                Đăng tin
+                Cập nhật
             </Button>
 
         </Form>
     );
 };
 
-export default SettingJob;
+export default EditJob;

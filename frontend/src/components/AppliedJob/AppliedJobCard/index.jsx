@@ -17,11 +17,11 @@ const GeneralJobCard = (props) => {
                 <Text strong type="secondary">Công ty FPT</Text>
                 <Row>
                     <Col span={24}>
-                        <i class="fas fa-dollar-sign"></i>&nbsp;
+                        <i className="fas fa-dollar-sign"></i>&nbsp;
                         Lương: 11-21 triệu
                     </Col>
                     <Col span={24}>
-                        <i class="fas fa-map-marked-alt"></i>&nbsp;
+                        <i className="fas fa-map-marked-alt"></i>&nbsp;
                         Địa điểm: Phú thọ, Vĩnh Phúc
                     </Col>
                 </Row>
@@ -33,8 +33,8 @@ const GeneralJobCard = (props) => {
             </Col>
             <Col span={4}>
                 <Space direction="vertical">
-                    <Button size="small"><i class="far fa-eye" style={{ color: "inherit" }}></i>&nbsp; Xem CV</Button>
-                    <Button size="small"><i class="far fa-comment-dots" style={{ color: "inherit" }}></i>&nbsp; Nhắn tin</Button>
+                    <Button size="small"><i className="far fa-eye" style={{ color: "inherit" }}></i>&nbsp; Xem CV</Button>
+                    <Button size="small"><i className="far fa-comment-dots" style={{ color: "inherit" }}></i>&nbsp; Nhắn tin</Button>
                 </Space>
             </Col>
         </Row>

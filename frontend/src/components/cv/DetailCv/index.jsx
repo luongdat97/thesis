@@ -63,7 +63,7 @@ const Home = () => {
                             <div className="section">
                                 <SectionTool />
                                 <div className="d-flex align-items-center section-title">
-                                    <i class="fas fa-bullseye ml-3"></i>
+                                    <i className="fas fa-bullseye ml-3"></i>
                                     <Input placeholder="Mục tiêu nghề nghiệp" className="section-title" defaultValue="Mục tiêu nghề nghiệp" />
                                 </div>
 
@@ -76,7 +76,7 @@ const Home = () => {
                             <div className="section">
                                 <SectionTool />
                                 <div className="d-flex align-items-center section-title">
-                                    <i class="fas fa-graduation-cap ml-3"></i>
+                                    <i className="fas fa-graduation-cap ml-3"></i>
                                     <Input placeholder="Học vấn" className="section-title" defaultValue="Học vấn" />
                                 </div>
                                 <Row className="section-item">
@@ -106,7 +106,7 @@ const Home = () => {
                             <div className="section">
                                 <SectionTool />
                                 <div className="d-flex align-items-center section-title">
-                                    <i class="fas fa-briefcase ml-3"></i>
+                                    <i className="fas fa-briefcase ml-3"></i>
                                     <Input placeholder="Kinh nghiệm làm việc" defaultValue="Kinh nghiệm làm việc" className="section-title" />
                                 </div>
                                 <Row>
@@ -149,9 +149,9 @@ function SectionTool(props) {
     return (
         <div className="section-tool">
             <Space size="small">
-                <Button type="primary"><i class="fas fa-arrow-up light-icon"></i></Button>
-                <Button type="primary"><i class="fas fa-arrow-down light-icon"></i></Button>
-                <Button type="primary"><i class="fas fa-trash light-icon"></i></Button>
+                <Button type="primary"><i className="fas fa-arrow-up light-icon"></i></Button>
+                <Button type="primary"><i className="fas fa-arrow-down light-icon"></i></Button>
+                <Button type="primary"><i className="fas fa-trash light-icon"></i></Button>
             </Space>
         </div>
     )
@@ -161,10 +161,10 @@ function ItemTool(props) {
     return (
         <div className="section-item-tool">
             <Space size="small">
-                <Button type="primary" size="small"><i class="fas fa-arrow-up light-icon"></i></Button>
-                <Button type="primary" size="small"><i class="fas fa-arrow-down light-icon"></i></Button>
-                <Button type="primary" size="small"><i class="fas fa-plus light-icon"></i></Button>
-                <Button type="primary" size="small"><i class="fas fa-trash light-icon"></i></Button>
+                <Button type="primary" size="small"><i className="fas fa-arrow-up light-icon"></i></Button>
+                <Button type="primary" size="small"><i className="fas fa-arrow-down light-icon"></i></Button>
+                <Button type="primary" size="small"><i className="fas fa-plus light-icon"></i></Button>
+                <Button type="primary" size="small"><i className="fas fa-trash light-icon"></i></Button>
             </Space>
         </div>
     )

@@ -10,7 +10,7 @@ function SampleNextArrow(props) {
       style={{ ...style, display: "block"}}
       onClick={onClick}
     > 
-    <i class="fas fa-chevron-circle-right"></i> 
+    <i className="fas fa-chevron-circle-right"></i> 
     </div>
   );
 }
@@ -23,7 +23,7 @@ function SamplePrevArrow(props) {
       style={{ ...style, display: "block", zIndex: 1}}
       onClick={onClick}
     >
-      <i class="fas fa-chevron-circle-right"></i>
+      <i className="fas fa-chevron-circle-right"></i>
     </div>
   );
 }
@@ -42,10 +42,10 @@ export default class ReactSlickDemo extends React.Component {
         <div className="container">
           <Slider {...settings}>
             <div>
-              <img class="w-100" src="https://res.cloudinary.com/project0407/image/upload/v1615340717/project/novaon-tuyen-dung-telesale_umsfqd.webp"/>
+              <img className="w-100" src="https://res.cloudinary.com/project0407/image/upload/v1615340717/project/novaon-tuyen-dung-telesale_umsfqd.webp"/>
             </div>
             <div>
-              <img class="w-100" src="https://res.cloudinary.com/project0407/image/upload/v1615340717/project/educa-tuyen-dung_pgrxp5.jpg" />
+              <img className="w-100" src="https://res.cloudinary.com/project0407/image/upload/v1615340717/project/educa-tuyen-dung_pgrxp5.jpg" />
             </div>
           </Slider>
         </div>

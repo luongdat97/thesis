@@ -1,34 +1,114 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Checkbox } from 'antd';
+import { Form, Input, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Button, Popconfirm, message } from 'antd';
+import jobApi from "../../../api/jobApi"
+import { attachTypeApi } from 'antd/lib/message';
+import moment from 'moment'
+import {Link} from 'react-router-dom'
 
 const { TabPane } = Tabs;
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
-const companyLogo = [
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-co-phan-dau-tu-phat-trien-anh-va-em-59db4c9957711_rs_abw9g7.jpg',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-co-phan-replus-5b504e7e8b74f_ka2czs.webp',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-co-phan-dich-vu-di-dong-truc-tuyen-vi-momo-5f55a14a178cc_mekeqf.webp',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-bds-tan-hoang-gia-60470624a2f64_wgstim.jpg',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-tnhh-oh-vacation-5b0fb1bd69cdf_rs_xojube.jpg',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/ngan-hang-thuong-mai-co-phan-ky-thuong-viet-nam-5e7c8a9259ddc_rvysrd.webp',
-]
 
 const JobManager = (props) => {
-    return (
-        <>
-            <Title level={3}>Danh sách tin tuyển dụng</Title>
-            <Row>
-                <Col xs={16}>
+  const [jobList, setJobList] = useState([])
+  useEffect(() => {
+    fetchJobList()
+  }, [])
+
+  const fetchJobList = () => {
+    jobApi.getJobList().then((res) => {
+      console.log(res)
+      let jobList = res.data.map((item) => ({
+        key: item.id,
+        title: item.title,
+        endDate: moment(item.endDate).format('DD/MM/YYYY'),
+        numberApply: "20",
+        id: item.id
+      }))
+      setJobList(jobList)
+    })
+  }
+
+  const handleDelJob = (jobId) => {
+    return jobApi.delJob(jobId)
+  }
+
+  const removeJobFromList = (jobId) => {
+    let newList = [...jobList]
+    let removeIndex = newList.findIndex((job) => job.id === jobId)
+    newList.splice(removeIndex, 1)
+    setJobList(newList)
+  }
+
+  const delConfirm = (jobId) => {
+    console.log("jobid.................")
+    console.log(jobId)
+    handleDelJob(jobId).then((res) => {
+      removeJobFromList()
+      message.success('Click on Yes');
+
+    })
+    
+  }
+
+  const columns = [
+    {
+      title: 'Vị trí tuyển dụng',
+      dataIndex: 'title',
+      key: 'title',
+      render: text => <a>{text}</a>,
+    },
+    {
+      title: 'Hạn nhận hồ sơ',
+      dataIndex: 'endDate',
+      key: 'endDate',
+    },
+    {
+      title: 'Tổng CV apply',
+      dataIndex: 'numberApply',
+      key: 'numberApply',
+    },
+    {
+      title: 'Thời gian yêu cầu hiển thị',
+      key: 'showTime',
+      dataIndex: 'showTime',
+    },
+    {
+      title: 'Thao tác',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="small">
+          <Button type="primary" size="small">Xem CV apply</Button>
+          <Link to={`/recruiter/edit-job/${record.id}`} ><Button type="primary" size="small">Sửa</Button></Link>
+          <Popconfirm
+            title="Are you sure to delete this task?"
+            onConfirm={() => delConfirm(record.id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="primary" size="small" danger>Xóa</Button>
+          </Popconfirm>
+          
+        </Space>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <Title level={3}>Danh sách tin tuyển dụng</Title>
+      <Row>
+        <Col xs={16} className="bg-white">
 
 
-                    <Demo></Demo>
-                </Col>
-                <Col></Col>
-            </Row>
+          <Demo jobData={jobList} columns={columns}></Demo>
+        </Col>
+        <Col></Col>
+      </Row>
 
-        </>
-    )
+    </>
+  )
 }
 
 
@@ -37,10 +117,10 @@ function callback(key) {
   console.log(key);
 }
 
-const Demo = () => (
+const Demo = (props) => (
   <Tabs defaultActiveKey="1" onChange={callback}>
     <TabPane tab="Tin đang hiển thị" key="1">
-    <Table columns={columns} dataSource={data} />
+      <Table columns={props.columns} dataSource={props.jobData} />
     </TabPane>
     <TabPane tab="Tin chờ xác thực" key="2">
       Content of Tab Pane 2
@@ -53,61 +133,5 @@ const Demo = () => (
     </TabPane>
   </Tabs>
 );
-
-const columns = [
-  {
-    title: 'Vị trí tuyển dụng',
-    dataIndex: 'position',
-    key: 'position',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: 'Hạn nhận hồ sơ',
-    dataIndex: 'endDate',
-    key: 'endDate',
-  },
-  {
-    title: 'Tổng CV apply',
-    dataIndex: 'numberApply',
-    key: 'numberApply',
-  },
-  {
-    title: 'Thời gian yêu cầu hiển thị',
-    key: 'showTime',
-    dataIndex: 'showTime',
-  },
-  {
-    title: 'Thao tác',
-    key: 'action',
-    render: (text, record) => (
-      <Space size="middle">
-        <a>Sửa {record.name}</a>
-        <a>Xóa</a>
-        <a>Xem CV apply</a>
-      </Space>
-    ),
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    position: `Nhân Viên Kinh Doanh
-    Mức lương: Thoả thuận
-    Mã TTD: #382105`,
-    endDate: "29/05/2021",
-    numberApply: '20',
-    showTime: "20 ngày, từ 12/3/2021",
-  },
-  {
-    key: '1',
-    position: `Nhân Viên Kinh Doanh
-    Mức lương: Thoả thuận
-    Mã TTD: #382105`,
-    endDate: "29/05/2021",
-    numberApply: '20',
-    showTime: "20 ngày, từ 12/3/2021",
-  },
-]
 
 export default JobManager;

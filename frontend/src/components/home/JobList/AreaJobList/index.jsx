@@ -6,7 +6,7 @@ const AreaJobList = () => {
     return (
         <Card
             title="Việc làm mới nhất"
-            extra={<a href="#" class="text-white">Xem tất cả</a>}
+            extra={<a href="#" className="text-white">Xem tất cả</a>}
             style={{ width: "100%" }}
             headStyle={{ backgroundColor: "#1890ff", color: "#fff" }}
         >
