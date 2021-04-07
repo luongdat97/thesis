@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Row, Col, Collapse, Card, Typography, Button, Space, Slider, Radio } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import StyleCv from "./index.style"
 import UploadAvatar from './UploadAvatar'
 const { Option } = Select;
@@ -13,6 +14,7 @@ const layout = {
 };
 
 const Home = () => {
+
     return (
         <>
             <div style={{ backgroundColor: "#f0f2f5" }}>
@@ -43,7 +45,7 @@ const Home = () => {
                                 Cỡ chữ
                         <div className="d-flex align-items-end pb-1">
                                     <i className="fas fa-font"></i>
-                                    <Slider defaultValue={0} min={0} max={3} style={{ width: 120, margin: "0px 15px 3px" }}/>
+                                    <Slider defaultValue={0} min={0} max={3} style={{ width: 120, margin: "0px 15px 3px" }} />
                                     <i style={{ fontSize: '1.5em' }} className="fas fa-font"></i>
                                 </div>
                             </Col>
@@ -51,7 +53,7 @@ const Home = () => {
                                 Khoảng cách dòng
                         <div className="d-flex align-items-end pb-1">
                                     <i className="fas fa-text-height"></i>
-                                    <Slider defaultValue={0} min={0} max={3} style={{ width: 120, margin: "0px 15px 3px" }}/>
+                                    <Slider defaultValue={0} min={0} max={3} style={{ width: 120, margin: "0px 15px 3px" }} />
                                     <i style={{ fontSize: '1.5em' }} className="fas fa-text-height"></i>
                                 </div>
                             </Col>
@@ -62,7 +64,11 @@ const Home = () => {
 
                         <Form
                             {...layout}
+                            onFinish={(values) => console.log(values)}
                         >
+                            <Button type="primary" htmlType="submit">
+                                Submit
+        </Button>
                             <Row>
                                 <Col span={6} className="p-3"><UploadAvatar /></Col>
                                 <Col span={18}>
@@ -109,8 +115,9 @@ const Home = () => {
 
                                 <TextArea
                                     placeholder="Autosize height with minimum and maximum number of lines"
-                                    defaultValue="Môi trường chuyên nghiệp \n Cống hiến hết mình"
+                                    defaultValue={`Môi trường chuyên nghiệp\nCống hiến hết mình`}
                                     autoSize={{ minRows: 1, maxRows: 6 }}
+                                    onChange={(e) => console.log(e.target.value)}
                                 />
                             </div>
                             <div className="section">
@@ -119,30 +126,58 @@ const Home = () => {
                                     <i className="fas fa-graduation-cap ml-3"></i>
                                     <Input placeholder="Học vấn" className="section-title" defaultValue="Học vấn" />
                                 </div>
-                                <Row className="section-item">
-                                    <ItemTool />
-                                    <Col span={5}>
-                                        <Input placeholder="10/2021 - hiện tại" value="10/2021 - hiện tại" />
-                                    </Col>
-                                    <Col span={19}>
-                                        <Input placeholder="Đại học TOPCV" style={{ fontWeight: 'bold' }} defaultValue="Đại học TOPCV" />
-                                        <Input placeholder="Chuyên ngành: Quản trị Doanh nghiệp" defaultValue="Chuyên ngành: Quản trị doanh nghiệp" />
-                                        <Input placeholder="Tốt nghiệp loại Giỏi, điểm trung bình 8.0" defaultValue="Tốt nghiệp loại giỏi" />
-                                    </Col>
-                                </Row>
-                                <Row className="section-item">
-                                    <ItemTool />
-                                    <Col span={5}>
-                                        <Input placeholder="10/2021 - hiện tại" value="10/2021 - hiện tại" />
-                                    </Col>
-                                    <Col span={19}>
-                                        <Input placeholder="Đại học TOPCV" style={{ fontWeight: 'bold' }} />
-                                        <Input placeholder="Chuyên ngành: Quản trị Doanh nghiệp" />
-                                        <Input placeholder="Tốt nghiệp loại Giỏi, điểm trung bình 8.0" />
-                                    </Col>
-                                </Row>
+                                <div className="ml-3">
+                                    <Form.List name="education" initialValue={[{}]}>
+                                        {(fields, { add, remove, move }) => (
+                                            <>
 
+                                                {fields.map(({ key, name, fieldKey, ...restField }, index) => (
+                                                    <div className="section-item">
+                                                        <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
+                                                        <Row>
+                                                            <Col span={5}>
+                                                                <Form.Item
+                                                                    {...restField}
+                                                                    name={[name, 'first']}
+                                                                    fieldKey={[fieldKey, 'first']}
+                                                                >
+                                                                    <Input placeholder="10/2021 - hiện tại" value="10/2021 - hiện tại" />
+                                                                </Form.Item>
+
+                                                            </Col>
+                                                            <Col span={19}>
+                                                                <Form.Item
+                                                                    {...restField}
+                                                                    name={[name, 'education']}
+                                                                    fieldKey={[fieldKey, 'education']}
+                                                                >
+                                                                    <Input placeholder="Đại học TOPCV" style={{ fontWeight: 'bold' }} defaultValue="Đại học TOPCV" />
+                                                                </Form.Item>
+                                                                <Form.Item
+                                                                    {...restField}
+                                                                    name={[name, 'major']}
+                                                                    fieldKey={[fieldKey, 'major']}
+                                                                >
+                                                                    <Input placeholder="Chuyên ngành: Quản trị Doanh nghiệp" defaultValue="Chuyên ngành: Quản trị doanh nghiệp" />
+                                                                </Form.Item>
+                                                                <Form.Item
+                                                                    {...restField}
+                                                                    name={[name, 'description']}
+                                                                    fieldKey={[fieldKey, 'description']}
+                                                                >
+                                                                    <Input placeholder="Tốt nghiệp loại Giỏi, điểm trung bình 8.0" defaultValue="Tốt nghiệp loại giỏi" />
+                                                                </Form.Item>
+                                                            </Col>
+                                                        </Row>
+                                                    </div>
+                                                ))}
+                                            </>
+                                        )}
+                                    </Form.List>
+
+                                </div>
                             </div>
+
                             <div className="section">
                                 <SectionTool />
                                 <div className="d-flex align-items-center section-title">
@@ -198,13 +233,15 @@ function SectionTool(props) {
 }
 
 function ItemTool(props) {
+    const { remove, index, add, length, move } = props
     return (
         <div className="section-item-tool">
             <Space size="small">
-                <Button type="primary" size="small"><i className="fas fa-arrow-up light-icon"></i></Button>
-                <Button type="primary" size="small"><i className="fas fa-arrow-down light-icon"></i></Button>
-                <Button type="primary" size="small"><i className="fas fa-plus light-icon"></i></Button>
-                <Button type="primary" size="small"><i className="fas fa-trash light-icon"></i></Button>
+                {length >= 1 && index !== 0 && <Button type="primary" size="small" onClick={() => move(index, index - 1)}><i className="fas fa-arrow-up light-icon"></i></Button>}
+                {length >= 1 && index !== length - 1 && <Button type="primary" size="small" onClick={() => move(index, index + 1)}><i className="fas fa-arrow-down light-icon"></i></Button>}
+                <Button type="primary" size="small" onClick={() => add({}, index + 1)}><i className="fas fa-plus light-icon"></i></Button>
+                
+                {length >= 2 && <Button type="primary" size="small" onClick={() => { remove(index) }}><i className="fas fa-minus light-icon"></i></Button>}
             </Space>
         </div>
     )

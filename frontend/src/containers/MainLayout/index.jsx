@@ -12,7 +12,7 @@ function MainLayout({children}) {
             <Layout>
                 <Header />
                 <Content className="site-layout" style={{marginTop: 64 }}>
-                    <div className="site-layout-background">
+                    <div className="bootstrap-container site-layout-background">
                         {children}
                     </div>
                 </Content>

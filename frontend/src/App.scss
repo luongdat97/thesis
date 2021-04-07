@@ -1,1 +1,23 @@
 @import "~bootstrap-utilities";
+
+.bootstrap-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  @media (min-width: 768px) {
+    .bootstrap-container {
+      width: 750px;
+    }
+  }
+  @media (min-width: 992px) {
+    .bootstrap-container {
+      width: 970px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .bootstrap-container {
+      width: 1170px;
+    }
+  }

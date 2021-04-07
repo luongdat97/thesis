@@ -29,10 +29,8 @@ export class JobBLLBase implements JobNS.BLL {
     }
 
     async UpdateJob(job_id: string, params: JobNS.UpdateJobParams) {
-        const job = await this.GetJob(job_id);
-        if (params.title) {
-            job.title = params.title;
-        }
+        let job = await this.GetJob(job_id);
+        job = {...job, ...params}
         job.mtime = Date.now();
         await this.dal.UpdateJob(job);
     }

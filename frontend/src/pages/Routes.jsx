@@ -28,6 +28,7 @@ import AccountPage from './ManagerPages/AccountPage'
 import ReportPage from './ManagerPages/ReportPage'
 import StatisticPage from './ManagerPages/StatisticPage'
 import WorkhistoryPage from './ManagerPages/WorkHistoryPage'
+import JobSearchPage from './JobSearchPage'
 export const routes = [
   {
     path: '/',
@@ -37,6 +38,11 @@ export const routes = [
   {
     path: '/job-detail',
     component: JobDetailPage,
+    exact: true
+  },
+  {
+    path: '/job-search',
+    component: JobSearchPage,
     exact: true
   },
   {

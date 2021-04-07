@@ -7,9 +7,7 @@ const StyleList = styled.div`
     height: 64px;
   }
   .site-layout .site-layout-background {
-    min-height: 1000px;
-    margin: 30px 100px;
-    padding: 25px;
+    margin-top: 30px;
   }
   .logo img {
     width: 60px;

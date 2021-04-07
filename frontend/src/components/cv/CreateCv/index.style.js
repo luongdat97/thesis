@@ -11,6 +11,7 @@ const StyleList = styled.div`
   .ant-input:hover {
     border: 1px dashed #000;
   }
+  
   .avatar-uploader > .ant-upload {
     width: 140px;
     height: 210px;
@@ -33,14 +34,14 @@ const StyleList = styled.div`
     position: absolute;
     z-index: 1;
     right: 0px;
-    top: -35px;
+    top: -33px;
     visibility: hidden;
   }
   .section-item-tool {
     position: absolute;
     z-index: 1;
     right: 0px;
-    top: -25px;
+    top: -24px;
     visibility: hidden;
   }
   .section-item:hover .section-item-tool {

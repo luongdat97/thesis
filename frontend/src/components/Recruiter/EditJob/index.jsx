@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, Checkbox, Button } from 'antd';
+import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, message, Button } from 'antd';
 import jobApi from "../../../api/jobApi"
 import {useParams} from "react-router-dom"
+import moment from "moment"
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
@@ -9,14 +10,13 @@ const { Option } = Select
 
 const EditJob = (props) => {
     let { id } = useParams();
-    const [job, setJob] = useState(null)
-    console.log("..........")
-    console.log(id)
+    const [job, setJob] = useState({})
 
     const fetchJob = (jobId) => {
         jobApi.getJobById(jobId).then((res) => {
-            console.log(".............res", res)
+            res.data.endDate = moment(res.data.endDate)
             setJob(res.data)
+            console.log(res.data)
         })
     }
 
@@ -29,7 +29,7 @@ const EditJob = (props) => {
             <Title level={2}>Cập nhật tin tuyển dụng</Title>
             <Row>
                 <Col md={16} className="p-4 bg-white">
-                    <Demo></Demo>
+                    <Demo initialValues={job}></Demo>
                 </Col>
                 <Col></Col>
             </Row>
@@ -37,13 +37,21 @@ const EditJob = (props) => {
     )
 }
 
-const Demo = () => {
+const Demo = (props) => {
+    const [form] = Form.useForm();
+    useEffect(() => {form.resetFields(); console.log("resett")}, [props.initialValues]);
+    
+    const editJob = (payload) => {
+        return jobApi.editJob(payload)
+    }
+
     const onFinish = (values) => {
         console.log('Success:', values);
-        // postJob(values).then((res) => {
-        //     console.log("...........")
-        //     console.log(res)
-        // })
+        editJob(values).then((res) => {
+            console.log("...........")
+            console.log(res)
+            message.success('Cập nhật thành công!');
+        })
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -52,15 +60,21 @@ const Demo = () => {
 
     return (
         <Form
+            form={form}
             layout="vertical"
             name="basic"
-            initialValues={{
-                remember: true,
-            }}
+            initialValues={props.initialValues}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         >
             <Title level={3}>Thông tin cơ bản</Title>
+            <Form.Item
+                label="Id"
+                name="id"
+                className="d-none"
+            >
+                <Input />
+            </Form.Item>
             <Form.Item
                 label="Tiêu đề"
                 name="title"
@@ -209,9 +223,6 @@ const Demo = () => {
 
                 </Col>
             </Row>
-
-
-
 
             <Title level={3}>Thông tin người nhận hồ sơ</Title>
 

@@ -2,8 +2,9 @@ import { jsPDF } from "jspdf";
 import CreateCv from "../CreateCv"
 import html2canvas from "html2canvas"
 import "./MoviePosterPersonalUse-axyeE-normal"
+import printJS from 'print-js'
+import {Button} from "antd"
 
-console.log("hahahhhhhhhhhhhhhhhhhhhhhh")
 
 let generate = function () {
     html2canvas(document.getElementById("html2canvas"), { quality: 4 }).then(function (canvas) {
@@ -26,7 +27,7 @@ let generate = function () {
         }
         window.open(doc.output('bloburl'), '_self');
         //doc.output('dataurlnewwindow');
-        
+
         //doc.save('file.pdf');
     });
 
@@ -68,7 +69,18 @@ const CvPreview = () => {
         <>
             <button onClick={() => generate()}>Generate PDF</button>
             <div>
-
+                <Button color="primary" onClick={() => {
+                    printJS({
+                        printable: 'html2canvas',
+                        type: 'html',
+                        targetStyles: ['*'],
+                        style: `@page {
+                                size: A4;
+                              }`,
+                        header: null,
+                        footer: null,
+                    });
+                }}>Tạo phiếu in</Button>
                 <CreateCv></CreateCv>
                 <p></p>
 
