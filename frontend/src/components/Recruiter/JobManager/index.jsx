@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Button, Popconfirm, message } from 'antd';
+import { Form, Input, Tabs, Select, Row, Col, Table, Card, Typography, Space, Button, Popconfirm, message } from 'antd';
 import jobApi from "../../../api/jobApi"
 import { attachTypeApi } from 'antd/lib/message';
 import moment from 'moment'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const { TabPane } = Tabs;
 const { Title } = Typography
@@ -49,7 +49,7 @@ const JobManager = (props) => {
       message.success('Click on Yes');
 
     })
-    
+
   }
 
   const columns = [
@@ -89,7 +89,7 @@ const JobManager = (props) => {
           >
             <Button type="primary" size="small" danger>Xóa</Button>
           </Popconfirm>
-          
+
         </Space>
       ),
     },
@@ -97,15 +97,15 @@ const JobManager = (props) => {
 
   return (
     <>
-      <Title level={3}>Danh sách tin tuyển dụng</Title>
-      <Row>
-        <Col xs={16} className="bg-white">
+      <Card>
+        <Title level={3}>Danh sách tin tuyển dụng</Title>
 
 
-          <Demo jobData={jobList} columns={columns}></Demo>
-        </Col>
-        <Col></Col>
-      </Row>
+
+        <Demo jobData={jobList} columns={columns}></Demo>
+
+      </Card>
+
 
     </>
   )

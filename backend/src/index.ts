@@ -1,4 +1,3 @@
-import { JobDALMongo } from './job/job.dal.mongo';
 import { ReadConfig } from "./config";
 import * as express from "express";
 import "./lib/express";
@@ -9,13 +8,25 @@ import { UserAuthBLLBase } from "./auth/auth.bll.base";
 import { NewAuthAPI } from "./auth/auth.api";
 import { TodoDALMongo } from "./todo/todo.dal.mongo";
 import { TodoBLLBase } from "./todo/todo.bll.base";
+import { JobDALMongo } from './job/job.dal.mongo';
 import { JobBLLBase } from "./job/job.bll.base";
 import { CustomerDALMongo } from "./customer/customer.dal.mongo";
 import { CustomerBLLBase } from "./customer/customer.bll.base";
+import { AccountDALMongo } from './account/account.dal.mongo';
+import { AccountBLLBase } from "./account/account.bll.base";
+import { ProfileDALMongo } from './profile/profile.dal.mongo';
+import { ProfileBLLBase } from "./profile/profile.bll.base";
+import { ApplicantDALMongo } from './applicant/applicant.dal.mongo';
+import { ApplicantBLLBase } from "./applicant/applicant.bll.base";
+
 import { NewTodoAPI } from "./todo/todo.api";
 import { NewCustomerAPI } from "./customer/customer.api";
 import { NewJobAPI} from "./job/job.api";
 import { NewServiceAPI } from './service/service.api';
+import { NewAccountAPI} from "./account/account.api";
+import { NewProfileAPI} from "./profile/profile.api";
+import { NewApplicantAPI} from "./applicant/applicant.api";
+
 import { ServiceBLLBase } from './service/service.bll.base'
 import { ServiceDALMongo } from './service/service.dal.mongo';
 
@@ -52,6 +63,24 @@ async function main() {
   await jobDAL.init();
   const jobBLL = new JobBLLBase(jobDAL);
   await jobBLL.init();
+
+  //--------
+  const accountDAL = new AccountDALMongo(database);
+  await accountDAL.init();
+  const accountBLL = new AccountBLLBase(accountDAL);
+  await accountBLL.init();
+
+  //--------
+  const profileDAL = new ProfileDALMongo(database);
+  await profileDAL.init();
+  const profileBLL = new ProfileBLLBase(profileDAL);
+  await profileBLL.init();
+
+  //--------
+  const applicantDAL = new ApplicantDALMongo(database);
+  await applicantDAL.init();
+  const applicantBLL = new ApplicantBLLBase(applicantDAL);
+  await applicantBLL.init();
   /****************************************************** */
   const app = require('express')();
   app.disable('x-powered-by');
@@ -65,7 +94,9 @@ async function main() {
   app.use("/api/customer/", NewCustomerAPI(customerBLL));
   app.use('/api/todo/', NewTodoAPI(userAuthBLL, todoBLL));
   app.use('/api/job/', NewJobAPI(jobBLL));
-
+  app.use('/api/profile/', NewProfileAPI(profileBLL));
+  app.use('/api/account/', NewAccountAPI(accountBLL));
+  app.use('/api/applicant/', NewApplicantAPI(applicantBLL, profileBLL, accountBLL));
 
   /******************************************************* */
   app.use((err, req, res, next) => {

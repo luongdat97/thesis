@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Checkbox, Button } from 'antd';
+import { Form, Input, Tabs, Select, Row, Col, Table, Card, Typography, Space, Checkbox, Button } from 'antd';
 
 const { TabPane } = Tabs;
 const { Title } = Typography
@@ -7,36 +7,36 @@ const { TextArea } = Input
 const { Option } = Select
 
 const JobManager = (props) => {
-    return (
-        <>
-            <Title level={3}>Danh sách ứng viên</Title>
-            <Form>
-              <Form.Item
-                label="Chọn tin tuyển dụng liên quan"
-              >
-                <Select placeholder="Chọn tin tuyển dụng" size="large">
-                  <Option value="1">Tuyển thực tập sinh JAVA</Option>
-                  <Option value="2">Ăn cơm chưa!</Option>
-                  <Option value="3">Fresher AI</Option>
-                </Select>
-              </Form.Item>
-            </Form>
+  return (
+    <>
+      <Card>
+        <Title level={3}>Danh sách ứng viên</Title>
+        <Form>
+          <Form.Item
+            label="Chọn tin tuyển dụng liên quan"
+          >
+            <Select placeholder="Chọn tin tuyển dụng" size="large">
+              <Option value="1">Tuyển thực tập sinh JAVA</Option>
+              <Option value="2">Ăn cơm chưa!</Option>
+              <Option value="3">Fresher AI</Option>
+            </Select>
+          </Form.Item>
+        </Form>
             Trạng thái tin tuyển dụng: Đang tuyển dụng
             <br />
             Hạn tuyển: 20/09/2021
             <br />
-            <Button>Xem chi tiết tin tuyển dụng</Button>
-            <Row>
-                <Col xs={16}>
+        
 
 
-                    <Demo></Demo>
-                </Col>
-                <Col></Col>
-            </Row>
 
-        </>
-    )
+        <Demo></Demo>
+      </Card>
+
+
+
+    </>
+  )
 }
 
 
@@ -48,7 +48,7 @@ function callback(key) {
 const Demo = () => (
   <Tabs defaultActiveKey="1" onChange={callback}>
     <TabPane tab="Ứng viên đã duyệt" key="1">
-    <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} />
     </TabPane>
     <TabPane tab="Ứng viên chờ duyệt" key="2">
       Content of Tab Pane 2

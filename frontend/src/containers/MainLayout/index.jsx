@@ -6,14 +6,15 @@ const {Title} = Typography;
 
 const { Content, Footer } = Layout;
 
-function MainLayout({children}) {
+function MainLayout(props) {
+    const url = props.url
     return (
         <StyleList>
             <Layout>
-                <Header />
+                <Header url={url}/>
                 <Content className="site-layout" style={{marginTop: 64 }}>
                     <div className="bootstrap-container site-layout-background">
-                        {children}
+                        {props.children}
                     </div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

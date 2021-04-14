@@ -60,11 +60,11 @@ const data = [
 const SearchCampaign = (props) => {
     return (
         <>
-            <Title level={3}>Tạo chiến dịch tìm kiếm</Title>
-            <Row>
-                <Col xs={16}>
-                    <Row>
-                        <Col xs={20}>
+            <Card>
+                <Title level={3}>Tạo chiến dịch tìm kiếm</Title>
+
+                <Row>
+                    <Col xs={20}>
                         <Form layout="inline" className="my-3">
                             <Form.Item
                                 label="Tìm kiếm theo tên chiến dịch"
@@ -75,22 +75,22 @@ const SearchCampaign = (props) => {
                                 <Button type="primary">Tìm kiếm</Button>
                             </Form.Item>
                         </Form>
-                        </Col>
-                        <Col xs={4}>
+                    </Col>
+                    <Col xs={4}>
                         <div className="d-flex justify-content-end my-3">
-                        <AddCampaignModal></AddCampaignModal>
-                    </div>
-                        </Col>
+                            <AddCampaignModal></AddCampaignModal>
+                        </div>
+                    </Col>
 
-                    </Row>
-                    
-                    
+                </Row>
 
-                    <Table columns={columns} dataSource={data} />
 
-                </Col>
-                <Col></Col>
-            </Row>
+
+                <Table columns={columns} dataSource={data} />
+
+
+            </Card>
+
 
         </>
     )

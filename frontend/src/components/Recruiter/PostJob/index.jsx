@@ -8,13 +8,11 @@ const { Option } = Select
 const SettingJob = (props) => {
     return (
         <>
-            <Title level={2}>Đăng tin tuyển dụng</Title>
-            <Row>
-                <Col md={16} className="p-4 bg-white">
+            <Card>
+            <Title level={4} className="mt-3">Đăng tin tuyển dụng</Title>
                     <Demo></Demo>
-                </Col>
-                <Col></Col>
-            </Row>
+            </Card>
+            
 
         </>
     )
@@ -70,7 +68,7 @@ const Demo = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         >
-            <Title level={3}>Thông tin cơ bản</Title>
+            <Title level={5}>Thông tin cơ bản</Title>
             <Form.Item
                 label="Tiêu đề"
                 name="title"
@@ -223,7 +221,7 @@ const Demo = () => {
 
 
 
-            <Title level={3}>Thông tin người nhận hồ sơ</Title>
+            <Title level={5}>Thông tin người nhận hồ sơ</Title>
 
             <Form.Item
                 label="Tên người nhận hồ sơ"
@@ -243,7 +241,7 @@ const Demo = () => {
             >
                 <Input />
             </Form.Item>
-            <Title level={3}>Mô tả chi tiết công việc</Title>
+            <Title level={5}>Mô tả chi tiết công việc</Title>
             <Form.Item
                 label="Mô tả công việc"
                 name="jobDescription"

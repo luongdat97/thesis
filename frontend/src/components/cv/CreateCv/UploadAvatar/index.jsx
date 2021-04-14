@@ -45,7 +45,7 @@ export default class Avatar extends React.Component {
     const { loading, imageUrl } = this.state;
     const uploadButton = (
       <div>
-        <div style={{ marginTop: 8, fontSize: 100 }}><i className="fas fa-camera"></i></div>
+        <div style={{ marginTop: 8, fontSize: 70 }}><i className="fas fa-camera"></i></div>
         {loading ? <LoadingOutlined /> : "Click để đăng ảnh"}
         
       </div>

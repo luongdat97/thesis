@@ -26,24 +26,17 @@ const Home = () => {
             {/* <div style={{ padding: "30px 100px 0px", backgroundColor: "#fff" }}>
                 <SearchJobForm />
             </div> */}
-            <div style={{backgroundColor: "#fff" }}>
-                <div style={{
-                    position: "sticky",
-                    top: "64px",
-                    backgroundColor: "#e6f7ff",
-                    zIndex: "1",
-                    borderBottom: "1px solid #ddd",
-                    padding: "15px 0px"
-                }}>
+            <div >
+                
                     <JobSumary></JobSumary>
-                </div>
+                
 
 
-                <Row gutter={16} className="pt-5">
+                <Row gutter={30} className="mt-4">
                     <Col span={16}>
                         <JobDescription></JobDescription>
                     </Col>
-                    <Col span={8} className="pr-5">
+                    <Col span={8}>
                         <CardDetail></CardDetail>
                     </Col>
 

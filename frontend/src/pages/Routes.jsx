@@ -1,16 +1,7 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import HomePage from './HomePage';
-import JobDetailPage from './JobDetailPage'
-import CreateCvPage from './CreateCvPage'
-import CvManagerPage from './CvManagerPage'
-import CvPreviewPage from './CvPreviewPage'
-import SavedJobPage from './ApplicantPages/SavedJobPage'
-import AppliedJobPage from './ApplicantPages/AppliedJobPage'
-import SettingJobPage from './ApplicantPages/SettingJobPage'
-import SuitableJobPage from './ApplicantPages/SuitableJobPage'
-import RecruiterVisitPage from './ApplicantPages/RecruiterVisitPage'
+
 import PostJobPage from './RecruiterPages/PostJobPage'
 import EditJobPage from './RecruiterPages/EditJobPage'
 import JobManagerPage from './RecruiterPages/JobManagerPage'
@@ -28,62 +19,14 @@ import AccountPage from './ManagerPages/AccountPage'
 import ReportPage from './ManagerPages/ReportPage'
 import StatisticPage from './ManagerPages/StatisticPage'
 import WorkhistoryPage from './ManagerPages/WorkHistoryPage'
-import JobSearchPage from './JobSearchPage'
+
+import HomePages from './HomePages'
+import ApplicantPages from './ApplicantPages'
+import RecruiterPages from './RecruiterPages'
 export const routes = [
   {
-    path: '/',
-    component: HomePage,
-    exact: true,
-  },
-  {
-    path: '/job-detail',
-    component: JobDetailPage,
-    exact: true
-  },
-  {
-    path: '/job-search',
-    component: JobSearchPage,
-    exact: true
-  },
-  {
-    path: '/cv/create',
-    component: CreateCvPage,
-    exact: true
-  },
-  {
-    path: '/cv/manage',
-    component: CvManagerPage,
-    exact: true
-  },
-  {
-    path: '/cv/preview',
-    component: CvPreviewPage,
-    exact: true
-  },
-  {
-    path: '/applicant/saved-job',
-    component: SavedJobPage,
-    exact: true
-  },
-  {
-    path: '/applicant/suitable-job',
-    component: SuitableJobPage,
-    exact: true
-  },
-  {
-    path: '/applicant/applied-job',
-    component: AppliedJobPage,
-    exact: true
-  },
-  {
-    path: '/applicant/setting-job',
-    component: SettingJobPage,
-    exact: true
-  },
-  {
-    path: '/applicant/recruiter-visit',
-    component: RecruiterVisitPage,
-    exact: true
+    path: '/recruiter',
+    component: RecruiterPages,
   },
   {
     path: '/recruiter/post-job',
@@ -169,6 +112,14 @@ export const routes = [
     path: '/manager/work-history',
     component: WorkhistoryPage,
     exact: true
+  },
+  {
+    path: '/applicant',
+    component: ApplicantPages,
+  },
+  {
+    path: '/',
+    component: HomePages,
   },
 ];
 

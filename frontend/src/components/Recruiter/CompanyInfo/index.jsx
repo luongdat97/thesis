@@ -15,58 +15,58 @@ const companyLogo = [
 const SettingJob = (props) => {
     return (
         <>
-            <Title level={3}>Thông tin công ty</Title>
-            <Row>
-                <Col xs={16}>
-                    <Space direction="vertical">
+            <Card>
+                <Title level={3}>Thông tin công ty</Title>
+
+                <Space direction="vertical">
                     <Row>
-                            <Col span={4}>Logo</Col>
-                            <Col span={20}><img src="https://static.topcv.vn/company_logos/fpt-software-5f7b5509924a3.jpg"></img></Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Tên công ty</Col>
-                            <Col span={20}>FPT Software</Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Mã số thuế</Col>
-                            <Col span={20}>0101601092</Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Lĩnh vực hoạt động</Col>
-                            <Col span={20}>IT - Phần mềm, IT - Phần cứng</Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Địa chỉ</Col>
-                            <Col span={20}>FPT Building, 17 Duy Tân Str., Cầu Giấy District, Hanoi,</Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Số điện thoại</Col>
-                            <Col span={20}>0969125248</Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Email</Col>
-                            <Col span={20}>bachdv1@fsoft.com.vn</Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Website</Col>
-                            <Col span={20}>	https://www.fpt-software.com/</Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Quy mô</Col>
-                            <Col span={20}>10000+ nhân viên</Col>
-                        </Row>
-                        <Row>
-                            <Col span={4}>Mô tả</Col>
-                            <Col span={20}>FPT Software là công ty thành viên thuộc Tập đoàn FPT. Được thành lập từ năm 1999, FPT Software hiện là công ty chuyên cung cấp các dịch vụ và giải pháp phần mềm cho các khách hàng quốc tế, với hơn 16.000 nhân viên, hiện diện tại 25 quốc gia trên toàn cầu.
-                            Nhiều năm liền, FPT Software được bình chọn là Nhà Tuyển dụng được yêu thích nhất và nằm trong TOP các công ty có môi trường làm việc tốt nhất Việt Nam.
+                        <Col span={4}>Logo</Col>
+                        <Col span={20}><img src="https://static.topcv.vn/company_logos/fpt-software-5f7b5509924a3.jpg"></img></Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Tên công ty</Col>
+                        <Col span={20}>FPT Software</Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Mã số thuế</Col>
+                        <Col span={20}>0101601092</Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Lĩnh vực hoạt động</Col>
+                        <Col span={20}>IT - Phần mềm, IT - Phần cứng</Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Địa chỉ</Col>
+                        <Col span={20}>FPT Building, 17 Duy Tân Str., Cầu Giấy District, Hanoi,</Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Số điện thoại</Col>
+                        <Col span={20}>0969125248</Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Email</Col>
+                        <Col span={20}>bachdv1@fsoft.com.vn</Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Website</Col>
+                        <Col span={20}>	https://www.fpt-software.com/</Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Quy mô</Col>
+                        <Col span={20}>10000+ nhân viên</Col>
+                    </Row>
+                    <Row>
+                        <Col span={4}>Mô tả</Col>
+                        <Col span={20}>FPT Software là công ty thành viên thuộc Tập đoàn FPT. Được thành lập từ năm 1999, FPT Software hiện là công ty chuyên cung cấp các dịch vụ và giải pháp phần mềm cho các khách hàng quốc tế, với hơn 16.000 nhân viên, hiện diện tại 25 quốc gia trên toàn cầu.
+                        Nhiều năm liền, FPT Software được bình chọn là Nhà Tuyển dụng được yêu thích nhất và nằm trong TOP các công ty có môi trường làm việc tốt nhất Việt Nam.
 
 </Col>
-                        </Row>
-                    </Space>
+                    </Row>
+                </Space>
 
-                </Col>
-                <Col></Col>
-            </Row>
+
+            </Card>
+
 
         </>
     )

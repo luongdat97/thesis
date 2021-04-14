@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, message, Button } from 'antd';
 import jobApi from "../../../api/jobApi"
-import {useParams} from "react-router-dom"
+import { useParams } from "react-router-dom"
 import moment from "moment"
 const { Title } = Typography
 const { TextArea } = Input
@@ -20,27 +20,27 @@ const EditJob = (props) => {
         })
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         fetchJob(id)
-    },[] )
+    }, [])
 
     return (
         <>
-            <Title level={2}>Cập nhật tin tuyển dụng</Title>
-            <Row>
-                <Col md={16} className="p-4 bg-white">
-                    <Demo initialValues={job}></Demo>
-                </Col>
-                <Col></Col>
-            </Row>
+            <Card>
+                <Title level={4}>Cập nhật tin tuyển dụng</Title>
+
+                <Demo initialValues={job}></Demo>
+
+            </Card>
+
         </>
     )
 }
 
 const Demo = (props) => {
     const [form] = Form.useForm();
-    useEffect(() => {form.resetFields(); console.log("resett")}, [props.initialValues]);
-    
+    useEffect(() => { form.resetFields(); console.log("resett") }, [props.initialValues]);
+
     const editJob = (payload) => {
         return jobApi.editJob(payload)
     }
@@ -121,7 +121,7 @@ const Demo = (props) => {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                        <Form.Item
+                            <Form.Item
                                 label="Lương lên đến"
                                 name={["salary", "to"]}
                             >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Checkbox, Button, DatePicker } from 'antd';
+import { Form, Input, Tabs, Select, Row, Col, Table, Card, Typography, Space, Checkbox, Button, DatePicker } from 'antd';
 import AddMeet from './AddMeet'
 
 const { TabPane } = Tabs;
@@ -8,36 +8,36 @@ const { TextArea } = Input
 const { Option } = Select
 
 const JobManager = (props) => {
-    return (
-        <>
-            <Title level={3}>Đặt lịch hẹn ứng viên</Title>
-            <Form>
-              <Form.Item
-                label="Chọn tin tuyển dụng liên quan"
-              >
-                <Select placeholder="Chọn tin tuyển dụng" size="large">
-                  <Option value="1">Tuyển thực tập sinh JAVA</Option>
-                  <Option value="2">Ăn cơm chưa!</Option>
-                  <Option value="3">Fresher AI</Option>
-                </Select>
-              </Form.Item>
-            </Form>
+  return (
+    <>
+      <Card>
+        <Title level={3}>Đặt lịch hẹn ứng viên</Title>
+        <Form>
+          <Form.Item
+            label="Chọn tin tuyển dụng liên quan"
+          >
+            <Select placeholder="Chọn tin tuyển dụng" size="large">
+              <Option value="1">Tuyển thực tập sinh JAVA</Option>
+              <Option value="2">Ăn cơm chưa!</Option>
+              <Option value="3">Fresher AI</Option>
+            </Select>
+          </Form.Item>
+        </Form>
             Hạn tuyển: 20/09/2021
             <br />
-            <Button>Xem chi tiết tin tuyển dụng</Button>
-            <div>Số lượng ứng viên: 50</div>
-            <div>Đã hẹn gặp: 25</div>
-            <div>Chưa hẹn gặp: 25</div>
-            <Row>
-                <Col xs={16}>
-                <AddMeet></AddMeet>
-                <Table columns={columns} dataSource={data} />
-                </Col>
-                <Col></Col>
-            </Row>
+        <div>Số lượng ứng viên: 50</div>
+        <div>Đã hẹn gặp: 25</div>
+        <div>Chưa hẹn gặp: 25</div>
 
-        </>
-    )
+        <AddMeet></AddMeet>
+        <Table columns={columns} dataSource={data} />
+
+
+      </Card>
+
+
+    </>
+  )
 }
 
 
@@ -49,7 +49,7 @@ function callback(key) {
 const Demo = () => (
   <Tabs defaultActiveKey="1" onChange={callback}>
     <TabPane tab="Ứng viên đã duyệt" key="1">
-    <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} />
     </TabPane>
     <TabPane tab="Ứng viên chờ duyệt" key="2">
       Content of Tab Pane 2

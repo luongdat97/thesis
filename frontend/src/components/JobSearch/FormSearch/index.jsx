@@ -19,7 +19,6 @@ const SearchJobForm = () => {
     };
 
     const searchSelectProps = {
-        size: "large",
         optionLabelProp: "label",
         showSearch: true,
         style: { width: "100%" },
@@ -33,17 +32,18 @@ const SearchJobForm = () => {
 
     return (
         <>
-            <div className="bg-white">
+            
+
+            <Card className="bg-white">
+            <Title level={4}>Nhập thông tin tìm kiếm</Title>
                 <Form form={form} name="horizontal_login" onFinish={onFinish}>
                     <Form.Item
-                        noStyle
                         name="username"
                     >
-                        <Input size="large" prefix={<i className="far fa-user"></i>} placeholder="Tên công việc, vị trí bạn muốn ứng tuyển..." />
+                        <Input prefix={<i className="far fa-user"></i>} placeholder="Tên công việc, vị trí bạn muốn ứng tuyển..." />
                     </Form.Item>
 
                     <Form.Item
-                        noStyle
                         name="passworsd"
                     >
                         <Select
@@ -68,7 +68,6 @@ const SearchJobForm = () => {
                         </Select>
                     </Form.Item>
                     <Form.Item
-                        noStyle
                         name="password"
                     >
                         <Select
@@ -94,107 +93,101 @@ const SearchJobForm = () => {
                     </Form.Item>
 
 
-                    <Row>
-                        <Collapse ghost className="w-100" expandIconPosition="right">
-                            <Panel header={<div className="d-flex justify-content-end">Tìm kiếm nâng cao</div>} key="1">
-                                <Form.Item
-                                    name="salary"
-                                >
-                                    <Select
-                                        {...searchSelectProps}
-                                        defaultValue="1"
-                                    >
-                                        <Option value="1"
-                                            label={
-                                                <React.Fragment>
-                                                    <i className="fas fa-money-bill-wave"></i>
+                    <Form.Item
+                        name="salary"
+                    >
+                        <Select
+                            {...searchSelectProps}
+                            defaultValue="1"
+                        >
+                            <Option value="1"
+                                label={
+                                    <React.Fragment>
+                                        <i className="fas fa-money-bill-wave"></i>
                                                 &nbsp;
                                                 {"Tất cả mức lương"}
-                                                </React.Fragment>
-                                            }
-                                        >Tất cả mức lương</Option>
-                                        <Option value="2">An toàn lao động</Option>
-                                        <Option value="3">Bán hàng kỹ thuật</Option>
-                                        <Option value="4">Identified</Option>
-                                        <Option value="5">Resolved</Option>
-                                        <Option value="6">Cancelled</Option>
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item
-                                    name="experience"
-                                >
-                                    <Select
-                                        {...searchSelectProps}
-                                        defaultValue="1"
-                                    >
-                                        <Option value="1"
-                                            label={
-                                                <React.Fragment>
-                                                    <i className="fas fa-business-time"></i>
+                                    </React.Fragment>
+                                }
+                            >Tất cả mức lương</Option>
+                            <Option value="2">An toàn lao động</Option>
+                            <Option value="3">Bán hàng kỹ thuật</Option>
+                            <Option value="4">Identified</Option>
+                            <Option value="5">Resolved</Option>
+                            <Option value="6">Cancelled</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="experience"
+                    >
+                        <Select
+                            {...searchSelectProps}
+                            defaultValue="1"
+                        >
+                            <Option value="1"
+                                label={
+                                    <React.Fragment>
+                                        <i className="fas fa-business-time"></i>
                                                 &nbsp;
                                                 {"Tất cả kinh nghiệm"}
-                                                </React.Fragment>
-                                            }
-                                        >Tất cả kinh nghiệm</Option>
-                                        <Option value="2">An toàn lao động</Option>
-                                        <Option value="3">Bán hàng kỹ thuật</Option>
-                                        <Option value="4">Identified</Option>
-                                        <Option value="5">Resolved</Option>
-                                        <Option value="6">Cancelled</Option>
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item
-                                    name="typeWork"
-                                >
-                                    <Select
-                                        {...searchSelectProps}
-                                        defaultValue="1"
-                                    >
-                                        <Option value="1"
-                                            label={
-                                                <React.Fragment>
-                                                    <i className="far fa-clock"></i>
+                                    </React.Fragment>
+                                }
+                            >Tất cả kinh nghiệm</Option>
+                            <Option value="2">An toàn lao động</Option>
+                            <Option value="3">Bán hàng kỹ thuật</Option>
+                            <Option value="4">Identified</Option>
+                            <Option value="5">Resolved</Option>
+                            <Option value="6">Cancelled</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="typeWork"
+                    >
+                        <Select
+                            {...searchSelectProps}
+                            defaultValue="1"
+                        >
+                            <Option value="1"
+                                label={
+                                    <React.Fragment>
+                                        <i className="far fa-clock"></i>
                                                 &nbsp;
                                                 {"Tất cả loại hình"}
-                                                </React.Fragment>
-                                            }
-                                        >Tất cả loại hình</Option>
-                                        <Option value="2">An toàn lao động</Option>
-                                        <Option value="3">Bán hàng kỹ thuật</Option>
-                                        <Option value="4">Identified</Option>
-                                        <Option value="5">Resolved</Option>
-                                        <Option value="6">Cancelled</Option>
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item
-                                    name="company"
-                                >
-                                    <Select
-                                        {...searchSelectProps}
-                                        defaultValue="1"
-                                    >
-                                        <Option value="1"
-                                            label={
-                                                <React.Fragment>
-                                                    <i className="far fa-building"></i>
+                                    </React.Fragment>
+                                }
+                            >Tất cả loại hình</Option>
+                            <Option value="2">An toàn lao động</Option>
+                            <Option value="3">Bán hàng kỹ thuật</Option>
+                            <Option value="4">Identified</Option>
+                            <Option value="5">Resolved</Option>
+                            <Option value="6">Cancelled</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="company"
+                    >
+                        <Select
+                            {...searchSelectProps}
+                            defaultValue="1"
+                        >
+                            <Option value="1"
+                                label={
+                                    <React.Fragment>
+                                        <i className="far fa-building"></i>
                                                 &nbsp;
                                                 {"Tất cả lĩnh vực"}
-                                                </React.Fragment>
-                                            }
-                                        >Tất cả lĩnh vực công ty</Option>
-                                        <Option value="2">An toàn lao động</Option>
-                                        <Option value="3">Bán hàng kỹ thuật</Option>
-                                        <Option value="4">Identified</Option>
-                                        <Option value="5">Resolved</Option>
-                                        <Option value="6">Cancelled</Option>
-                                    </Select>
-                                </Form.Item>
-                            </Panel>
-                        </Collapse>
-                    </Row>
+                                    </React.Fragment>
+                                }
+                            >Tất cả lĩnh vực công ty</Option>
+                            <Option value="2">An toàn lao động</Option>
+                            <Option value="3">Bán hàng kỹ thuật</Option>
+                            <Option value="4">Identified</Option>
+                            <Option value="5">Resolved</Option>
+                            <Option value="6">Cancelled</Option>
+                        </Select>
+                    </Form.Item>
                 </Form>
 
-            </div>
+            </Card>
         </>
     );
 };

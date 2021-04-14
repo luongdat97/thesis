@@ -4,6 +4,7 @@ const StyleList = styled.div`
   .ant-input {
     border: 1px solid #fff;
     transition: none;
+    padding: 0px 11px;
   }
   .ant-form-item {
     margin-bottom: 0px;
@@ -14,10 +15,10 @@ const StyleList = styled.div`
   
   .avatar-uploader > .ant-upload {
     width: 140px;
-    height: 210px;
+    height: 160px;
   }
   .section-title {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: bold;
   }
   .section:hover {
@@ -85,6 +86,9 @@ const StyleList = styled.div`
   .ant-btn.btn-success {
     background: #52c41a;
     border-color: #52c41a;
+  }
+  .ant-col-18 {
+    max-width: 100%
   }
 `;
 export default StyleList;

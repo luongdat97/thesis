@@ -21,6 +21,10 @@ const companyLogo = [
     'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-bds-tan-hoang-gia-60470624a2f64_wgstim.jpg',
     'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-tnhh-oh-vacation-5b0fb1bd69cdf_rs_xojube.jpg',
     'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/ngan-hang-thuong-mai-co-phan-ky-thuong-viet-nam-5e7c8a9259ddc_rvysrd.webp',
+    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-co-phan-dich-vu-di-dong-truc-tuyen-vi-momo-5f55a14a178cc_mekeqf.webp',
+    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-bds-tan-hoang-gia-60470624a2f64_wgstim.jpg',
+    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-tnhh-oh-vacation-5b0fb1bd69cdf_rs_xojube.jpg',
+    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/ngan-hang-thuong-mai-co-phan-ky-thuong-viet-nam-5e7c8a9259ddc_rvysrd.webp',
 ]
 const data = [
     'Racing car sprays burning fuel into crowd.',
@@ -29,8 +33,8 @@ const data = [
     'Man charged over missing wedding girl.',
     'Los Angeles battles huge wildfires.',
 ];
-
 const Home = () => {
+    
     return (
         <>
             <HomeSlider />
@@ -45,20 +49,6 @@ const Home = () => {
                 </Row>
                 
                 
-                <Row style={{marginTop: 25}} gutter={25}>
-                    <Col span={16}>
-                        <LargeJobList companyLogo={companyLogo}></LargeJobList>
-                        <br></br>
-                        <InterestJobList  companyLogo={companyLogo}></InterestJobList>
-                        <br></br>
-                        <AreaJobList></AreaJobList>
-                        <br></br>
-                        <AreaJobList></AreaJobList>
-                    </Col>
-                    <Col span={8}>
-                        <img style={{width: "100%"}} alt="advertise" src="https://res.cloudinary.com/project0407/image/upload/v1615362884/project/advertise/co-viec-sieu-toc-cung-topcv_vlafgn.webp"></img>                            
-                    </Col>
-                </Row>
             </div>
 
         </>
