@@ -7,6 +7,9 @@ import AppliedJobPage from '../../../components/Applicant/AppliedJob'
 import SettingJobPage from '../../../components/Applicant/SettingJob'
 import SuitableJobPage from '../../../components/Applicant/SuitableJob'
 import RecruiterVisitPage from '../../../components/Applicant/RecruiterVisit'
+import CvManage from '../../../components/cv/ManageCv'
+import ViewCv from '../../../components/cv/ViewCv'
+import EditCv from '../../../components/cv/EditCv'
 export const routes = [
   {
     path: '/saved-job',
@@ -31,6 +34,21 @@ export const routes = [
   {
     path: '/recruiter-visit',
     component: RecruiterVisitPage,
+    exact: true
+  },
+  {
+    path: '/manage-cv',
+    component: CvManage,
+    exact: true
+  },
+  {
+    path: '/view-cv/:id',
+    component: ViewCv,
+    exact: true
+  },
+  {
+    path: '/edit-cv/:id',
+    component: EditCv,
     exact: true
   },
 ];

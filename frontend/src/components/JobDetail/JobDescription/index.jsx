@@ -6,7 +6,8 @@ const { Panel } = Collapse;
 const { Meta } = Card;
 const { Title, Text } = Typography;
 
-export default function JobDescription() {
+export default function JobDescription(props) {
+    let job = props.job
     return (
         <>
             <Card>
@@ -14,33 +15,25 @@ export default function JobDescription() {
                     <div>
                         <Title level={3}>Mô tả công việc</Title>
                         <Space direction="vertical">
-                            <Text>- Tư vấn về nhãn hàng; tìm hiểu nhu cầu và giới thiệu mỹ phẩm đến khách hàng; hướng dẫn khách hàng sử dụng sản phẩm phù hợp.</Text>
-                            <Text>- Cung cấp thông tin và dịch vụ ưu đãi theo chương trình chăm sóc khách hàng độc quyền của nhãn hàng.</Text>
-                            <Text>- Cố gắng hoàn thành chỉ tiêu doanh số.</Text>
-                            <Text>- Trưng bày và bảo quản sản phẩm trong cửa hàng; giữ gìn vệ sinh quầy kệ; kiểm kê và đảm bảo số lượng hàng hóa phụ trách.</Text>
-                            <Text>- Thực hiện các nhiệm vụ khác theo phân công của cấp quản lý.</Text>
+                            {job.jobDescription?.split("\n").map((item) => (
+                                <Text key={item.id}>{item}</Text>
+                            ))}
                         </Space>
                     </div>
                     <div>
                         <Title level={3}>YÊU CẦU ỨNG VIÊN</Title>
                         <Space direction="vertical">
-                            <Text>- Ứng viên từ 18 tuổi trở lên, đã tốt nghiệp cấp 3 và có bằng THPT.</Text>
-                            <Text>- Ngoại hình dễ nhìn, da mặt đẹp.</Text>
-                            <Text>- Yêu thích mỹ phẩm và làm đẹp là một lợi thế.</Text>
-                            <Text>- Có tinh thần phục vụ khách hàng.</Text>
-                            <Text>- Ứng viên có từ 6 tháng kinh nghiệm bán hàng mỹ phẩm, ưu tiên kinh nghiệm tại các thương hiệu / cửa hàng mỹ phẩm lớn.</Text>
+                            {job.jobRequire?.split("\n").map((item) => (
+                                <Text key={item.id}>{item}</Text>
+                            ))}
                         </Space>
                     </div>
                     <div>
                         <Title level={3}>Quyền lợi được hưởng</Title>
                         <Space direction="vertical">
-                            <Text>- Thu nhập hàng tháng hấp dẫn bao gồm lương cơ bản + phụ cấp + thưởng doanh thu (trung bình khoảng 12-20 triệu tùy năng lực cá nhân).</Text>
-                            <Text>- Cam kết lương tháng 13.</Text>
-                            <Text>- Ngày nghỉ: 1 ngày / tuần + 12 ngày phép năm.</Text>
-                            <Text>- Chế độ bảo hiểm XH, YT, TN đúng và đầy đủ theo Luật lao động.</Text>
-                            <Text>- Chế độ bảo hiểm tai nạn 24/24 ngay trong thời gian thử việc.</Text>
-                            <Text>- Chế độ bảo hiểm sức khỏe cho nhân viên chính thức.</Text>
-                            <Text>- Chế độ mỹ phẩm quý và mua hàng giảm giá dành cho nhân viên.</Text>
+                            {job.jobBenefit?.split("\n").map((item) => (
+                                <Text key={item.id}>{item}</Text>
+                            ))}
                         </Space>
                     </div>
                     <div>

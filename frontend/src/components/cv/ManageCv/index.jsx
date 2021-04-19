@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Select, Row, Col, Collapse, Card, Typography, Button, Space, Slider, Radio } from 'antd';
+import { Form, Input, Select, Row, Col, Collapse, Card, Typography, Button, Space, Slider, Radio, Popconfirm } from 'antd';
+import { Link } from 'react-router-dom'
 import StyleManageCv from './index.style'
+import cvApi from '../../../api/cvApi'
 const { Option } = Select;
 const { Panel } = Collapse;
 const { Meta } = Card;
@@ -16,23 +18,29 @@ function CvCard(props) {
                 </Col>
                 <Col span={20}>
                     <div className="d-flex justify-content-between">
-                        <Title level={3}>Tên file CV</Title>
+                        <Title level={4}>Tên file CV</Title>
                         <Space>
+                            <Link to={`/applicant/individual/view-cv/${props.cvId}`}><Button type="primary">Xem</Button></Link>
+                            <Link to={`/applicant/individual/edit-cv/${props.cvId}`}><Button type="primary">Sửa</Button></Link>
+                            <Popconfirm
+                                title="Bạn có muốn xóa cv này?"
+                                onConfirm={() => props.deleteCv(props.cvId)}
+                                // onCancel={}
+                                okText="Đồng ý"
+                                cancelText="Thoát"
+                            >
+                                <Button type="primary">Xóa</Button>
+                            </Popconfirm>
                             
-                            <Button type="primary">Tải xuống</Button>
-                            <Button type="primary">Xem</Button>
-                            <Button type="primary">Sửa</Button>
-                            <Button type="primary">Xóa</Button>
                         </Space>
                     </div>
-                    
-                    
+
+
                     <Text>Ngày tạo: 14-03-2021 16:31 PM</Text>
                     <br></br>
                     <Text>Link CV: https://i.topcv.vn/nguyenvana?ref=3881639</Text>
                     <br></br>
-                    <Button type="primary" className="mt-3 btn-success">Bật tìm việc</Button>
-                    
+
                 </Col>
             </Row>
         </>
@@ -40,23 +48,38 @@ function CvCard(props) {
 }
 
 export default function ManageCv() {
+    const [cvList, setCvList] = useState([])
+    useEffect(() => {
+        fetchCv()
+    }, [])
+
+    const fetchCv = () => {
+        cvApi.getCvList().then((res) => {
+            console.log(res.data)
+            setCvList(res.data)
+        })
+    }
+
+    const deleteCv = (id) => {
+        cvApi.delCv(id).then((res) => {
+            fetchCv()
+        })
+    }
+
     return (
         <>
             <StyleManageCv>
-                <Row>
-                    <Col span={16}>
-                        <Space direction="vertical" size="large">
-                            <CvCard></CvCard>
-                            <CvCard></CvCard>
-                            <CvCard></CvCard>
-                            <CvCard></CvCard>
-                        </Space>
-                    </Col>
-                    <Col span={8}>
-                    </Col>
-                </Row>
+                <div className="bg-white p-3">
+                    <Space direction="vertical" size="large">
+                        {cvList.map(item => (
+                            <CvCard key={item.id} cvId={item.id} deleteCv={deleteCv}></CvCard>
+                        ))}
+                    </Space>
+                </div>
+
+
             </StyleManageCv>
-            
+
 
 
         </>

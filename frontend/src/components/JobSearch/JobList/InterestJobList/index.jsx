@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import {Row, Col, Card, Typography, Pagination} from 'antd';
 import HorizontalJobCard from '../../JobCard/HorizontalJobCard'
+import jobApi from '../../../../api/jobApi'
 import {Link} from 'react-router-dom'
 const { Title, Text } = Typography;
 
 const InterestJobList = (props) => {
+    const [jobList, setJobList] = useState([])
+    const fetchJob = async () => {
+        let jobList = (await jobApi.getJobList()).data
+        setJobList(jobList)
+    }
+    useEffect(()=> {
+        fetchJob()
+    },[])
     let {companyLogo} = props
+    console.log(jobList)
     return (
         <Card
             title={<Title level={4} style={{color: 'inherit'}}>Việc làm mới nhất</Title>}
@@ -15,10 +25,10 @@ const InterestJobList = (props) => {
         >
             <Row gutter={[0, 16]}>
                 {
-                    companyLogo.map(data => (
-                        <Col span={24}>
-                            <Link to="/job-detail">
-                                <HorizontalJobCard logoUrl={data}/>
+                    jobList.map(job => (
+                        <Col key={job.id} span={24}>
+                            <Link to={`/job-detail/${job.id}`}>
+                                <HorizontalJobCard job={job}/>
                             </Link>
                             
                         </Col>

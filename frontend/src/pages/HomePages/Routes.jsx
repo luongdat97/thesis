@@ -31,7 +31,7 @@ export const routes = [
     exact: true
   },
   {
-    path: '/job-detail',
+    path: '/job-detail/:id',
     component: JobDetailPage,
     exact: true
   },

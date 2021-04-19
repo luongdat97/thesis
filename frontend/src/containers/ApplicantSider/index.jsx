@@ -13,6 +13,9 @@ export default function MainHeader(props) {
             <div className="p-4 border-bottom">
                 <Avatar size="large" style={{ width: "100%", height: "auto" }} src={"https://timviec.com.vn/storage/avatars/528993/Jg5tKRGfcTs4kWZwDmC8WwKGVeqqzxngzlnyK7is.png"} />
             </div>
+            <Link to={`${url}/manage-cv`}>
+                <div className="text-dark d-flex align-items-center border-bottom" style={{height: 35}}>Quản lý CV</div>
+            </Link>
             <Link to={`${url}/saved-job`}>
                 <div className="text-dark d-flex align-items-center border-bottom" style={{height: 35}}>Công việc đã lưu</div>
             </Link>

@@ -12,8 +12,14 @@ export class JobDALMongo implements JobNS.DAL {
 
     private col_job = this.db.collection("job");
 
-    async ListJob(user_id: string) {
-        const docs = await this.col_job.find({ user_id }).toArray();
+    async ListJob(user_id?: string) {
+        let docs;
+        if (user_id) {
+            docs = await this.col_job.find({ user_id }).toArray();
+        } else {
+            docs = await this.col_job.find().toArray();
+        }
+        
         return FromMongoData.Many<JobNS.Job>(docs);
     }
 

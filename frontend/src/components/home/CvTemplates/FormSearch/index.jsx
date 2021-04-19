@@ -48,7 +48,7 @@ const SearchJobForm = () => {
                             <Option value="1"
                                 label={
                                     <React.Fragment>
-                                        <i class="fas fa-tools"></i>
+                                        <i className="fas fa-tools"></i>
                                                 &nbsp;&nbsp;
                                                 {"Chọn ngành nghề"}
                                     </React.Fragment>
@@ -57,7 +57,7 @@ const SearchJobForm = () => {
                             <Option value="2"
                                 label={
                                     <React.Fragment>
-                                        <i class="fas fa-tools"></i>
+                                        <i className="fas fa-tools"></i>
                                                 &nbsp;&nbsp;
                                                 {"Công nghệ thông tin"}
                                     </React.Fragment>
@@ -66,7 +66,7 @@ const SearchJobForm = () => {
                             <Option value="3"
                                 label={
                                     <React.Fragment>
-                                        <i class="fas fa-tools"></i>
+                                        <i className="fas fa-tools"></i>
                                                 &nbsp;&nbsp;
                                                 {"Báo chí"}
                                     </React.Fragment>
@@ -84,7 +84,7 @@ const SearchJobForm = () => {
                             <Option value="1"
                                 label={
                                     <React.Fragment>
-                                        <i class="fas fa-pencil-ruler"></i>
+                                        <i className="fas fa-pencil-ruler"></i>
                                                 &nbsp;&nbsp;
                                                 {"Chọn thiết kế"}
                                     </React.Fragment>
@@ -93,7 +93,7 @@ const SearchJobForm = () => {
                             <Option value="2"
                                 label={
                                     <React.Fragment>
-                                        <i class="fas fa-pencil-ruler"></i>
+                                        <i className="fas fa-pencil-ruler"></i>
                                                 &nbsp;&nbsp;
                                                 {"Đơn giản"}
                                     </React.Fragment>
@@ -102,7 +102,7 @@ const SearchJobForm = () => {
                             <Option value="3"
                                 label={
                                     <React.Fragment>
-                                        <i class="fas fa-pencil-ruler"></i>
+                                        <i className="fas fa-pencil-ruler"></i>
                                                 &nbsp;&nbsp;
                                                 {"Thanh lịch"}
                                     </React.Fragment>

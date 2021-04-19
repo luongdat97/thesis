@@ -29,10 +29,10 @@ const GeneralJobCard = (props) => {
                 <Col sm={12} className="p-5">
                     <Space direction="vertical" >
                         <Title level={3}>Nhà tuyển dụng</Title>
-                        <Text><i class="fas fa-check text-success"></i> Ứng viên sẵn sàng tiếp cận thông tin tuyển dụng</Text>
-                        <Text><i class="fas fa-check text-success"></i> Không giới hạn tương tác với ứng viên qua hệ thống nhắn tin nội bộ MIỄN PHÍ</Text>
-                        <Text><i class="fas fa-check text-success"></i> Quảng cáo thông minh giúp tin tuyển dụng được phủ rộng trên toàn bộ hệ thống</Text>
-                        <Text><i class="fas fa-check text-success"></i> Quảng cáo công ty trên Fanpage số 1 về việc làm – tuyển dụng</Text>
+                        <Text><i className="fas fa-check text-success"></i> Ứng viên sẵn sàng tiếp cận thông tin tuyển dụng</Text>
+                        <Text><i className="fas fa-check text-success"></i> Không giới hạn tương tác với ứng viên qua hệ thống nhắn tin nội bộ MIỄN PHÍ</Text>
+                        <Text><i className="fas fa-check text-success"></i> Quảng cáo thông minh giúp tin tuyển dụng được phủ rộng trên toàn bộ hệ thống</Text>
+                        <Text><i className="fas fa-check text-success"></i> Quảng cáo công ty trên Fanpage số 1 về việc làm – tuyển dụng</Text>
                     </Space>
                 
                     <Space className="mt-5">

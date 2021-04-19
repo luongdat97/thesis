@@ -7,7 +7,7 @@ import {
     useRouteMatch,
     Link
 } from "react-router-dom";
-import ApplicantLayout from '../../containers/ApplicantLayout'
+import RecruiterLayout from '../../containers/RecruiterLayout'
 import RecruiterSider from '../../containers/RecruiterSider'
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -23,7 +23,7 @@ function HomePages() {
 
     return (
         <div className="App">
-            <ApplicantLayout url={url}>
+            <RecruiterLayout url={url}>
                 <Row gutter={30}>
                     <Col span={6}>
                         <RecruiterSider path={path} url={url}></RecruiterSider>
@@ -33,7 +33,7 @@ function HomePages() {
                     </Col>
                 </Row>
 
-            </ApplicantLayout>
+            </RecruiterLayout>
 
         </div>
     );

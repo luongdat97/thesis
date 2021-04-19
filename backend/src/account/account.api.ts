@@ -1,6 +1,7 @@
 import * as express from "express";
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../lib/http";
 import { AccountNS } from "./account";
+var jwt = require('jsonwebtoken');
 import { NewAuthMiddleware, GetAuthData } from "../auth/auth.api.middleware";
 import { UserAuthNS } from "../auth/auth";
 
@@ -45,18 +46,22 @@ export function NewAccountAPI(accountBLL: AccountNS.BLL) {
   });
 
   app.post("/login", async (req, res) => {
-    const {username, password} = req.body;
+    const { username, password } = req.body;
     const account = await accountBLL.GetAccountByUsername(username);
     console.log(account)
     if (!account) {
-      res.json({code: 9000, mess: "username không tồn tại"})
+      res.json({ code: 9000, mess: "username không tồn tại" })
       return
     }
 
     if (account.password === password) {
-      res.json({code: 1000, mess: "oke", data: account})
+      let token = jwt.sign({
+        accountId: account.id,
+      }, process.env.TOKEN_SECRET);
+      
+      res.json({ code: 1000, mess: "oke", data: {...account, token} })
     } else {
-      res.json({code: 9001, mess: "incorrect password"})
+      res.json({ code: 9001, mess: "incorrect password" })
     }
   });
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Row, Col, Collapse, Card, Typography, Button, Space, Slider, Radio, Divider } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import cvApi from '../../../api/cvApi'
 import StyleCv from "./index.style"
 import UploadAvatar from './UploadAvatar'
 import { jsPDF } from "jspdf";
@@ -43,7 +43,15 @@ let generate = function () {
     });
 }
 const Home = () => {
-
+    const onSubmit = (values) => {
+        console.log(values)
+        values.applicant_id = "324234v"
+        cvApi.postCv(values).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
     return (
         <>
             <div style={{ backgroundColor: "#f0f2f5" }}>
@@ -55,21 +63,31 @@ const Home = () => {
 
                                 <Form
                                     {...layout}
-                                    onFinish={(values) => console.log(values)}
+                                    onFinish={(values) => onSubmit(values)}
                                 >
-                                    {/* <Button type="primary" htmlType="submit">
+                                    <Button type="primary" htmlType="submit">
                                         Submit
-                                    </Button> */}
+                                    </Button>
                                     <Row>
                                         <Col span={6} className="px-3"><UploadAvatar /></Col>
                                         <Col span={18}>
-                                            <Input style={{ fontSize: 22, fontWeight: "bold" }} placeholder="Họ và tên" defaultValue="Lương Mạnh Đạt" />
-                                            <Input style={{ fontSize: 18, fontWeight: "bold" }} placeholder="Vị trí bạn muốn ứng tuyển" defaultValue="Thực tập sinh React" />
+                                            <Form.Item
+                                                name="name"
+                                            >
+                                                <Input style={{ fontSize: 22, fontWeight: "bold" }} placeholder="Họ và tên" defaultValue="Lương Mạnh Đạt" />
+                                            </Form.Item>
+
+                                            <Form.Item
+                                                name="jobPosition"
+                                            >
+                                                <Input style={{ fontSize: 18, fontWeight: "bold" }} placeholder="Vị trí bạn muốn ứng tuyển" defaultValue="Thực tập sinh React" />
+                                            </Form.Item>
+
                                             <Row>
                                                 <Col span={12}>
                                                     <Form.Item
                                                         label="Ngày sinh"
-                                                        name="birthDay"
+                                                        name="birthday"
                                                     >
                                                         <Input bordered={false} defaultValue="30/01/1997" />
                                                     </Form.Item>
@@ -376,11 +394,18 @@ const Home = () => {
                                         footer: null,
                                     });
                                 }}>Tạo phiếu in</Button> */}
-                                <Space>
+                                {/* <Space>
                                     <Button type="primary" size="small" icon={<i className="fas fa-exchange-alt light-icon"></i>}>&nbsp;Đổi mẫu</Button>
                                     <Button type="primary" size="small" icon={<i className="far fa-eye light-icon"></i>} onClick={() => generate()}>&nbsp;Xem trước</Button>
                                     <Button type="primary" size="small" icon={<i className="fas fa-download light-icon"></i>}>&nbsp;Tải xuống</Button>
                                     <Button type="primary" size="small" icon={<i className="far fa-save light-icon"></i>}>&nbsp;Lưu</Button>
+                                </Space> */}
+
+                                <Space>
+                                    <Button type="primary" size="small" >&nbsp;Đổi mẫu</Button>
+                                    <Button type="primary" size="small" onClick={() => generate()}>&nbsp;Xem trước</Button>
+                                    <Button type="primary" size="small" >&nbsp;Tải xuống</Button>
+                                    <Button type="primary" size="small" >&nbsp;Lưu</Button>
                                 </Space>
                             </div>
                             <div style={{ backgroundColor: "#fff" }} className="p-2">
@@ -444,7 +469,7 @@ function SectionTool(props) {
             <Space size="small">
                 <Button type="primary"><i className="fas fa-arrow-up light-icon"></i></Button>
                 <Button type="primary"><i className="fas fa-arrow-down light-icon"></i></Button>
-                <Button type="primary"><i className="fas fa-trash light-icon"></i></Button>
+                <Button type="primary"><i className="fas fa-minus light-icon"></i></Button>
             </Space>
         </div>
     )

@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Input, Typography } from 'antd';
 import { Link } from 'react-router-dom'
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import {useCookies} from 'react-cookie'
+import {useHistory} from 'react-router-dom'
 const { Title } = Typography;
 
 const { Header } = Layout;
 
 export default function MainHeader(props) {
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    const history = useHistory();
+    const logout = () => {
+        console.log("logout.....")
+        removeCookie("user")
+        history.push("/")
+    }
     const url = props.url
     return (
         <Header className="d-flex" style={{ position: 'fixed', zIndex: 1, width: '100%', padding: '0 100px' }}>
@@ -26,7 +35,7 @@ export default function MainHeader(props) {
                         <Menu.Item key="7"><Link to={`/applicant/individual/suitable-job`}></Link>Việc làm phù hợp</Menu.Item>
                         <Menu.Item key="8"><Link to={`/applicant/individual/setting-job`}></Link>Cài đặt gợi ý</Menu.Item>
                         <Menu.Item key="9"><Link to={`/applicant/individual/recruiter-visit`}></Link>Nhà tuyển dụng xem hồ sơ</Menu.Item>
-                        <Menu.Item key="10" className="border-top"><i class="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>
+                        <Menu.Item key="10" className="border-top"  onClick={logout}><i className="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>
                 </Menu.SubMenu>
             </Menu>
             <div><span className="text-white mr-3">Chào, Đạt</span></div>

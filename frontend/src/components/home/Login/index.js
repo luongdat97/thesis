@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Button, Form, Input, message } from 'antd';
 import {useHistory} from 'react-router-dom'
 import accountApi from '../../../api/accountApi'
+import { useCookies } from 'react-cookie';
 const { Title, Text } = Typography;
 const layout = {
     labelCol: { span: 8 },
@@ -10,7 +11,9 @@ const layout = {
 const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
 };
+
 const Login = (props) => {
+    const [cookies, setCookie] = useCookies(['user']);
     let history = useHistory();
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -22,6 +25,7 @@ const Login = (props) => {
             } else if (data.code === 9001) {
                 message.error("Mật khẩu không đúng!")
             } else if (data.code === 1000) {
+                setCookie('user', data.data, { path: '/' });
                 history.push("/applicant")
             }
         })

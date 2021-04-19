@@ -6,6 +6,8 @@ import SearchJobForm from '../home/SearchJobForm'
 import CardDetail from './CardDetail'
 import JobSumary from './JobSumary'
 import JobDescription from './JobDescription'
+import {useParams} from 'react-router-dom'
+import jobApi from '../../api/jobApi'
 const { Option } = Select;
 const { Panel } = Collapse;
 const { Meta } = Card;
@@ -20,26 +22,28 @@ const companyLogo = [
     'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/ngan-hang-thuong-mai-co-phan-ky-thuong-viet-nam-5e7c8a9259ddc_rvysrd.webp',
 ]
 
-const Home = () => {
+const Home = (props) => {
+    let {id} = useParams()
+    const [job, setJob] = useState({})
+    useEffect(() => {
+        fetchJob()
+    },[])
+    const fetchJob = async () => {
+        const job = await jobApi.getJobById(id)
+        setJob(job.data)
+        console.log(job.data)
+    }
     return (
         <>
-            {/* <div style={{ padding: "30px 100px 0px", backgroundColor: "#fff" }}>
-                <SearchJobForm />
-            </div> */}
             <div >
-                
-                    <JobSumary></JobSumary>
-                
-
-
+                <JobSumary job={job}></JobSumary>
                 <Row gutter={30} className="mt-4">
                     <Col span={16}>
-                        <JobDescription></JobDescription>
+                        <JobDescription job={job}></JobDescription>
                     </Col>
                     <Col span={8}>
-                        <CardDetail></CardDetail>
+                        <CardDetail job={job}></CardDetail>
                     </Col>
-
                 </Row>
             </div>
 

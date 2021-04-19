@@ -3,6 +3,7 @@ import { Row, Col, Typography, Button, Space } from 'antd';
 const { Title, Text } = Typography;
 
 const GeneralJobCard = (props) => {
+    let job = props.job
     return (
         <Row gutter={16} className="mb-4">
             <Col span={3}>
@@ -13,7 +14,7 @@ const GeneralJobCard = (props) => {
                 />
             </Col>
             <Col span={11}>
-                <Title level={5}>Nhân viên kinh doanh online</Title>
+                <Title level={5}>{job.title}</Title>
                 <Text strong type="secondary">Công ty FPT</Text>
                 <Row>
                     <Col span={24}>

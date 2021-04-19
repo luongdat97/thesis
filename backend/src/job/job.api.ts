@@ -35,8 +35,14 @@ export function NewJobAPI(jobBLL: JobNS.BLL) {
     res.json(job);
   });
   app.get("/list", async (req, res) => {
-    const user_id  = "1"
-    const docs = await jobBLL.ListJob(user_id);
+    let docs;
+    let user_id = req.query.user_id as string
+    if (user_id) {
+      docs = await jobBLL.ListJob(user_id);
+    } else {
+      docs = await jobBLL.ListJob();
+    }
+     
     res.json(docs);
   });
 

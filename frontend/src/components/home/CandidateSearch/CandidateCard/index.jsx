@@ -30,9 +30,9 @@ const CandidateCard = (props) => {
                             <Text>Địa điểm: hà nội</Text>
                         </Space>
                         <br />
-                        <Text><i class="fas fa-briefcase"></i> Nhân viên parttime - Phiên dịch và edit video</Text><br />
-                        <Text><i class="fas fa-briefcase"></i> Nhân viên đặt hàng fulltime - Nhân viên đặt hàng</Text><br />
-                        <Text><i class="fas fa-graduation-cap"></i>Chuyên ngành: Giáo dục Hán ngữ Quốc tế - Đại học Tây nam trùng khánh</Text><br />
+                        <Text><i className="fas fa-briefcase"></i> Nhân viên parttime - Phiên dịch và edit video</Text><br />
+                        <Text><i className="fas fa-briefcase"></i> Nhân viên đặt hàng fulltime - Nhân viên đặt hàng</Text><br />
+                        <Text><i className="fas fa-graduation-cap"></i>Chuyên ngành: Giáo dục Hán ngữ Quốc tế - Đại học Tây nam trùng khánh</Text><br />
 
 
                         <Space size="small" className="mt-1">
