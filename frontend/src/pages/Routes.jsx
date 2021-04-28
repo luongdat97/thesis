@@ -12,22 +12,8 @@ import WorkhistoryPage from './ManagerPages/WorkHistoryPage'
 import HomePages from './HomePages'
 import ApplicantPages from './ApplicantPages'
 import RecruiterPages from './RecruiterPages'
+import EmployeePages from './EmployeePages'
 export const routes = [
-  {
-    path: '/employee/cv-template',
-    component: CvTemplatePage,
-    exact: true
-  },
-  {
-    path: '/employee/verify-company',
-    component: VerifyCompanyPage,
-    exact: true
-  },
-  {
-    path: '/employee/verify-job',
-    component: VerifyJobPage,
-    exact: true
-  },
   {
     path: '/manager/account',
     component: AccountPage,
@@ -47,6 +33,10 @@ export const routes = [
     path: '/manager/work-history',
     component: WorkhistoryPage,
     exact: true
+  },
+  {
+    path: '/employee',
+    component: EmployeePages,
   },
   {
     path: '/recruiter',

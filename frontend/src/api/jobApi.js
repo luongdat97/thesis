@@ -18,8 +18,8 @@ class jobApi {
     postJob(payload) {
         return Http.post(`${API_ENDPOINT.BASE}/create`, payload)
     }
-    getJobList() {
-        return Http.get(`${API_ENDPOINT.BASE}/list`)
+    getJobList(payload) {
+        return Http.get(`${API_ENDPOINT.BASE}/list`, payload)
     }
     getJobById(id) {
         return Http.get(`${API_ENDPOINT.BASE}/get`, { id })

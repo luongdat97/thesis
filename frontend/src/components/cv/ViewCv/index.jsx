@@ -72,25 +72,6 @@ const Home = () => {
                 <StyleCv>
                     <Title level={3}>CV cá nhân</Title>
                     <div className="mb-3">
-                            {/* <Button color="primary" onClick={() => {
-                                    printJS({
-                                        printable: 'html2canvas',
-                                        type: 'html',
-                                        targetStyles: ['*'],
-                                        style: `@page {
-                                size: A4;
-                              }`,
-                                        header: null,
-                                        footer: null,
-                                    });
-                                }}>Tạo phiếu in</Button> */}
-                            {/* <Space>
-                                    <Button type="primary" size="small" icon={<i className="fas fa-exchange-alt light-icon"></i>}>&nbsp;Đổi mẫu</Button>
-                                    <Button type="primary" size="small" icon={<i className="far fa-eye light-icon"></i>} onClick={() => generate()}>&nbsp;Xem trước</Button>
-                                    <Button type="primary" size="small" icon={<i className="fas fa-download light-icon"></i>}>&nbsp;Tải xuống</Button>
-                                    <Button type="primary" size="small" icon={<i className="far fa-save light-icon"></i>}>&nbsp;Lưu</Button>
-                                </Space> */}
-
                             <Space>
                                 <Button type="primary" size="small" onClick={generate}>&nbsp;Tải xuống</Button>
                             </Space>
@@ -106,7 +87,7 @@ const Home = () => {
                                     initialValues={cvData}
                                 >
                                     <Row>
-                                        <Col span={6} className="px-3"><UploadAvatar /></Col>
+                                        <Col span={6} className="px-3"><UploadAvatar avatar={cvData.avatar}/></Col>
                                         <Col span={18}>
                                             <Form.Item
                                                 name="name"

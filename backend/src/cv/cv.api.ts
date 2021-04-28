@@ -12,12 +12,8 @@ export function NewCvAPI(cvBLL: CvNS.BLL) {
     let cvData = req.body
     console.log(".........")
     console.log(cvData.activity)
-    const { applicant_id, jobPosition, objective, favorite } = req.body
     const params: CvNS.CreateCvParams = {
-      applicant_id,
-      jobPosition,
-      objective,
-      favorite,
+      ...req.body
     };
 
     const cv = await cvBLL.CreateCv(params);
@@ -59,8 +55,22 @@ export function NewCvAPI(cvBLL: CvNS.BLL) {
     res.json(cv);
   });
   app.get("/list", async (req, res) => {
-    const docs = await cvBLL.ListCv();
-    res.json(docs);
+    const docs = req.query.applicant_id ? await cvBLL.ListCvByApplicant(req.query.applicant_id as string) : await cvBLL.ListCv();
+    let detailDocs = await Promise.all(docs.map(async (doc) => {
+      const cv_id = doc.id
+      const activity = await cvBLL.ListActivity(cv_id)
+      const education = await cvBLL.ListEducation(cv_id)
+      const experience = await cvBLL.ListExperience(cv_id)
+      const skill = await cvBLL.ListSkill(cv_id)
+      let cv = { ...doc } as any
+      cv.activity = activity
+      cv.education = education
+      cv.experience = experience
+      cv.skill = skill
+      return cv
+    }))
+
+    res.json(detailDocs);
   });
 
   app.post("/update", async (req, res) => {
@@ -69,9 +79,9 @@ export function NewCvAPI(cvBLL: CvNS.BLL) {
 
     console.log(".........")
     console.log(cvData.activity)
-    const { applicant_id, jobPosition, objective, favorite } = req.body
+    const { applicant_id, jobPosition, objective, favorite, avatar } = req.body
 
-    const params: CvNS.UpdateCvParams = { jobPosition, objective, favorite };
+    const params: CvNS.UpdateCvParams = { jobPosition, objective, favorite, avatar };
     await cvBLL.UpdateCv(cv_id, params);
 
     for (const activity of cvData.activity) {

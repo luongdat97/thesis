@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import ImageCloud from '../../../../helper/ImageCloud'
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -13,41 +14,50 @@ function beforeUpload(file) {
   if (!isJpgOrPng) {
     message.error('You can only upload JPG/PNG file!');
   }
-  const isLt2M = file.size / 1024 / 1024 < 2;
+  const isLt2M = file.size / 1024 / 1024 < 5;
   if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
+    message.error('Image must smaller than 5MB!');
   }
-  return isJpgOrPng && isLt2M;
+  return false;
 }
 
 export default class Avatar extends React.Component {
   state = {
     loading: false,
+    imageUrl: this.props.avatar.url
   };
 
-  handleChange = info => {
-    if (info.file.status === 'uploading') {
-      this.setState({ loading: true });
-      return;
+  handleChange = async (info) => {
+    let { signature, timestamp } = (await ImageCloud.getSignature()).data
+    console.log(signature, timestamp)
+    if (this.props.avatar.public_id) {
+      ImageCloud.remove(this.props.avatar.public_id)
     }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl =>
-        this.setState({
-          imageUrl,
-          loading: false,
-        }),
-      );
-    }
+
+
+    getBase64(info.file.originFileObj, imageUrl => {
+      this.setState({
+        imageUrl,
+        loading: false,
+      })
+      ImageCloud.postImage({ file: imageUrl, timestamp, signature }).then((res) => {
+        console.log(res)
+        this.props.setAvatar({url: res.data.url, public_id: res.data.public_id})
+      })
+    },
+    );
+
   };
 
   render() {
-    const { loading, imageUrl } = this.state;
+    let { loading, imageUrl } = this.state;
+    const {avatar, setAvatar} = this.props
+    if (!imageUrl) imageUrl=avatar.url
     const uploadButton = (
       <div>
         <div style={{ marginTop: 8, fontSize: 70 }}><i className="fas fa-camera"></i></div>
         {loading ? <LoadingOutlined /> : "Click để đăng ảnh"}
-        
+
       </div>
     );
     return (
@@ -56,12 +66,11 @@ export default class Avatar extends React.Component {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-          {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-        
+        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+
       </Upload>
     );
   }

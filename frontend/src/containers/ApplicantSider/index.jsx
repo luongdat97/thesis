@@ -11,7 +11,7 @@ export default function MainHeader(props) {
     return (
         <Card style={{ minHeight: 700, height: "100%" }}>
             <div className="p-4 border-bottom">
-                <Avatar size="large" style={{ width: "100%", height: "auto" }} src={"https://timviec.com.vn/storage/avatars/528993/Jg5tKRGfcTs4kWZwDmC8WwKGVeqqzxngzlnyK7is.png"} />
+                <Avatar size="large" style={{ width: "100%", height: "auto" }} src={""} />
             </div>
             <Link to={`${url}/manage-cv`}>
                 <div className="text-dark d-flex align-items-center border-bottom" style={{height: 35}}>Quản lý CV</div>

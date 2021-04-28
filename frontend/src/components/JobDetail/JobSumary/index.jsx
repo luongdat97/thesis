@@ -87,7 +87,7 @@ export default function JobSumary(props) {
                 <Col span={8}>
                     <Space direction="vertical" size="large">
 
-                        {!appliedJobId && <ApplyModal chosenCv={chosenCv} setChosenCv={setChosenCv} applyJob={applyJob}></ApplyModal>}
+                        {!appliedJobId && <ApplyModal user={user} chosenCv={chosenCv} setChosenCv={setChosenCv} applyJob={applyJob}></ApplyModal>}
                         {!!appliedJobId && <Button onClick={deleteAppliedJob} size="large" type="primary" style={{ background: "#73d13d", borderColor: "#73d13d", width: 150 }}>Đã ứng tuyển</Button>}
 
                         {!savedJobId && <Button onClick={saveJob} size="large" style={{ width: 150 }}>Lưu tin</Button>}
@@ -109,13 +109,14 @@ const radioStyle = {
 const ApplyModal = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [cvList, setCvList] = useState([])
-    const { chosenCv, setChosenCv, applyJob } = props
+    const { chosenCv, setChosenCv, applyJob, user } = props
     useEffect(() => {
         fetchCv()
     }, [])
 
     const fetchCv = () => {
-        cvApi.getCvList().then((res) => {
+        cvApi.getCvList({applicant_id: user.id}).then((res) => {
+            console.log(user.id)
             console.log(res.data)
             let cvList = res.data
             setCvList(cvList)

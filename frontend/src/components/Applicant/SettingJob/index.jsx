@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List, Checkbox } from 'antd';
+import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List, Checkbox, Switch, Space } from 'antd';
+import { useCookies } from 'react-cookie'
+import desireApi from '../../../api/desireApi'
+import profileApi from '../../../api/profileApi'
+import cvApi from '../../../api/cvApi'
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
-const companyLogo = [
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-co-phan-dau-tu-phat-trien-anh-va-em-59db4c9957711_rs_abw9g7.jpg',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-co-phan-replus-5b504e7e8b74f_ka2czs.webp',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-co-phan-dich-vu-di-dong-truc-tuyen-vi-momo-5f55a14a178cc_mekeqf.webp',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-bds-tan-hoang-gia-60470624a2f64_wgstim.jpg',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-tnhh-oh-vacation-5b0fb1bd69cdf_rs_xojube.jpg',
-    'https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/ngan-hang-thuong-mai-co-phan-ky-thuong-viet-nam-5e7c8a9259ddc_rvysrd.webp',
-]
 
 const SettingJob = (props) => {
     return (
         <>
             <Card>
-                <Title level={4}>CẬP NHẬT THÔNG TIN GỢI Ý VIỆC LÀM</Title>
+
                 <Demo></Demo>
             </Card>
-
-
         </>
     )
 }
@@ -41,16 +35,44 @@ const layout = {
         span: 16,
     },
 };
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
 
 const Demo = () => {
+    const [cookies] = useCookies(['user'])
+    const [desire, setDesire] = useState({})
+    const [profile, setProfile] = useState({})
+    const [cvList, setCvList] = useState([])
+    const [form] = Form.useForm()
+
+    useEffect(() => {
+        console.log(cookies.user)
+        desireApi.getDesire({ applicant_id: cookies.user.id }).then((res) => {
+            console.log(res)
+            setDesire(res.data)
+        })
+
+        profileApi.getProfile({ id: cookies.user.profile_id }).then((res) => {
+            console.log(res)
+            setProfile(res.data)
+        })
+
+        cvApi.getCvList({ applicant_id: cookies.user.id }).then((res) => {
+            console.log(res)
+            setCvList(res.data)
+        })
+    }, [])
+
+    useEffect(() => { form.resetFields() }, [desire, profile]);
+
     const onFinish = (values) => {
         console.log('Success:', values);
+        console.log(desire)
+        profileApi.editProfile({ ...profile, ...values.profile })
+        if (desire.id) {
+            desireApi.editDesire({ ...desire, ...values.desire })
+        } else {
+            desireApi.postDesire({ ...values.desire, applicant_id: cookies.user.id })
+        }
+
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -61,178 +83,196 @@ const Demo = () => {
         <Form
             {...layout}
             name="basic"
-            initialValues={{
-                remember: true,
-            }}
+            initialValues={{ profile, desire }}
+            form={form}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         >
-            <Title level={5}>Thông tin cá nhân</Title>
-            <Form.Item
-                label="Họ và tên"
-                name="username"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input your username!',
-                    },
-                ]}
-            >
-                <Input />
-            </Form.Item>
-            <Title level={5}>Kinh nghiệm thực tế</Title>
-            <Form.Item
-                label="Ngành nghề"
-                name="password"
-            >
-                <Select
-                    mode="multiple"
-                    allowClear
-                    style={{ width: '100%' }}
-                    placeholder="Please select"
-                    defaultValue={['IT phần mềm', 'Báo chí']}
-                    onChange={handleChange}
+            <div className="d-flex">
+                <Title level={4} className="mr-3">Chế độ tìm việc</Title>
+                <Form.Item
+                    name={['desire', 'enable']}
                 >
-                    {children}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Kỹ năng"
-                name="password"
-            >
-                <Select
-                    mode="multiple"
-                    allowClear
-                    style={{ width: '100%' }}
-                    placeholder="Please select"
-                    defaultValue={['Bootstrap', 'ReactJs']}
-                    onChange={handleChange}
-                >
-                    {children}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Kinh nghiệm"
-                name="password"
-            >
-                <Select >
-                    <Option value="1">Chưa có kinh nghiệm</Option>
-                    <Option value="2">Dưới 1 năm</Option>
-                    <Option value="3">1 năm</Option>
-                    <Option value="4">2 năm</Option>
-                    <Option value="5">3 năm</Option>
-                    <Option value="6">4 năm</Option>
-                    <Option value="7">5 năm</Option>
-                    <Option value="8">Trên 5 năm</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Trình độ chuyên môn"
-                name="password"
-            >
-                <Select>
-                    <Option value="1">Sinh viên</Option>
-                    <Option value="2">mới ra trường</Option>
-                    <Option value="3">có kinh nghệm</Option>
-                    <Option value="4">trưởng nhóm</Option>
-                    <Option value="5">Quản lý/ giám sát</Option>
-                    <Option value="6">chuyên gia</Option>
-                    <Option value="7">giám sát</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Trình độ tiếng Anh"
-                name="password"
-            >
-                <Select>
-                    <Option value="1">Không biết</Option>
-                    <Option value="2">Đọc hiểu cơ bản</Option>
-                    <Option value="3">Đọc/ viết tốt tài liệu chuyên môn</Option>
-                    <Option value="4">Giao tiếp tốt</Option>
-                    <Option value="5">Thành thạo mọi kỹ năng</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Năm sinh"
-                name="password"
-            >
-                <Select>
-                    <Option value="1">Chưa có kinh nghiệm</Option>
-                    <Option value="2">Dưới 1 năm</Option>
-                    <Option value="3">1 năm</Option>
-                    <Option value="4">2 năm</Option>
-                    <Option value="5">3 năm</Option>
-                    <Option value="6">4 năm</Option>
-                    <Option value="7">5 năm</Option>
-                    <Option value="8">Trên 5 năm</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Giới tính"
-                name="password"
-            >
-                <Select >
-                    <Option value="1">Nam</Option>
-                    <Option value="2">Nữ</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Quê quán"
-                name="password"
-            >
-                <Select >
-                    <Option value="1">Vĩnh Phúc</Option>
-                    <Option value="2">Hà Nội</Option>
-                    <Option value="3">Quảng Bình</Option>
-                </Select>
-            </Form.Item>
-            <Title level={5}>Mong muốn của bạn</Title>
-            <Form.Item
-                label="Cv chính của bạn"
-                name="password"
-            >
-                <Select >
-                    <Option value="1">CV xin việc it</Option>
-                    <Option value="2">CV xin việc CSS</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Loại hình làm việc"
-                name="password"
-            >
-                <Select >
-                    <Option value="1">Toàn thời gian</Option>
-                    <Option value="2">Bán thời gian</Option>
-                    <Option value="3">Thực tập</Option>
-                    <Option value="4">Remote (làm việc từ xa)</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Mong muốn làm việc tại nước ngoài"
-                name="password"
-            >
-                <Select >
-                    <Option value="1">Có</Option>
-                    <Option value="2">Không</Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Về bạn"
-                name="about"
-            >
-                <TextArea rows={3} placeholder="Giới thiệu ngắn gọn về bản thân để giúp bạn tăng sức thu hút với nhà tuyển dụng. VD: Tôi có chuyên môn trong lĩnh vực Tự động hóa, mong muốn của tôi là tìm được một môi trường làm việc chuyên nghiệp, với chế độ đãi ngộ tốt."></TextArea>
-            </Form.Item>
-            <Form.Item
-                label="Mong muốn"
-                name="desire"
-            >
-                <TextArea rows={2} placeholder="Mong muốn về môi trường làm việc, các công ty bạn mong muốn ứng tuyển (VD: Viettel, FPT, VNPT..)..vv"></TextArea>
-            </Form.Item>
+                    <Switch defaultChecked={!!desire.enable} />
+                </Form.Item>
 
-            <Form.Item {...tailLayout}>
+            </div>
+
+            <Title level={5}>Thông tin cơ bản</Title>
+            <Row gutter={30}>
+                <Col span={12}>
+                    <Form.Item
+                        label="Họ tên"
+                        name={['profile', 'name']}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Ngày sinh"
+                        name={['profile', 'birthday']}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Giới tính"
+                        name={['profile', 'gender']}
+                    >
+                        <Input />
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item
+                        label="Điện thoại"
+                        name={['profile', 'phoneNumber']}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Email"
+                        name={['profile', 'email']}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Địa chỉ"
+                        name={['profile', 'address']}
+                    >
+                        <Input />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={30}>
+                <Col span={12}>
+                    <Title level={5}>Giới thiệu bản thân</Title>
+                    <Form.Item
+                        label="CV cá nhân"
+                        name={['desire', 'cv_id']}
+                    >
+                        <Select >
+                            {cvList.map(item => (
+                                <Option value={item.id} key={item.id}>{item.jobPosition}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="Ngành nghề"
+                        name={['desire', 'field']}
+                    >
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{ width: '100%' }}
+                            placeholder="Please select"
+                            defaultValue={['IT phần mềm', 'Báo chí']}
+                            onChange={handleChange}
+                        >
+                            {children}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="Kỹ năng"
+                        name={['desire', 'skill']}
+                    >
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{ width: '100%' }}
+                            placeholder="Please select"
+                            defaultValue={['Bootstrap', 'ReactJs']}
+                            onChange={handleChange}
+                        >
+                            {children}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="Kinh nghiệm"
+                        name={['desire', 'experience']}
+                    >
+                        <Select >
+                            <Option value="1">Chưa có kinh nghiệm</Option>
+                            <Option value="2">Dưới 1 năm</Option>
+                            <Option value="3">1 năm</Option>
+                            <Option value="4">2 năm</Option>
+                            <Option value="5">3 năm</Option>
+                            <Option value="6">4 năm</Option>
+                            <Option value="7">5 năm</Option>
+                            <Option value="8">Trên 5 năm</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="Trình độ"
+                        name={['desire', 'level']}
+                    >
+                        <Select>
+                            <Option value="1">Sinh viên</Option>
+                            <Option value="2">mới ra trường</Option>
+                            <Option value="3">có kinh nghệm</Option>
+                            <Option value="4">trưởng nhóm</Option>
+                            <Option value="5">Quản lý/ giám sát</Option>
+                            <Option value="6">chuyên gia</Option>
+                            <Option value="7">giám sát</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="Trình độ tiếng Anh"
+                        name={['desire', 'english']}
+                    >
+                        <Select>
+                            <Option value="1">Không biết</Option>
+                            <Option value="2">Đọc hiểu cơ bản</Option>
+                            <Option value="3">Đọc/ viết tốt tài liệu chuyên môn</Option>
+                            <Option value="4">Giao tiếp tốt</Option>
+                            <Option value="5">Thành thạo mọi kỹ năng</Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Title level={5}>Mong muốn của bạn</Title>
+                    <Form.Item
+                        label="Địa điểm làm việc"
+                        name={['desire', 'address']}
+                    >
+                        <Select >
+                            <Option value="1">Vĩnh PHúc</Option>
+                            <Option value="2">Hà Nội</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="Loại hình làm việc"
+                        name={['desire', 'workType']}
+                    >
+                        <Select >
+                            <Option value="1">Toàn thời gian</Option>
+                            <Option value="2">Bán thời gian</Option>
+                            <Option value="3">Thực tập</Option>
+                            <Option value="4">Remote (làm việc từ xa)</Option>
+                        </Select>
+                    </Form.Item>
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Lương từ"
+                                name={['desire', 'salary', 'from']}
+                            >
+                                <Input></Input>
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Lên đến"
+                                name={['desire', 'salary', 'to']}
+                            >
+                                <Input></Input>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+
+            <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
                 <Button type="primary" htmlType="submit">
                     Cập nhật
-        </Button>
+                </Button>
             </Form.Item>
         </Form>
     );

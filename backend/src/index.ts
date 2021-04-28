@@ -19,23 +19,36 @@ import { ProfileDALMongo } from './profile/profile.dal.mongo';
 import { ProfileBLLBase } from "./profile/profile.bll.base";
 import { ApplicantDALMongo } from './applicant/applicant.dal.mongo';
 import { ApplicantBLLBase } from "./applicant/applicant.bll.base";
-import { CvDALMongo} from "./cv/cv.dal.mongo"
+import { RecruiterDALMongo } from './recruiter/recruiter.dal.mongo';
+import { RecruiterBLLBase } from "./recruiter/recruiter.bll.base";
+import { CvDALMongo } from "./cv/cv.dal.mongo"
 import { CvBLLBase } from './cv/cv.bll.base';
-import { SavedJobDALMongo} from "./savedJob/savedJob.dal.mongo"
+import { SavedJobDALMongo } from "./savedJob/savedJob.dal.mongo"
 import { SavedJobBLLBase } from './savedJob/savedJob.bll.base';
-import { AppliedJobDALMongo} from "./appliedJob/appliedJob.dal.mongo"
-import { AppliedJobBLLBase} from './appliedJob/appliedJob.bll.base';
+import { AppliedJobDALMongo } from "./appliedJob/appliedJob.dal.mongo"
+import { AppliedJobBLLBase } from './appliedJob/appliedJob.bll.base';
+import { CompanyDALMongo } from "./company/company.dal.mongo"
+import { CompanyBLLBase } from './company/company.bll.base';
+import { EmployeeDALMongo } from "./employee/employee.dal.mongo"
+import { EmployeeBLLBase } from './employee/employee.bll.base';
+import { DesireDALMongo } from "./desire/desire.dal.mongo"
+import { DesireBLLBase } from './desire/desire.bll.base';
 
 import { NewTodoAPI } from "./todo/todo.api";
 import { NewCustomerAPI } from "./customer/customer.api";
-import { NewJobAPI} from "./job/job.api";
+import { NewJobAPI } from "./job/job.api";
 import { NewServiceAPI } from './service/service.api';
-import { NewAccountAPI} from "./account/account.api";
-import { NewProfileAPI} from "./profile/profile.api";
-import { NewApplicantAPI} from "./applicant/applicant.api";
-import { NewCvAPI} from "./cv/cv.api"
-import { NewSavedJobAPI} from "./savedJob/savedJob.api"
-import { NewAppliedJobAPI} from "./appliedJob/appliedJob.api"
+import { NewAccountAPI } from "./account/account.api";
+import { NewProfileAPI } from "./profile/profile.api";
+import { NewApplicantAPI } from "./applicant/applicant.api";
+import { NewRecruiterAPI } from "./Recruiter/recruiter.api";
+import { NewCvAPI } from "./cv/cv.api"
+import { NewSavedJobAPI } from "./savedJob/savedJob.api"
+import { NewAppliedJobAPI } from "./appliedJob/appliedJob.api"
+import { NewCompanyAPI } from "./company/company.api"
+import { NewEmployeeAPI } from "./employee/employee.api"
+import { NewCloudAPI } from "./cloud/cloud.api"
+import { NewDesireAPI } from "./desire/desire.api"
 
 import { ServiceBLLBase } from './service/service.bll.base'
 import { ServiceDALMongo } from './service/service.dal.mongo';
@@ -89,8 +102,14 @@ async function main() {
   //--------
   const applicantDAL = new ApplicantDALMongo(database);
   await applicantDAL.init();
-  const applicantBLL = new ApplicantBLLBase(applicantDAL);
+  const applicantBLL = new ApplicantBLLBase(applicantDAL, profileDAL);
   await applicantBLL.init();
+
+  //--------
+  const recruiterDAL = new RecruiterDALMongo(database);
+  await recruiterDAL.init();
+  const recruiterBLL = new RecruiterBLLBase(recruiterDAL);
+  await recruiterBLL.init();
 
   //--------
   const cvDAL = new CvDALMongo(database);
@@ -109,6 +128,24 @@ async function main() {
   await savedJobDAL.init();
   const savedJobBLL = new SavedJobBLLBase(savedJobDAL, jobBLL);
   await savedJobBLL.init();
+
+  //--------
+  const companyDAL = new CompanyDALMongo(database);
+  await companyDAL.init();
+  const companyBLL = new CompanyBLLBase(companyDAL);
+  await companyBLL.init();
+
+  //--------
+  const employeeDAL = new EmployeeDALMongo(database);
+  await employeeDAL.init();
+  const employeeBLL = new EmployeeBLLBase(employeeDAL);
+  await employeeBLL.init();
+
+  //--------
+  const desireDAL = new DesireDALMongo(database);
+  await desireDAL.init();
+  const desireBLL = new DesireBLLBase(desireDAL);
+  await desireBLL.init();
   /****************************************************** */
   const app = require('express')();
   app.disable('x-powered-by');
@@ -125,9 +162,14 @@ async function main() {
   app.use('/api/profile/', NewProfileAPI(profileBLL));
   app.use('/api/account/', NewAccountAPI(accountBLL));
   app.use('/api/applicant/', NewApplicantAPI(applicantBLL, profileBLL, accountBLL));
+  app.use('/api/recruiter/', NewRecruiterAPI(recruiterBLL, profileBLL, accountBLL));
+  app.use('/api/employee/', NewEmployeeAPI(employeeBLL, profileBLL, accountBLL));
   app.use('/api/cv/', NewCvAPI(cvBLL))
   app.use('/api/applied-job', NewAppliedJobAPI(appliedJobBLL))
   app.use('/api/saved-job', NewSavedJobAPI(savedJobBLL))
+  app.use('/api/company', NewCompanyAPI(companyBLL))
+  app.use('/api/cloud', NewCloudAPI())
+  app.use('/api/desire', NewDesireAPI(desireBLL, applicantBLL, cvBLL))
 
   /******************************************************* */
   app.use((err, req, res, next) => {

@@ -20,6 +20,10 @@ export class ApplicantDALMongo implements ApplicantNS.DAL {
         const doc = await this.col_applicant.findOne({ _id: id });
         return FromMongoData.One<ApplicantNS.Applicant>(doc);
     }
+    async GetApplicantByAccount(account_id: string) {
+        const doc = await this.col_applicant.findOne({ account_id });
+        return FromMongoData.One<ApplicantNS.Applicant>(doc);
+    }
 
     async UpdateApplicant(applicant: ApplicantNS.Applicant) {
         const doc = ToMongoData.One(applicant);

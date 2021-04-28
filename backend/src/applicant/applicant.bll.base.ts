@@ -1,9 +1,11 @@
 import rand from "../lib/rand";
+import { ProfileNS } from "../profile/profile";
 import { ApplicantNS } from "./applicant";
 
 export class ApplicantBLLBase implements ApplicantNS.BLL {
     constructor(
         private dal: ApplicantNS.DAL,
+        private profileDal: ProfileNS.DAL,
     ) { }
 
     async init() {
@@ -16,6 +18,16 @@ export class ApplicantBLLBase implements ApplicantNS.BLL {
 
     async GetApplicant(id: string) {
         const applicant = await this.dal.GetApplicant(id);
+        const profile = await this.profileDal.GetProfile(applicant.profile_id)
+        if (!applicant) {
+            throw ApplicantNS.Errors.ErrApplicantNotFound;
+        }
+        const doc: any = {...applicant, profile}
+        return doc;
+    }
+
+    async GetApplicantByAccount(account_id: string) {
+        const applicant = await this.dal.GetApplicantByAccount(account_id);
         if (!applicant) {
             throw ApplicantNS.Errors.ErrApplicantNotFound;
         }

@@ -13,7 +13,7 @@ export default function MainHeader(props) {
     const history = useHistory();
     const logout = () => {
         console.log("logout.....")
-        removeCookie("user")
+        removeCookie("user",{ path: '/' })
         history.push("/")
     }
     const url = props.url

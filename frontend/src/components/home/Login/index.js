@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Button, Form, Input, message } from 'antd';
 import {useHistory} from 'react-router-dom'
+import applicantApi from '../../../api/applicantApi'
 import accountApi from '../../../api/accountApi'
+import recruiterApi from '../../../api/recruiterApi'
+import employeeApi from '../../../api/employeeApi'
 import { useCookies } from 'react-cookie';
 const { Title, Text } = Typography;
 const layout = {
@@ -15,20 +18,34 @@ const tailLayout = {
 const Login = (props) => {
     const [cookies, setCookie] = useCookies(['user']);
     let history = useHistory();
-    const onFinish = (values) => {
-        console.log('Success:', values);
-        accountApi.login(values).then((res) => {
-            let data = res.data
-            console.log(data)
-            if (data.code === 9000) {
-                message.error("email không tồn tại!")
-            } else if (data.code === 9001) {
-                message.error("Mật khẩu không đúng!")
-            } else if (data.code === 1000) {
-                setCookie('user', data.data, { path: '/' });
-                history.push("/applicant")
-            }
-        })
+    const onFinish = async (values) => {
+        try{
+            console.log('Success:', values);
+            let account = (await accountApi.getAccountByUsername(values.username)).data
+            let api = null
+            console.log(account.role)
+    
+            if (account.role === "applicant") api = applicantApi
+            if (account.role === "recruiter") api = recruiterApi
+            if (account.role === "employee") api = employeeApi
+    
+            api.login(values).then((res) => {
+                let data = res.data
+                console.log(data)
+                if (data.code === 9000) {
+                    message.error("email không tồn tại!")
+                } else if (data.code === 9001) {
+                    message.error("Mật khẩu không đúng!")
+                } else if (data.code === 1000) {
+                    setCookie('user', data.data, { path: '/' });
+                    history.push(`/${account.role}`)
+                }
+            })
+        } catch(err) {
+            console.log(err)
+            message.error("email không tồn tại!")
+        }
+        
     };
 
     const onFinishFailed = (errorInfo) => {

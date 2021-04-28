@@ -60,7 +60,7 @@ export default class Avatar extends React.Component {
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-          {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+          {!!this.props.avatar?.url && <img src={this.props.avatar.url} alt="avatar" style={{ width: '100%' }} />}
         
       </Upload>
     );

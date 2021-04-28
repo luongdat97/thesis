@@ -15,6 +15,10 @@ export class CvBLLBase implements CvNS.BLL {
         return this.dal.ListCv();
     }
 
+    async ListCvByApplicant(applicant_id: string) {
+        return this.dal.ListCvByApplicant(applicant_id);
+    }
+
     async GetCv(id: string) {
         const cv = await this.dal.GetCv(id);
         if (!cv) {

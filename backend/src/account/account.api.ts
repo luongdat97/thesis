@@ -8,7 +8,6 @@ import { UserAuthNS } from "../auth/auth";
 export function NewAccountAPI(accountBLL: AccountNS.BLL) {
   const app = express();
   app.post("/create", async (req, res) => {
-    console.log("haaaaaaaaaaaaaaaaaaa")
     const title = HttpParamValidators.MustBeString(req.body, "title");
     const { username, password, role } = req.body
 
@@ -36,33 +35,20 @@ export function NewAccountAPI(accountBLL: AccountNS.BLL) {
   });
 
   app.get("/get", async (req, res) => {
-    const doc = await accountBLL.GetAccount(req.query.id as string);
-    res.json(doc);
+    const {id, username} = req.query
+    if (id) {
+      const doc = await accountBLL.GetAccount(id as string);
+      res.json(doc);
+    } else if (username) {
+      const doc = await accountBLL.GetAccountByUsername(username as string);
+      res.json(doc);
+    }
+    
   });
 
   app.post("/delete", async (req, res) => {
     const doc = await accountBLL.DeleteAccount(req.body.id as string);
     res.json(doc);
-  });
-
-  app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-    const account = await accountBLL.GetAccountByUsername(username);
-    console.log(account)
-    if (!account) {
-      res.json({ code: 9000, mess: "username không tồn tại" })
-      return
-    }
-
-    if (account.password === password) {
-      let token = jwt.sign({
-        accountId: account.id,
-      }, process.env.TOKEN_SECRET);
-      
-      res.json({ code: 1000, mess: "oke", data: {...account, token} })
-    } else {
-      res.json({ code: 9001, mess: "incorrect password" })
-    }
   });
 
   const commonErrors = new Set([...Object.values(AccountNS.Errors)]);

@@ -9,36 +9,36 @@ export function NewJobAPI(jobBLL: JobNS.BLL) {
   app.post("/create", async (req, res) => {
     console.log("haaaaaaaaaaaaaaaaaaa")
     const title = HttpParamValidators.MustBeString(req.body, "title");
-    const { career, address, workplace, salary, genderRequire, workType, level,
-      numberHire, endDate, experienceRequire, skillRequire, receiver, jobDescription, jobRequire, jobBenefit } = req.body
+    // const { career, address, workplace, salary, genderRequire, workType, level,
+    //   numberHire, endDate, experienceRequire, skillRequire, receiver, jobDescription, jobRequire, jobBenefit } = req.body
 
-    const params: JobNS.CreateJobParams = {
-      user_id: "1",
-      title,
-      career,
-      address,
-      workplace,
-      salary,
-      genderRequire,
-      workType,
-      level,
-      numberHire,
-      endDate,
-      experienceRequire,
-      skillRequire,
-      receiver,
-      jobDescription,
-      jobRequire,
-      jobBenefit,
-    };
-    const job = await jobBLL.CreateJob(params);
+    // const params: JobNS.CreateJobParams = {
+    //   recruiter_id: "1",
+    //   title,
+    //   career,
+    //   address,
+    //   workplace,
+    //   salary,
+    //   genderRequire,
+    //   workType,
+    //   level,
+    //   numberHire,
+    //   endDate,
+    //   experienceRequire,
+    //   skillRequire,
+    //   receiver,
+    //   jobDescription,
+    //   jobRequire,
+    //   jobBenefit,
+    // };
+    const job = await jobBLL.CreateJob({...req.body});
     res.json(job);
   });
   app.get("/list", async (req, res) => {
     let docs;
-    let user_id = req.query.user_id as string
-    if (user_id) {
-      docs = await jobBLL.ListJob(user_id);
+    let recruiter_id = req.query.recruiter_id as string
+    if (recruiter_id) {
+      docs = await jobBLL.ListJob(recruiter_id);
     } else {
       docs = await jobBLL.ListJob();
     }

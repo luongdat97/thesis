@@ -5,7 +5,6 @@ import HomePage from '../../components/home/Home';
 import JobDetailPage from '../../components/JobDetail'
 import CreateCvPage from '../../components/cv/CreateCv'
 import CvManagerPage from '../../components/cv/ManageCv'
-import CvPreviewPage from '../../components/cv/CvPreview'
 import JobSearchPage from '../../components/JobSearch'
 import CandidateSearch from '../../components/home/CandidateSearch'
 import CvTemplates from '../../components/home/CvTemplates'
@@ -53,11 +52,6 @@ export const routes = [
   {
     path: '/cv/manage',
     component: CvManagerPage,
-    exact: true
-  },
-  {
-    path: '/cv/preview',
-    component: CvPreviewPage,
     exact: true
   },
   {

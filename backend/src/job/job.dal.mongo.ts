@@ -12,10 +12,10 @@ export class JobDALMongo implements JobNS.DAL {
 
     private col_job = this.db.collection("job");
 
-    async ListJob(user_id?: string) {
+    async ListJob(recruiter_id?: string) {
         let docs;
-        if (user_id) {
-            docs = await this.col_job.find({ user_id }).toArray();
+        if (recruiter_id) {
+            docs = await this.col_job.find({ recruiter_id }).toArray();
         } else {
             docs = await this.col_job.find().toArray();
         }

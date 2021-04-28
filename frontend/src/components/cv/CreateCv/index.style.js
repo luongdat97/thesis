@@ -88,7 +88,15 @@ const StyleList = styled.div`
     border-color: #52c41a;
   }
   .ant-col-18 {
-    max-width: 100%
+    max-width: 100%;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    border: none;
+  }
+  img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
   }
 `;
 export default StyleList;

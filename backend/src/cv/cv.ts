@@ -2,6 +2,10 @@ export namespace CvNS {
   export interface Cv {
     //cv
     id: string;
+    avatar?: {
+      public_id: string;
+      url: string;
+    };
     applicant_id: string;
     jobPosition?: string;
     objective?: string;
@@ -11,6 +15,10 @@ export namespace CvNS {
   }
 
   export interface CreateCvParams {
+    avatar?: {
+      public_id: string;
+      url: string;
+    };
     applicant_id: string;
     jobPosition?: string;
     objective?: string;
@@ -18,6 +26,10 @@ export namespace CvNS {
   }
 
   export interface UpdateCvParams {
+    avatar?: {
+      public_id: string;
+      url: string;
+    };
     jobPosition?: string;
     objective?: string;
     favorite?: string;
@@ -129,6 +141,7 @@ export namespace CvNS {
 
   export interface BLL {
     ListCv(): Promise<Cv[]>;
+    ListCvByApplicant(applicant_id: string): Promise<Cv[]>;
     GetCv(id: string): Promise<Cv>;
     CreateCv(params: CreateCvParams): Promise<Cv>;
     UpdateCv(id: string, params: UpdateCvParams): Promise<void>;
@@ -161,6 +174,7 @@ export namespace CvNS {
 
   export interface DAL {
     ListCv(): Promise<Cv[]>;
+    ListCvByApplicant(applicant_id): Promise<Cv[]>;
     GetCv(id: string): Promise<Cv>;
     CreateCv(Cv: Cv): Promise<void>;
     UpdateCv(Cv: Cv): Promise<void>;

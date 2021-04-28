@@ -24,14 +24,14 @@ class AccountApi {
     getAccountById(id) {
         return Http.get(`${API_ENDPOINT.BASE}/get`, { id })
     }
+    getAccountByUsername(username) {
+        return Http.get(`${API_ENDPOINT.BASE}/get`, { username })
+    }
     delAccount(id) {
         return Http.post(`${API_ENDPOINT.BASE}/delete`, { id })
     }
     editAccount(payload) {
         return Http.post(`${API_ENDPOINT.BASE}/update`, payload)
-    }
-    login(payload) {
-        return Http.post(`${API_ENDPOINT.BASE}/login`, payload)
     }
 }
 

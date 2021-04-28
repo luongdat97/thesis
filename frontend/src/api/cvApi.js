@@ -18,8 +18,8 @@ class CvApi {
     postCv(payload) {
         return Http.post(`${API_ENDPOINT.BASE}/create`, payload)
     }
-    getCvList() {
-        return Http.get(`${API_ENDPOINT.BASE}/list`)
+    getCvList(payload) {
+        return Http.get(`${API_ENDPOINT.BASE}/list`, payload)
     }
     getCvById(id) {
         return Http.get(`${API_ENDPOINT.BASE}/get`, { id })

@@ -90,5 +90,8 @@ const StyleList = styled.div`
   .ant-col-18 {
     max-width: 100%
   }
+  .ant-upload.ant-upload-select-picture-card {
+    border: none;
+  }
 `;
 export default StyleList;

@@ -24,14 +24,14 @@ function HomePages() {
     return (
         <div className="App">
             <RecruiterLayout url={url}>
-                <Row gutter={30}>
+                {/* <Row gutter={16}>
                     <Col span={6}>
                         <RecruiterSider path={path} url={url}></RecruiterSider>
                     </Col>
-                    <Col span={18}>
+                    <Col span={18}> */}
                         <Routes path={path} />
-                    </Col>
-                </Row>
+                    {/* </Col>
+                </Row> */}
 
             </RecruiterLayout>
 

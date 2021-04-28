@@ -24,6 +24,7 @@ export namespace ApplicantNS {
     CreateApplicant(params: CreateApplicantParams): Promise<Applicant>;
     UpdateApplicant(id: string, params: UpdateApplicantParams): Promise<void>;
     DeleteApplicant(id: string): Promise<Applicant>;
+    GetApplicantByAccount(account_id: string): Promise<Applicant>;
   }
 
   export interface DAL {
@@ -32,6 +33,7 @@ export namespace ApplicantNS {
     CreateApplicant(Applicant: Applicant): Promise<void>;
     UpdateApplicant(Applicant: Applicant): Promise<void>;
     DeleteApplicant(id: string): Promise<void>;
+    GetApplicantByAccount(account_id: string): Promise<Applicant>;
   }
 
   export const Errors = {

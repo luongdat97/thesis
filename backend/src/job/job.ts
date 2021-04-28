@@ -1,8 +1,11 @@
 export namespace JobNS {
   export interface Job {
     id: string;
-    user_id: string;
+    recruiter_id: string;
     title: string;
+    state?: number;
+    employeeVerify_id?: string;
+    rejectReason?: string;
     career?: string;
     address?: string;
     workplace?: string;
@@ -31,7 +34,9 @@ export namespace JobNS {
 
   export interface CreateJobParams {
     title: string;
-    user_id: string;
+    recruiter_id: string;
+    state?: number;
+    employeeVerify_id?: string;
     career?: string;
     address?: string;
     workplace?: string;
@@ -57,6 +62,9 @@ export namespace JobNS {
   }
 
   export interface UpdateJobParams {
+    state?: number;
+    employeeVerify_id?: string;
+    rejectReason?: string;
     title?: string;
     career?: string;
     address?: string;
@@ -83,7 +91,7 @@ export namespace JobNS {
   }
 
   export interface BLL {
-    ListJob(user_id?: string): Promise<Job[]>;
+    ListJob(recruiter_id?: string): Promise<Job[]>;
     GetJob(id: string): Promise<Job>;
     CreateJob(params: CreateJobParams): Promise<Job>;
     UpdateJob(id: string, params: UpdateJobParams): Promise<void>;
@@ -91,7 +99,7 @@ export namespace JobNS {
   }
 
   export interface DAL {
-    ListJob(user_id?: string): Promise<Job[]>;
+    ListJob(recruiter_id?: string): Promise<Job[]>;
     GetJob(id: string): Promise<Job>;
     CreateJob(Job: Job): Promise<void>;
     UpdateJob(Job: Job): Promise<void>;

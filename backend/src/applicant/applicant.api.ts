@@ -3,10 +3,12 @@ import { HttpError, HttpStatusCodes, HttpParamValidators } from "../lib/http";
 import { ApplicantNS } from "./applicant";
 import {ProfileNS} from "../profile/profile"
 import {AccountNS} from "../account/account"
+var jwt = require('jsonwebtoken');
+
 import { NewAuthMiddleware, GetAuthData } from "../auth/auth.api.middleware";
 import { UserAuthNS } from "../auth/auth";
 
-export function NewApplicantAPI(applicantBLL: ApplicantNS.BLL, profileBLL: ProfileNS.BLL, AccountBLL: AccountNS.BLL) {
+export function NewApplicantAPI(applicantBLL: ApplicantNS.BLL, profileBLL: ProfileNS.BLL, accountBLL: AccountNS.BLL) {
   const app = express();
   app.post("/create", async (req, res) => {
     const { account_id, profile_id } = req.body
@@ -41,10 +43,34 @@ export function NewApplicantAPI(applicantBLL: ApplicantNS.BLL, profileBLL: Profi
 
   app.post("/register", async (req, res) => {
     const {name, phone, email, password} = req.body
-    let account = await AccountBLL.CreateAccount({username : email, password, role : "applicant", active: true})
+    let account = await accountBLL.CreateAccount({username : email, password, role : "applicant", active: true})
     let profile = await profileBLL.CreateProfile({name, email, phone})
     let applicant = await applicantBLL.CreateApplicant({account_id: account.id, profile_id: profile.id})
     res.json(applicant);
+  });
+
+  app.post("/login", async (req, res) => {
+    console.log("haaaaaaaa")
+    console.log(req.body)
+    const { username, password } = req.body;
+    const account = await accountBLL.GetAccountByUsername(username);
+    console.log(account)
+    if (!account) {
+      res.json({ code: 9000, mess: "username không tồn tại" })
+      return
+    }
+
+    if (account.password === password) {
+      let token = jwt.sign({
+        accountId: account.id,
+      }, process.env.TOKEN_SECRET);
+
+      let applicant = await applicantBLL.GetApplicantByAccount(account.id)
+      let profile = profileBLL.GetProfile(applicant.profile_id)
+      res.json({ code: 1000, mess: "oke", data: {...applicant, token, account_ref: account, profile_ref: profile} })
+    } else {
+      res.json({ code: 9001, mess: "incorrect password" })
+    }
   });
 
   const commonErrors = new Set([...Object.values(ApplicantNS.Errors)]);

@@ -7,20 +7,14 @@ const { TextArea } = Input
 const { Option } = Select
 
 const JobManager = (props) => {
-    return (
-        <>
-            <Title level={3}>Quản lý mẫu CV</Title>
-            <Row>
-                <Col xs={16}>
-
-
-                <Table columns={columns} dataSource={data} />
-                </Col>
-                <Col></Col>
-            </Row>
-
-        </>
-    )
+  return (
+    <>
+      <Title level={3}>Quản lý mẫu CV</Title>
+      <div className="bg-white p-3">
+        <Table columns={columns} dataSource={data} />
+      </div>
+    </>
+  )
 }
 
 
@@ -32,7 +26,7 @@ function callback(key) {
 const Demo = () => (
   <Tabs defaultActiveKey="1" onChange={callback}>
     <TabPane tab="Quản lý mẫu CV" key="1">
-    <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} />
     </TabPane>
     <TabPane tab="Tin đã duyệt" key="2">
       Content of Tab Pane 2
@@ -54,14 +48,14 @@ const columns = [
     title: 'Ảnh',
     dataIndex: 'cvImage',
     key: 'cvImage',
-    render: (text) => <img src={text} style={{height: "64px", width: "auto"}}></img>
+    render: (text) => <img src={text} style={{ height: "64px", width: "auto" }}></img>
   },
   {
     title: 'Ngày tạo',
     dataIndex: 'createdTime',
     key: 'createdTime',
   },
-  
+
   {
     title: 'Thao tác',
     key: 'action',

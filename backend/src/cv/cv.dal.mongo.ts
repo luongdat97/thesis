@@ -20,6 +20,11 @@ export class CvDALMongo implements CvNS.DAL {
         return FromMongoData.Many<CvNS.Cv>(docs);
     }
 
+    async ListCvByApplicant(applicant_id: string) {
+        const docs = await this.col_cv.find({applicant_id}).toArray();
+        return FromMongoData.Many<CvNS.Cv>(docs);
+    }
+
     async GetCv(id: string) {
         const doc = await this.col_cv.findOne({ _id: id });
         return FromMongoData.One<CvNS.Cv>(doc);

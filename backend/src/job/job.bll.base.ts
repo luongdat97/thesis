@@ -10,9 +10,9 @@ export class JobBLLBase implements JobNS.BLL {
 
     }
 
-    async ListJob(user_id?: string) {
-        if (user_id) {
-            return this.dal.ListJob(user_id);
+    async ListJob(recruiter_id?: string) {
+        if (recruiter_id) {
+            return this.dal.ListJob(recruiter_id);
         } else {
             return this.dal.ListJob();
         }

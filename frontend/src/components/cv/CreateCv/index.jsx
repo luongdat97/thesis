@@ -5,6 +5,7 @@ import StyleCv from "./index.style"
 import UploadAvatar from './UploadAvatar'
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas"
+import {useCookies} from "react-cookie"
 import printJS from 'print-js'
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -43,15 +44,19 @@ let generate = function () {
     });
 }
 const Home = () => {
+    const [cookies] = useCookies(["user"])
+    const [avatar, setAvatar] = useState({})
     const onSubmit = (values) => {
         console.log(values)
-        values.applicant_id = "324234v"
+        values.applicant_id = cookies.user.id
+        values.avatar = avatar
         cvApi.postCv(values).then((res) => {
             console.log(res)
         }).catch((err) => {
             console.log(err)
         })
     }
+    console.log(avatar)
     return (
         <>
             <div style={{ backgroundColor: "#f0f2f5" }}>
@@ -69,7 +74,7 @@ const Home = () => {
                                         Submit
                                     </Button>
                                     <Row>
-                                        <Col span={6} className="px-3"><UploadAvatar /></Col>
+                                        <Col span={6} className="px-3"><UploadAvatar avatar={avatar} setAvatar={setAvatar} /></Col>
                                         <Col span={18}>
                                             <Form.Item
                                                 name="name"

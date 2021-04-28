@@ -1,19 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import HomePage from '../../components/home/Home';
-import JobDetailPage from '../../components/JobDetail'
-import CreateCvPage from '../../components/cv/CreateCv'
-import CvManagerPage from '../../components/cv/ManageCv'
-import CvPreviewPage from '../../components/cv/CvPreview'
-import JobSearchPage from '../../components/JobSearch'
-import CvTemplates from '../../components/home/CvTemplates'
-
-import SavedJobPage from '../../components/Applicant/SavedJob'
-import AppliedJobPage from '../../components/Applicant/AppliedJob'
-import SettingJobPage from '../../components/Applicant/SettingJob'
-import SuitableJobPage from '../../components/Applicant/SuitableJob'
-import RecruiterVisitPage from '../../components/Applicant/RecruiterVisit'
 
 import PostJobPage from '../../components/Recruiter/PostJob'
 import EditJobPage from '../../components/Recruiter/EditJob'
@@ -23,8 +10,9 @@ import SearchCampaignPage from '../../components/Recruiter/SearchCampaign'
 import ViewCandidatesPage from '../../components/Recruiter/ViewCandidates'
 import CandidateManagePage from '../../components/Recruiter/CandidateManage'
 import SchedulePage from '../../components/Recruiter/Schedule'
-import CompanyInfoPage from '../../components/Recruiter/CompanyInfo'
-import AddCompanyPage from '../../components/Recruiter/AddCompany'
+import CompanyInfoPage from '../../components/Recruiter/Company/CompanyInfo'
+import AddCompanyPage from '../../components/Recruiter/Company/AddCompany'
+import EditCompany from '../../components/Recruiter/Company/EditCompany'
 export const routes = [
   {
     path: '/post-job',
@@ -74,6 +62,11 @@ export const routes = [
   {
     path: '/add-company',
     component: AddCompanyPage,
+    exact: true
+  },
+  {
+    path: '/edit-company/:id',
+    component: EditCompany,
     exact: true
   },
 ];

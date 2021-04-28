@@ -33,6 +33,9 @@ class ApplicantApi {
     register(payload) {
         return Http.post(`${API_ENDPOINT.BASE}/register`, payload)
     }
+    login(payload) {
+        return Http.post(`${API_ENDPOINT.BASE}/login`, payload)
+    }
 }
 
 const instance = new ApplicantApi();
