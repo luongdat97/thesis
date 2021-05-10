@@ -3,6 +3,7 @@ import { Form, Input, Select, Row, Col, Collapse, Card, Typography, Button, Spac
 import { Link } from 'react-router-dom'
 import StyleManageCv from './index.style'
 import cvApi from '../../../api/cvApi'
+import {useCookies} from 'react-cookie'
 const { Option } = Select;
 const { Panel } = Collapse;
 const { Meta } = Card;
@@ -49,12 +50,15 @@ function CvCard(props) {
 
 export default function ManageCv() {
     const [cvList, setCvList] = useState([])
+    const [cookies] = useCookies(["user"])
+    let applicant_id = cookies.user.id
     useEffect(() => {
         fetchCv()
     }, [])
 
     const fetchCv = () => {
-        cvApi.getCvList().then((res) => {
+        console.log("l.=............",applicant_id)
+        cvApi.getCvList({applicant_id}).then((res) => {
             console.log(res.data)
             setCvList(res.data)
         })

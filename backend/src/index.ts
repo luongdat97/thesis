@@ -31,8 +31,12 @@ import { CompanyDALMongo } from "./company/company.dal.mongo"
 import { CompanyBLLBase } from './company/company.bll.base';
 import { EmployeeDALMongo } from "./employee/employee.dal.mongo"
 import { EmployeeBLLBase } from './employee/employee.bll.base';
+import { InvitedApplicantDALMongo } from "./invitedApplicant/invitedApplicant.dal.mongo"
+import { InvitedApplicantBLLBase } from './invitedApplicant/invitedApplicant.bll.base';
 import { DesireDALMongo } from "./desire/desire.dal.mongo"
 import { DesireBLLBase } from './desire/desire.bll.base';
+import { SavedApplicantDALMongo } from "./savedApplicant/savedApplicant.dal.mongo"
+import { SavedApplicantBLLBase } from './savedApplicant/savedApplicant.bll.base';
 
 import { NewTodoAPI } from "./todo/todo.api";
 import { NewCustomerAPI } from "./customer/customer.api";
@@ -49,6 +53,8 @@ import { NewCompanyAPI } from "./company/company.api"
 import { NewEmployeeAPI } from "./employee/employee.api"
 import { NewCloudAPI } from "./cloud/cloud.api"
 import { NewDesireAPI } from "./desire/desire.api"
+import { NewSavedApplicantAPI } from "./savedApplicant/savedApplicant.api"
+import { NewInvitedApplicantAPI } from "./invitedApplicant/invitedApplicant.api"
 
 import { ServiceBLLBase } from './service/service.bll.base'
 import { ServiceDALMongo } from './service/service.dal.mongo';
@@ -120,7 +126,7 @@ async function main() {
   //--------
   const appliedJobDAL = new AppliedJobDALMongo(database);
   await appliedJobDAL.init();
-  const appliedJobBLL = new AppliedJobBLLBase(appliedJobDAL, jobBLL);
+  const appliedJobBLL = new AppliedJobBLLBase(appliedJobDAL, jobBLL, applicantBLL);
   await appliedJobBLL.init();
 
   //--------
@@ -146,6 +152,18 @@ async function main() {
   await desireDAL.init();
   const desireBLL = new DesireBLLBase(desireDAL);
   await desireBLL.init();
+
+  //--------
+  const savedApplicantDAL = new SavedApplicantDALMongo(database);
+  await savedApplicantDAL.init();
+  const savedApplicantBLL = new SavedApplicantBLLBase(savedApplicantDAL, applicantDAL);
+  await savedApplicantBLL.init();
+
+  //--------
+  const invitedApplicantDAL = new InvitedApplicantDALMongo(database);
+  await invitedApplicantDAL.init();
+  const invitedApplicantBLL = new InvitedApplicantBLLBase(invitedApplicantDAL);
+  await invitedApplicantBLL.init();
   /****************************************************** */
   const app = require('express')();
   app.disable('x-powered-by');
@@ -158,7 +176,7 @@ async function main() {
   app.use('/api/service', NewServiceAPI(serviceBLL));
   app.use("/api/customer/", NewCustomerAPI(customerBLL));
   app.use('/api/todo/', NewTodoAPI(userAuthBLL, todoBLL));
-  app.use('/api/job/', NewJobAPI(jobBLL));
+  app.use('/api/job/', NewJobAPI(jobBLL, companyBLL, recruiterBLL));
   app.use('/api/profile/', NewProfileAPI(profileBLL));
   app.use('/api/account/', NewAccountAPI(accountBLL));
   app.use('/api/applicant/', NewApplicantAPI(applicantBLL, profileBLL, accountBLL));
@@ -170,6 +188,8 @@ async function main() {
   app.use('/api/company', NewCompanyAPI(companyBLL))
   app.use('/api/cloud', NewCloudAPI())
   app.use('/api/desire', NewDesireAPI(desireBLL, applicantBLL, cvBLL))
+  app.use('/api/saved-applicant', NewSavedApplicantAPI(savedApplicantBLL))
+  app.use('/api/invited-applicant', NewInvitedApplicantAPI(invitedApplicantBLL))
 
   /******************************************************* */
   app.use((err, req, res, next) => {

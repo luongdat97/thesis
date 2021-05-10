@@ -1,3 +1,4 @@
+import { ApplicantNS } from "../applicant/applicant";
 import { JobNS } from "../job/job";
 import rand from "../lib/rand";
 import { AppliedJobNS } from "./appliedJob";
@@ -6,6 +7,7 @@ export class AppliedJobBLLBase implements AppliedJobNS.BLL {
     constructor(
         private dal: AppliedJobNS.DAL,
         private jobBLL: JobNS.BLL,
+        private applicantBLL: ApplicantNS.BLL,
     ) { }
 
     async init() {
@@ -20,9 +22,25 @@ export class AppliedJobBLLBase implements AppliedJobNS.BLL {
         let docs = await this.dal.ListAppliedJobByApplicant(applicant_id);
         let docsDetail: AppliedJobNS.AppliedJobDetail[] = await Promise.all(docs.map(async (item) => {
             let job_ref = await this.jobBLL.GetJob(item.job_id)
+            let applicant_ref = await this.applicantBLL.GetApplicant(item.applicant_id)
             return ({
                 ...item,
-                job_ref
+                job_ref,
+                applicant_ref
+            })
+        }))
+        return docsDetail
+    }
+
+    async ListAppliedJobByJob(job_id: string) {
+        let docs = await this.dal.ListAppliedJobByJob(job_id);
+        let docsDetail: AppliedJobNS.AppliedJobDetail[] = await Promise.all(docs.map(async (item) => {
+            let job_ref = await this.jobBLL.GetJob(item.job_id)
+            let applicant_ref = await this.applicantBLL.GetApplicant(item.applicant_id)
+            return ({
+                ...item,
+                job_ref,
+                applicant_ref
             })
         }))
         return docsDetail

@@ -23,27 +23,37 @@ export function NewDesireAPI(desireBLL: DesireNS.BLL, applicantBLL: ApplicantNS.
     if (param.enable) {
       param.enable = param.enable === 'true'
     }
+
+    console.log(param)
     const docs = await desireBLL.ListDesire(param);
 
     let newDocs = await Promise.all(docs.map(async (doc) => {
-      let cv = await cvBLL.GetCv(doc.cv_id) as any
-      const cv_id = doc.cv_id
-      const activity = await cvBLL.ListActivity(cv_id)
-      const education = await cvBLL.ListEducation(cv_id)
-      const experience = await cvBLL.ListExperience(cv_id)
-      const skill = await cvBLL.ListSkill(cv_id)
+      let cv: any = {}
+      let applicant: any = {}
+      try {
+        console.log("...",doc)
+        cv = await cvBLL.GetCv(doc.cv_id) as any
+        const cv_id = doc.cv_id
+        const activity = await cvBLL.ListActivity(cv_id)
+        const education = await cvBLL.ListEducation(cv_id)
+        const experience = await cvBLL.ListExperience(cv_id)
+        const skill = await cvBLL.ListSkill(cv_id)
 
-      const applicant = await applicantBLL.GetApplicant(doc.applicant_id)
-      cv.activity = activity
-      cv.education = education
-      cv.experience = experience
-      cv.skill = skill
+        applicant = await applicantBLL.GetApplicant(doc.applicant_id)
+        cv.activity = activity
+        cv.education = education
+        cv.experience = experience
+        cv.skill = skill
+      } catch (err) {
+        console.log(err)
+      }
+
       let newDoc: any = { ...doc, cv, applicant }
-  
+
       return newDoc
     }))
 
-    res.json(newDocs);
+    res.json(newDocs.filter(item => !!item.cv_id));
   });
 
   app.post("/update", async (req, res) => {

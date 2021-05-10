@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, Checkbox, Button, message } from 'antd';
 import jobApi from "../../../api/jobApi"
 import { useCookies } from 'react-cookie'
+import { province, career, tag } from '../../../Constances/const'
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
@@ -57,9 +58,9 @@ const PostJob = (props) => {
                             name="career"
                         >
                             <Select>
-                                <Option value={1}>Công nghệ IT</Option>
-                                <Option value={2}>Thời trang</Option>
-                                <Option value={3}>Báo chí</Option>
+                                {career.map(item => (
+                                    <Option value={item} key={item}>{item}</Option>
+                                ))}
                             </Select>
                         </Form.Item>
                     </Col>
@@ -73,10 +74,14 @@ const PostJob = (props) => {
                     </Col>
                     <Col span={12}>
                         <Form.Item
-                            label="Nơi làm việc"
+                            label="Tỉnh thành"
                             name="workplace"
                         >
-                            <Input />
+                            <Select>
+                                {province.map(item => (
+                                    <Option value={item} key={item}>{item}</Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                     </Col>
                     <Col span={12}>
@@ -86,7 +91,7 @@ const PostJob = (props) => {
                                     label="Lương từ"
                                     name={["salary", "from"]}
                                 >
-                                    <Input />
+                                    <Input type="number" />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
@@ -94,7 +99,7 @@ const PostJob = (props) => {
                                     label="Lương lên đến"
                                     name={["salary", "to"]}
                                 >
-                                    <Input />
+                                    <Input type="number" />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -184,10 +189,14 @@ const PostJob = (props) => {
                     </Col>
                     <Col span={12}>
                         <Form.Item
-                            label="Kỹ năng"
+                            label="Từ khóa"
                             name="skillRequire"
                         >
-                            <Input />
+                            <Select mode="tags" tokenSeparators={[',']}>
+                                {tag.map((item) => (
+                                    <Option value={item} key={item}>{item}</Option>
+                                ))}
+                            </Select>
                         </Form.Item>
 
                     </Col>

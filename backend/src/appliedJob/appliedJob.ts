@@ -1,3 +1,4 @@
+import { ApplicantNS } from "../applicant/applicant";
 import { JobNS } from "../job/job";
 
 export namespace AppliedJobNS {
@@ -6,6 +7,9 @@ export namespace AppliedJobNS {
     applicant_id: string;
     job_id: string;
     cv_id: string;
+    state?: number;
+    dayMeet?: string;
+    message?: string;
     mtime?: number;
     ctime?: number;
   }
@@ -15,7 +19,11 @@ export namespace AppliedJobNS {
     applicant_id: string;
     job_id: string;
     job_ref: JobNS.Job;
+    applicant_ref: ApplicantNS.Applicant;
     cv_id: string;
+    state?: number;
+    dayMeet?: string;
+    message?: string;
     mtime?: number;
     ctime?: number;
   }
@@ -30,12 +38,16 @@ export namespace AppliedJobNS {
     applicant_id?: string;
     job_id?: string;
     cv_id?: string;
+    state?: number;
+    dayMeet?: string;
+    message?: string;
     mtime?: number;
   }
 
   export interface BLL {
     ListAppliedJob(): Promise<AppliedJob[]>;
     ListAppliedJobByApplicant(applicant_id: string): Promise<AppliedJobDetail[]>;
+    ListAppliedJobByJob(job_id: string): Promise<AppliedJobDetail[]>;
     GetAppliedJob(id: string): Promise<AppliedJob>;
     CreateAppliedJob(params: CreateAppliedJobParams): Promise<AppliedJob>;
     UpdateAppliedJob(id: string, params: UpdateAppliedJobParams): Promise<void>;
@@ -46,6 +58,7 @@ export namespace AppliedJobNS {
   export interface DAL {
     ListAppliedJob(): Promise<AppliedJob[]>;
     ListAppliedJobByApplicant(applicant_id: string): Promise<AppliedJob[]>;
+    ListAppliedJobByJob(job_id: string): Promise<AppliedJob[]>;
     GetAppliedJob(id: string): Promise<AppliedJob>;
     CreateAppliedJob(AppliedJob: AppliedJob): Promise<void>;
     UpdateAppliedJob(AppliedJob: AppliedJob): Promise<void>;

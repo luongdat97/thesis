@@ -21,6 +21,9 @@ class jobApi {
     getJobList(payload) {
         return Http.get(`${API_ENDPOINT.BASE}/list`, payload)
     }
+    searchJob(payload) {
+        return Http.get(`${API_ENDPOINT.BASE}/search`, payload)
+    }
     getJobById(id) {
         return Http.get(`${API_ENDPOINT.BASE}/get`, { id })
     }

@@ -30,6 +30,7 @@ export default function MainHeader(props) {
                 <Menu.Item key="1"><Link to={`/recruiter/job-manager`}>Tin tuyển dụng</Link></Menu.Item>
                 <Menu.Item key="2"><Link to={`/recruiter/candidate-search`}>Tìm ứng viên</Link></Menu.Item>
                 <Menu.Item key="3"><Link to={`/recruiter/schedule`}>Đặt lịch hẹn</Link></Menu.Item>
+                <Menu.Item key="7"><Link to={`/recruiter/candidate-manage`}>Quản lý ứng viên</Link></Menu.Item>
                 
                 <Menu.SubMenu key="4" icon={<SettingOutlined />} title="Tài khoản">
                         <Menu.Item key="5"><Link to={`/recruiter/saved-job`}></Link>Thông tin cá nhân</Menu.Item>

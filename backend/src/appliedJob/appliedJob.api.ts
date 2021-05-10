@@ -1,8 +1,8 @@
 import * as express from "express";
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../lib/http";
 import { AppliedJobNS } from "./appliedJob";
-import {ProfileNS} from "../profile/profile"
-import {AccountNS} from "../account/account"
+import { ProfileNS } from "../profile/profile"
+import { AccountNS } from "../account/account"
 import { NewAuthMiddleware, GetAuthData } from "../auth/auth.api.middleware";
 import { UserAuthNS } from "../auth/auth";
 
@@ -21,6 +21,9 @@ export function NewAppliedJobAPI(appliedJobBLL: AppliedJobNS.BLL) {
   app.get("/list", async (req, res) => {
     if (req.query.applicant_id) {
       const docs = await appliedJobBLL.ListAppliedJobByApplicant(req.query.applicant_id as string)
+      res.json(docs);
+    } else if (req.query.job_id) {
+      const docs = await appliedJobBLL.ListAppliedJobByJob(req.query.job_id as string)
       res.json(docs);
     } else {
       const docs = await appliedJobBLL.ListAppliedJob();
@@ -43,7 +46,7 @@ export function NewAppliedJobAPI(appliedJobBLL: AppliedJobNS.BLL) {
       const doc = await appliedJobBLL.GetAppliedJobByApplicantAndJob(req.query.applicant_id as string, req.query.job_id as string);
       res.json(doc);
     }
-    
+
   });
 
   app.post("/delete", async (req, res) => {

@@ -80,7 +80,7 @@ export default function JobSumary(props) {
                 </Col>
                 <Col span={12}>
                     <Title level={3} className="text-uppercase text-success">{job.title}</Title>
-                    <Title level={5}>Công ty TNHH AmorePacific Việt Nam</Title>
+                    <Title level={5}>{job.company?.name}</Title>
                     <Text><i className="fas fa-map-marker-alt"></i> {job.address}</Text><br />
                     <Text><i className="far fa-clock"></i> Hạn nộp hồ sơ: {moment(job.endDate).format("DD/MM/YYYY")}</Text>
                 </Col>

@@ -30,6 +30,11 @@ export const routes = [
     exact: true
   },
   {
+    path: '/',
+    component: JobManagerPage,
+    exact: true
+  },
+  {
     path: '/candidate-search',
     component: CandidateSearch,
     exact: true

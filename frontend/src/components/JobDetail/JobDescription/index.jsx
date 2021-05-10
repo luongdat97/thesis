@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, Space } from 'antd';
+import moment from 'moment'
 import styled from 'styled-components'
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -43,7 +44,7 @@ export default function JobDescription(props) {
                             <div className="d-flex justify-content-center">
                                 <Button size="large" type="primary" style={{ background: "#73d13d", borderColor: "#73d13d" }}>Ứng tuyển ngay</Button>
                             </div>
-                            <div className="d-flex justify-content-center">Hạn nộp hồ sơ: 08/04/2021</div>
+                            <div className="d-flex justify-content-center">Hạn nộp hồ sơ: {moment(job.endDate).format("DD/MM/YYYY")}</div>
                         </div>
                     </div>
                 </Space>

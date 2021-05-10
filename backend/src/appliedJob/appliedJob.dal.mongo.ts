@@ -21,6 +21,11 @@ export class AppliedJobDALMongo implements AppliedJobNS.DAL {
         return FromMongoData.Many<AppliedJobNS.AppliedJob>(docs);
     }
 
+    async ListAppliedJobByJob(job_id: string) {
+        const docs = await this.col_appliedJob.find({job_id}).toArray();
+        return FromMongoData.Many<AppliedJobNS.AppliedJob>(docs);
+    }
+
     async GetAppliedJob(id: string) {
         const doc = await this.col_appliedJob.findOne({ _id: id });
         return FromMongoData.One<AppliedJobNS.AppliedJob>(doc);

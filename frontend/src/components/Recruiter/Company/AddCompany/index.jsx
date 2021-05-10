@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, Checkbox, Button } from 'antd';
+import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, Checkbox, Button, message } from 'antd';
 import companyApi from '../../../../api/companyApi'
 import recruiterApi from '../../../../api/recruiterApi'
 import { useCookies } from 'react-cookie'
+import UploadAvatar from './UploadAvatar'
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
@@ -25,18 +26,21 @@ const tailLayout = {
 
 const AddCompany = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
+    const [logo, setLogo] = useState({})
     const addCompany = (company) => {
         companyApi.postCompany(company).then((res) => {
             let company = res.data
             recruiterApi.editRecruiter({ id: cookies.user.id, company_id: company.id }).then(res => {
                 let data = { ...cookies.user, company_id: company.id }
                 setCookie('user', data, { path: '/' });
+                message.success("Bạn đã thêm công ty thành công!")
             })
         })
     }
     const onFinish = (values) => {
         console.log('Success:', values);
-        addCompany(values)
+        
+        addCompany({...values, logo})
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -71,7 +75,7 @@ const AddCompany = () => {
                     label="Logo"
                     name="logo"
                 >
-                    <Input />
+                    <UploadAvatar avatar={logo} setAvatar={setLogo}></UploadAvatar>
                 </Form.Item>
                 <Form.Item
                     label="Mã số thuế"

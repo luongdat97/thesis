@@ -5,9 +5,9 @@ export default class Util {
     constructor() { }
 
     static toSalaryString = ({from, to}) => {
-        if (!from && !to) return "Thỏa thuận"
+        if (!from && to == 1000000) return "Thỏa thuận"
         if (!from) return `Lên đến ${to} triệu` 
-        if (!to) return `Từ ${from} triệu`
+        if (to == 1000000) return `Từ ${from} triệu`
         return `${from} - ${to} triệu`
     }
 

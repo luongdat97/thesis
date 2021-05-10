@@ -7,6 +7,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import util from '../../../helper/util'
+import recruiterApi from '../../../api/recruiterApi'
 
 const { TabPane } = Tabs;
 const { Title } = Typography
@@ -15,6 +16,7 @@ const { Option } = Select
 
 const JobManager = (props) => {
   const [jobList, setJobList] = useState([])
+  const [recruiter, setRecruiter] = useState({})
   let displayedList = jobList.filter(item => item.state === 1 && !util.isOutDate(item.endDate))
   let waitedList = jobList.filter(item => !item.state && !util.isOutDate(item.endDate))
   let rejectedList = jobList.filter(item => item.state === 2 && !util.isOutDate(item.endDate))
@@ -23,6 +25,7 @@ const JobManager = (props) => {
   let recruiter_id = cookies.user.id
   useEffect(() => {
     fetchJobList()
+    fetchRecruiter()
   }, [])
 
   const fetchJobList = () => {
@@ -33,6 +36,13 @@ const JobManager = (props) => {
       }))
       console.log(jobList)
       setJobList(jobList)
+    })
+  }
+
+  const fetchRecruiter = () => {
+    recruiterApi.getRecruiterById(recruiter_id).then(res => {
+      console.log(res.data)
+      setRecruiter(res.data)
     })
   }
 
@@ -174,7 +184,6 @@ const JobManager = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="small">
-          <Button type="primary" size="small">Xem CV apply</Button>
           <Link to={`/recruiter/edit-job/${record.id}`} ><Button type="primary" size="small">Sửa</Button></Link>
           <Popconfirm
             title="Are you sure to delete this task?"
@@ -267,31 +276,48 @@ const JobManager = (props) => {
 
   return (
     <>
-      <Card>
-        <Title level={3}>Danh sách tin tuyển dụng</Title>
-        <Tabs defaultActiveKey="1">
-        <TabPane tab="Đăng tin" key="6">
-            <PostJob fetchJobList={fetchJobList}></PostJob>
-          </TabPane>
-          <TabPane tab="Tất cả tin" key="5">
-            <Table columns={allStateColumns} dataSource={jobList} />
-          </TabPane>
-          <TabPane tab="Tin đang hiển thị" key="1">
-            <Table columns={displayedColumns} dataSource={displayedList} />
-          </TabPane>
-          <TabPane tab="Tin chờ xác thực" key="2">
-            <Table columns={waitedColumns} dataSource={waitedList} />
-          </TabPane>
-          <TabPane tab="Tin hết hạn" key="3">
-            <Table columns={outDateColumns} dataSource={outDateList} />
-          </TabPane>
-          <TabPane tab="Tin bị từ chối" key="4">
-            <Table columns={rejectedColumns} dataSource={rejectedList} />
-          </TabPane>
-        </Tabs>
+      {!!recruiter.company_id &&
+        <Card>
+          <Title level={3}>Quản lý tin tuyển dụng</Title>
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="Đăng tin" key="6">
+              <PostJob fetchJobList={fetchJobList}></PostJob>
+            </TabPane>
+            <TabPane tab="Tin đang hiển thị" key="1">
+              <Table columns={displayedColumns} dataSource={displayedList} />
+            </TabPane>
+            <TabPane tab="Tất cả tin" key="5">
+              <Table columns={allStateColumns} dataSource={jobList} />
+            </TabPane>
+            <TabPane tab="Tin chờ xác thực" key="2">
+              <Table columns={waitedColumns} dataSource={waitedList} />
+            </TabPane>
+            <TabPane tab="Tin hết hạn" key="3">
+              <Table columns={outDateColumns} dataSource={outDateList} />
+            </TabPane>
+            <TabPane tab="Tin bị từ chối" key="4">
+              <Table columns={rejectedColumns} dataSource={rejectedList} />
+            </TabPane>
+          </Tabs>
+        </Card>
+      }
+
+      {!recruiter.company_id && <CompanyRequre />}
+
+
+
+    </>
+  )
+}
+
+const CompanyRequre = (props) => {
+  return (
+    <>
+      <Card style={{textAlign: 'center'}}>
+        Bạn chưa cập nhật thông tin công ty!<br />
+        Để sử dụng chức năng này, vui lòng cập nhật thông tin công ty <Link to="/recruiter/add-company">tại đây</Link> <br />
+        <Link to="/recruiter/add-company"><Button type="primary">Cập nhật thông tin công ty</Button></Link>
       </Card>
-
-
     </>
   )
 }

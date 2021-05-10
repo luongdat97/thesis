@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List, Checkbox, Switch, Space } from 'antd';
+import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List, Checkbox, Switch, Space, message } from 'antd';
 import { useCookies } from 'react-cookie'
 import desireApi from '../../../api/desireApi'
 import profileApi from '../../../api/profileApi'
 import cvApi from '../../../api/cvApi'
+import { province, career, tag } from '../../../Constances/const'
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
@@ -68,9 +69,13 @@ const Demo = () => {
         console.log(desire)
         profileApi.editProfile({ ...profile, ...values.profile })
         if (desire.id) {
-            desireApi.editDesire({ ...desire, ...values.desire })
+            desireApi.editDesire({ ...desire, ...values.desire }).then(res => {
+                message.success("Cập nhật thành công!")
+            })
         } else {
-            desireApi.postDesire({ ...values.desire, applicant_id: cookies.user.id })
+            desireApi.postDesire({ ...values.desire, applicant_id: cookies.user.id }).then(res => {
+                message.success("Cập nhật thành công!")
+            })
         }
 
     };
@@ -117,7 +122,10 @@ const Demo = () => {
                         label="Giới tính"
                         name={['profile', 'gender']}
                     >
-                        <Input />
+                        <Select>
+                            <Option value={2}>Nam</Option>
+                            <Option value={3}>Nữ</Option>
+                        </Select>
                     </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -158,30 +166,20 @@ const Demo = () => {
                         label="Ngành nghề"
                         name={['desire', 'field']}
                     >
-                        <Select
-                            mode="multiple"
-                            allowClear
-                            style={{ width: '100%' }}
-                            placeholder="Please select"
-                            defaultValue={['IT phần mềm', 'Báo chí']}
-                            onChange={handleChange}
-                        >
-                            {children}
+                        <Select>
+                            {career.map(item => (
+                                <Option value={item} key={item}>{item}</Option>
+                            ))}
                         </Select>
                     </Form.Item>
                     <Form.Item
                         label="Kỹ năng"
                         name={['desire', 'skill']}
                     >
-                        <Select
-                            mode="multiple"
-                            allowClear
-                            style={{ width: '100%' }}
-                            placeholder="Please select"
-                            defaultValue={['Bootstrap', 'ReactJs']}
-                            onChange={handleChange}
-                        >
-                            {children}
+                        <Select mode="tags" tokenSeparators={[',']}>
+                            {tag.map((item) => (
+                                <Option value={item} key={item}>{item}</Option>
+                            ))}
                         </Select>
                     </Form.Item>
                     <Form.Item
@@ -232,9 +230,10 @@ const Demo = () => {
                         label="Địa điểm làm việc"
                         name={['desire', 'address']}
                     >
-                        <Select >
-                            <Option value="1">Vĩnh PHúc</Option>
-                            <Option value="2">Hà Nội</Option>
+                        <Select>
+                            {province.map(item => (
+                                <Option value={item} key={item}>{item}</Option>
+                            ))}
                         </Select>
                     </Form.Item>
                     <Form.Item

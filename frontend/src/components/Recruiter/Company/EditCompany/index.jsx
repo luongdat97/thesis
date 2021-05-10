@@ -4,6 +4,7 @@ import companyApi from '../../../../api/companyApi'
 import recruiterApi from '../../../../api/recruiterApi'
 import { useCookies } from 'react-cookie'
 import { useParams } from 'react-router-dom'
+import UpLoadAvatar from './UploadAvatar'
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
@@ -28,11 +29,13 @@ const EditCompany = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
     const {id} = useParams()
     const [company, setCompany] = useState({})
+    const [logo, setLogo] = useState({})
     const [form] = Form.useForm()
     const fetchCompany = async () => {
         console.log(cookies.user)
         let company = await companyApi.getCompanyById(cookies.user.company_id)
         setCompany(company.data)
+        setLogo(company.data.logo)
         console.log(company)
     }
     useEffect(() => {
@@ -50,7 +53,7 @@ const EditCompany = () => {
     const onFinish = (values) => {
         console.log('Success:', values);
         values.id = id
-        editCompany(values)
+        editCompany({...values, logo})
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -84,7 +87,7 @@ const EditCompany = () => {
                     label="Logo"
                     name="logo"
                 >
-                    <Input />
+                    <UpLoadAvatar avatar={logo} setAvatar={setLogo}/>
                 </Form.Item>
                 <Form.Item
                     label="Mã số thuế"

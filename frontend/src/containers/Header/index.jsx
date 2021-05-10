@@ -18,9 +18,9 @@ export default function MainHeader(props) {
             </div>
             <Menu theme="dark" style={{ width: 684 }} mode="horizontal" defaultSelectedKeys={['1']} overflowedIndicator={<i className="fas fa-bars"></i>}	>
                 <Menu.Item key="1"><Link to={`/job-search`}>Việc làm</Link></Menu.Item>
-                {/* <Menu.Item key="2"><Link to={`/candidate-search`}>Ứng viên</Link></Menu.Item> */}
+                <Menu.Item key="2"><Link to={`/job-search-it`}>Việc làm IT</Link></Menu.Item>
                 <Menu.Item key="3"><Link to={`/cv-template`}>Mẫu CV</Link></Menu.Item>
-                <Menu.Item key="4">Công ty</Menu.Item>
+                {/* <Menu.Item key="4">Công ty</Menu.Item> */}
                 <Menu.Item key="5"><Link to={`/register`}>Đăng ký</Link></Menu.Item>
                 <Menu.Item key="6"><Link to={`/login`}>Đăng nhập</Link></Menu.Item>
                 <Menu.Item key="7"><Link to={`/recruiter-intro`}>Nhà tuyển dụng</Link></Menu.Item>

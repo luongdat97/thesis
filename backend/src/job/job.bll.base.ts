@@ -7,7 +7,7 @@ export class JobBLLBase implements JobNS.BLL {
     ) { }
 
     async init() {
-
+        
     }
 
     async ListJob(recruiter_id?: string) {
@@ -16,8 +16,12 @@ export class JobBLLBase implements JobNS.BLL {
         } else {
             return this.dal.ListJob();
         }
-        
     }
+
+    async SearchJob(params) {
+        return this.dal.SearchJob(params);
+    }
+
 
     async GetJob(id: string) {
         const job = await this.dal.GetJob(id);
@@ -35,7 +39,7 @@ export class JobBLLBase implements JobNS.BLL {
 
     async UpdateJob(job_id: string, params: JobNS.UpdateJobParams) {
         let job = await this.GetJob(job_id);
-        job = {...job, ...params}
+        job = { ...job, ...params }
         job.mtime = Date.now();
         await this.dal.UpdateJob(job);
     }

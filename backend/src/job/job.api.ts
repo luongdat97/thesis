@@ -3,35 +3,25 @@ import { HttpError, HttpStatusCodes, HttpParamValidators } from "../lib/http";
 import { JobNS } from "./job";
 import { NewAuthMiddleware, GetAuthData } from "../auth/auth.api.middleware";
 import { UserAuthNS } from "../auth/auth";
+import { CompanyNS } from "../company/company";
+import { RecruiterNS } from "../recruiter/recruiter";
 
-export function NewJobAPI(jobBLL: JobNS.BLL) {
+export function NewJobAPI(jobBLL: JobNS.BLL, companyBLL: CompanyNS.BLL, recruiterBLL: RecruiterNS.BLL) {
   const app = express();
   app.post("/create", async (req, res) => {
-    console.log("haaaaaaaaaaaaaaaaaaa")
     const title = HttpParamValidators.MustBeString(req.body, "title");
-    // const { career, address, workplace, salary, genderRequire, workType, level,
-    //   numberHire, endDate, experienceRequire, skillRequire, receiver, jobDescription, jobRequire, jobBenefit } = req.body
-
-    // const params: JobNS.CreateJobParams = {
-    //   recruiter_id: "1",
-    //   title,
-    //   career,
-    //   address,
-    //   workplace,
-    //   salary,
-    //   genderRequire,
-    //   workType,
-    //   level,
-    //   numberHire,
-    //   endDate,
-    //   experienceRequire,
-    //   skillRequire,
-    //   receiver,
-    //   jobDescription,
-    //   jobRequire,
-    //   jobBenefit,
-    // };
-    const job = await jobBLL.CreateJob({...req.body});
+    let params = req.body
+    if (params.salary.from) {
+      req.body.salary.from = parseInt(params.salary.from)
+    } else {
+      req.body.salary.from = 0
+    }
+    if (params.salary.to) {
+      req.body.salary.to = parseInt(params.salary.to) 
+    } else {
+      req.body.salary.to = 1000000
+    }
+    const job = await jobBLL.CreateJob({ ...req.body });
     res.json(job);
   });
   app.get("/list", async (req, res) => {
@@ -42,13 +32,53 @@ export function NewJobAPI(jobBLL: JobNS.BLL) {
     } else {
       docs = await jobBLL.ListJob();
     }
-     
-    res.json(docs);
+
+    let newDocs = await Promise.all(docs.map(async (job) => {
+
+      let company: any = {}
+      
+      try {
+        let recruiter = await recruiterBLL.GetRecruiter(job.recruiter_id)
+        company = await companyBLL.GetCompany(recruiter.company_id)
+      } catch (err) {
+        console.log(err)
+      }
+
+      return { ...job, company }
+    }))
+    res.json(newDocs);
+  });
+
+  app.get("/search", async (req, res) => {
+    
+      let docs = await jobBLL.SearchJob(req.query);
+    
+
+    let newDocs = await Promise.all(docs.map(async (job) => {
+
+      let company: any = {}
+      
+      try {
+        let recruiter = await recruiterBLL.GetRecruiter(job.recruiter_id)
+        company = await companyBLL.GetCompany(recruiter.company_id)
+      } catch (err) {
+        //console.log(err)
+      }
+
+      return { ...job, company }
+    }))
+    res.json(newDocs);
   });
 
   app.post("/update", async (req, res) => {
+    if (req.body.salary?.from) req.body.salary.from = parseInt(req.body.salary.from)
+    if (req.body.salary?.to) req.body.salary.to = parseInt(req.body.salary.to)
+
     const job_id = HttpParamValidators.MustBeString(req.body, "id");
-    const params: JobNS.UpdateJobParams = {...req.body};
+    const params: JobNS.UpdateJobParams = { ...req.body };
+    
+    
+
     if (req.body.title) {
       params.title = HttpParamValidators.MustBeString(req.body, "title", 2);
     }
@@ -57,7 +87,17 @@ export function NewJobAPI(jobBLL: JobNS.BLL) {
   });
 
   app.get("/get", async (req, res) => {
-    const doc = await jobBLL.GetJob(req.query.id as string);
+    const job = await jobBLL.GetJob(req.query.id as string);
+    let company: any = {}
+      
+      try {
+        let recruiter = await recruiterBLL.GetRecruiter(job.recruiter_id)
+        company = await companyBLL.GetCompany(recruiter.company_id)
+      } catch (err) {
+        console.log(err)
+      }
+
+      let doc = { ...job, company }
     res.json(doc);
   });
 

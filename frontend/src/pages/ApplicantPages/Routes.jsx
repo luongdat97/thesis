@@ -8,6 +8,7 @@ import SettingJobPage from '../../components/Applicant/SettingJob'
 import SuitableJobPage from '../../components/Applicant/SuitableJob'
 import RecruiterVisitPage from '../../components/Applicant/RecruiterVisit'
 import JobSearch from '../../components/JobSearch'
+import JobDetail from '../../components/JobDetail'
 import CvTemplates from '../../components/home/CvTemplates'
 import IndividualPages from './IndividualPages'
 export const routes = [
@@ -17,6 +18,16 @@ export const routes = [
   },
   {
     path: '/job-search',
+    component: JobSearch,
+    exact: true
+  },
+  {
+    path: '/job-detail/:id',
+    component: JobDetail,
+    exact: true
+  },
+  {
+    path: '/',
     component: JobSearch,
     exact: true
   },

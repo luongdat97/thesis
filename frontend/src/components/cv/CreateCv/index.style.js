@@ -98,5 +98,10 @@ const StyleList = styled.div`
     height:100%;
     object-fit:cover;
   }
+
+  input, label, textarea {
+    font-size: ${props => props.size ? props.size : "1.1em"};
+    height: fit-content;
+  }
 `;
 export default StyleList;

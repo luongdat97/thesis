@@ -5,7 +5,7 @@ export const enum MongoErrorCodes {
 }
 
 function RenameOne<T, U>(doc: T, from: string, to: string) {
-    console.log(doc);
+    //console.log(doc);
     if (!doc) {
         return null;
     }

@@ -2,10 +2,11 @@ import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from '../../components/home/Home';
-import JobDetailPage from '../../components/JobDetail'
+import JobDetailPage from '../../components/JobDetailHome'
 import CreateCvPage from '../../components/cv/CreateCv'
 import CvManagerPage from '../../components/cv/ManageCv'
 import JobSearchPage from '../../components/JobSearch'
+import JobSearchIT from '../../components/JobSearchIT'
 import CandidateSearch from '../../components/home/CandidateSearch'
 import CvTemplates from '../../components/home/CvTemplates'
 import Login from '../../components/home/Login'
@@ -16,7 +17,7 @@ import RecruiterRegister from '../../components/Recruiter/Register'
 export const routes = [
   {
     path: '/',
-    component: HomePage,
+    component: JobSearchPage,
     exact: true,
   },
   {
@@ -37,6 +38,11 @@ export const routes = [
   {
     path: '/job-search',
     component: JobSearchPage,
+    exact: true
+  },
+  {
+    path: '/job-search-it',
+    component: JobSearchIT,
     exact: true
   },
   {

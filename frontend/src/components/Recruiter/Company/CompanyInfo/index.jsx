@@ -26,7 +26,7 @@ const CompanyInfo = (props) => {
                     <Title level={3}>Thông tin công ty</Title>
                     <Row className="mb-2">
                         <Col span={4}>Logo</Col>
-                        <Col span={20}>{company.logo}</Col>
+                        <Col span={20}><img src={company.logo?.url} style={{width: 100, height: 100, objectFit: 'contain'}}/></Col>
                     </Row>
                     <Row className="mb-2">
                         <Col span={4}>Tên công ty</Col>
