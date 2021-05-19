@@ -1,6 +1,7 @@
 import { ApplicantNS } from "../applicant/applicant";
 import { JobNS } from "../job/job";
 import rand from "../lib/rand";
+import { ProfileNS } from "../profile/profile";
 import { SavedApplicantNS } from "./savedApplicant";
 
 
@@ -8,6 +9,7 @@ export class SavedApplicantBLLBase implements SavedApplicantNS.BLL {
     constructor(
         private dal: SavedApplicantNS.DAL,
         private applicantDal: ApplicantNS.DAL,
+        private profileDal: ProfileNS.DAL
     ) { }
 
     async init() {
@@ -18,10 +20,12 @@ export class SavedApplicantBLLBase implements SavedApplicantNS.BLL {
         return this.dal.ListSavedApplicant();
     }
 
-    async ListSavedApplicantByJob(job_id: string) {
-        let savedList = await this.dal.ListSavedApplicantByJob(job_id);
+    async ListSavedApplicantByRecruiter(recruiter_id: string) {
+        let savedList = await this.dal.ListSavedApplicantByRecruiter(recruiter_id);
         let detailList = await Promise.all(savedList.map(async (item) => {
-            let applicant =  await this.applicantDal.GetApplicant(item.applicant_id)
+            let applicant : any =  await this.applicantDal.GetApplicant(item.applicant_id)
+            let profile = await this.profileDal.GetProfile(applicant.profile_id)
+            applicant.profile = profile
             return {
                 ...item,
                 applicant

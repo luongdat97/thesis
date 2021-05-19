@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import VerifyCompanyPage from './EmployeePages/VerifyCompanyPage'
 import VerifyJobPage from './EmployeePages/VerifyJobPage'
 import CvTemplatePage from './EmployeePages/CvTemplatePage'
@@ -8,16 +8,20 @@ import AccountPage from './ManagerPages/AccountPage'
 import ReportPage from './ManagerPages/ReportPage'
 import StatisticPage from './ManagerPages/StatisticPage'
 import WorkhistoryPage from './ManagerPages/WorkHistoryPage'
-
+import { ProvideAuth, PrivateRoute } from '../components/authenticate'
 import HomePages from './HomePages'
 import ApplicantPages from './ApplicantPages'
 import RecruiterPages from './RecruiterPages'
 import EmployeePages from './EmployeePages'
+import AdminPages from './AdminPages'
+import { useCookies } from 'react-cookie';
 export const routes = [
   {
     path: '/manager/account',
     component: AccountPage,
-    exact: true
+    exact: true,
+    role: "manager"
+
   },
   {
     path: '/manager/report',
@@ -37,14 +41,22 @@ export const routes = [
   {
     path: '/employee',
     component: EmployeePages,
+    role: "employee"
   },
   {
     path: '/recruiter',
     component: RecruiterPages,
+    role: 'recruiter'
   },
   {
     path: '/applicant',
     component: ApplicantPages,
+    role: "applicant"
+  },
+  {
+    path: '/admin',
+    component: AdminPages,
+    role: "admin"
   },
   {
     path: '/',
@@ -52,34 +64,42 @@ export const routes = [
   },
 ];
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  //const isLogin = useSelector((state) => state.user.isLogin);
-  const isLogin = true
-
+export default () => {
+  const [cookies, setCookie] = useCookies(['user']);
+  let history = useHistory();
+  if (cookies.user) {
+    let account = cookies.user.account_ref
+    history.replace({ pathname: `/${account.role}` })
+  }
   return (
-    // Show the component only when the user is logged in
-    // Otherwise, redirect the user to /sign in page
-    <Route
-      {...rest}
-      render={(props) =>
-        isLogin ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  );
-};
+    <Switch>
+      {routes.map(({ path, exact = false, component: Component, ...rest }) => {
+        console.log(rest.role)
+        if (rest.role) {
+          return (
+            <PrivateRoute
+              key={path}
+              exact={exact}
+              path={path}
+              role={rest.role}
+              {...rest}
+            >
+              <Component></Component>
+            </PrivateRoute>
+          )
+        } else {
+          return (
+            <Route
+              key={path}
+              exact={exact}
+              path={path}
+              component={Component}
+              {...rest}
+            />
+          );
+        }
+      })}
+    </Switch>
+  )
+}
 
-export default () => (
-  <Switch>
-    {routes.map(({ path, exact = false, component: Component, ...rest }) => {
-      return (
-        <PrivateRoute
-          key={path}
-          exact={exact}
-          path={path}
-          component={Component}
-          {...rest}
-        />
-      );
-    })}
-  </Switch>
-);

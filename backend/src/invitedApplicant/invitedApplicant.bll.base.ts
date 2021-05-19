@@ -1,11 +1,15 @@
+import { ApplicantNS } from "../applicant/applicant";
 import { JobNS } from "../job/job";
 import rand from "../lib/rand";
+import { ProfileNS } from "../profile/profile";
 import { InvitedApplicantNS } from "./invitedApplicant";
 
 
 export class InvitedApplicantBLLBase implements InvitedApplicantNS.BLL {
     constructor(
         private dal: InvitedApplicantNS.DAL,
+        private applicantDal: ApplicantNS.DAL,
+        private profileDal: ProfileNS.DAL,
     ) { }
 
     async init() {
@@ -17,7 +21,18 @@ export class InvitedApplicantBLLBase implements InvitedApplicantNS.BLL {
     }
 
     async ListInvitedApplicantByJob(job_id: string) {
-        return this.dal.ListInvitedApplicantByJob(job_id);
+
+        let invitedList = await this.dal.ListInvitedApplicantByJob(job_id);
+        let detailList = await Promise.all(invitedList.map(async (item) => {
+            let applicant: any = await this.applicantDal.GetApplicant(item.applicant_id)
+            let profile = await this.profileDal.GetProfile(applicant.profile_id)
+            applicant.profile = profile
+            return {
+                ...item,
+                applicant,
+            }
+        }))
+        return detailList
     }
 
     async ListInvitedApplicantByRecruiterAndApplicant(recruiter_id: string, applicant_id: string) {
@@ -55,7 +70,7 @@ export class InvitedApplicantBLLBase implements InvitedApplicantNS.BLL {
 
     async UpdateInvitedApplicant(invitedApplicant_id: string, params: InvitedApplicantNS.UpdateInvitedApplicantParams) {
         let invitedApplicant = await this.GetInvitedApplicant(invitedApplicant_id);
-        invitedApplicant = {...invitedApplicant, ...params}
+        invitedApplicant = { ...invitedApplicant, ...params }
         invitedApplicant.mtime = Date.now();
         await this.dal.UpdateInvitedApplicant(invitedApplicant);
     }

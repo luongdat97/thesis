@@ -46,7 +46,7 @@ const CandidateManage = (props) => {
           <br />
             Hạn tuyển: {moment(chosenJob.endDate).format("DD/MM/YYYY")}
           <br />
-          <CandidateTable chosenJob={chosenJob} />
+          <CandidateTable chosenJob={chosenJob} recruiter_id={recruiter_id} />
         </>}
       </Card>
     </>
@@ -54,7 +54,7 @@ const CandidateManage = (props) => {
 }
 
 const CandidateTable = (props) => {
-  const { chosenJob } = props
+  const { chosenJob, recruiter_id } = props
   const [applicantList, setApplicantList] = useState([])
   const [invitedList, setInvitedList] = useState([])
   const [savedList, setSavedList] = useState([])
@@ -68,9 +68,14 @@ const CandidateTable = (props) => {
   const rejectedList = (applicantList.filter((item) => item.state == 2)).map(item => ({
     ...item.applicant_ref.profile, key: item.id, ...item,
   }))
+
+  const savedListData = savedList.map(item => ({ ...item.applicant.profile, key: item.id, ...item }))
+  const invitedListData = invitedList.map(item => ({ ...item.applicant.profile, key: item.id, ...item }))
   useEffect(() => {
     if (chosenJob.id) {
       fetchAppliedList()
+      fetchInvitedList()
+      fetchSavedList()
     }
 
   }, [chosenJob])
@@ -83,14 +88,17 @@ const CandidateTable = (props) => {
   }
 
   const fetchInvitedList = () => {
-    invitedApplicantApi.getInvitedApplicantList({job_id: chosenJob.id}).then(res => {
+    invitedApplicantApi.getInvitedApplicantList({ job_id: chosenJob.id }).then(res => {
       console.log(res.data)
       setInvitedList(res.data)
     })
   }
 
   const fetchSavedList = () => {
-    savedApplicantApi.getSavedApplicantList({})
+    savedApplicantApi.getSavedApplicantList({ recruiter_id }).then(res => {
+      console.log(res.data)
+      setSavedList(res.data)
+    })
   }
 
   const approve = (appliedJobId) => {
@@ -104,6 +112,20 @@ const CandidateTable = (props) => {
     appliedJobApi.editAppliedJob({ id: appliedJobId, state: 2 }).then(res => {
       message.success("Bạn đã từ chối đơn của ứng viên!")
       fetchAppliedList()
+    })
+  }
+
+  const delInvite = (invitedId) => {
+    invitedApplicantApi.delInvitedApplicant({id: invitedId}).then(res => {
+      message.success("Bạn đã xóa lời mời thành công!")
+      fetchInvitedList()
+    })
+  }
+
+  const delSave = (savedId) => {
+    savedApplicantApi.delSavedApplicant(savedId).then(res => {
+      message.success("Bạn đã bỏ lưu thành công!")
+      fetchSavedList()
     })
   }
 
@@ -225,6 +247,81 @@ const CandidateTable = (props) => {
       ),
     },
   ];
+  const savedColumns = [
+    {
+      title: 'Tên ứng viên',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Số điện thoại',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Thao tác',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="middle">
+          <Button size="small" type="primary">Xem CV</Button>
+
+          <Popconfirm
+            title="Bạn có muốn bỏ lưu ứng viên này?"
+            onConfirm={() => { delSave(record.id) }}
+            okText="Đồng ý"
+            cancelText="Thoát"
+          >
+            <Button size="small" type="primary" danger>Bỏ lưu</Button>
+          </Popconfirm>
+
+
+        </Space>
+      ),
+    },
+  ];
+
+  const invitedColumns = [
+    {
+      title: 'Tên ứng viên',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Số điện thoại',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Thao tác',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="middle">
+          <Button size="small" type="primary">Xem CV</Button>
+
+          <Popconfirm
+            title="Bạn có muốn xóa lời mời ứng viên này?"
+            onConfirm={() => { delInvite(record.id) }}
+            okText="Đồng ý"
+            cancelText="Thoát"
+          >
+            <Button size="small" type="primary" danger>Xóa lời mời</Button>
+          </Popconfirm>
+
+
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <Tabs defaultActiveKey="1" >
@@ -238,30 +335,13 @@ const CandidateTable = (props) => {
         <Table columns={rejectedColumns} dataSource={rejectedList} />
       </TabPane>
       <TabPane tab="Ứng viên đã mời ứng tuyển" key="4">
-        Content of Tab Pane 3
+        <Table columns={invitedColumns} dataSource={invitedListData} />
       </TabPane>
       <TabPane tab="Ứng viên đã lưu" key="5">
-        Content of Tab Pane 3
+        <Table columns={savedColumns} dataSource={savedListData} />
       </TabPane>
     </Tabs>
   )
 };
-
-
-
-const data = [
-  {
-    key: '1',
-    applicantName: 'Lương Mạnh Đạt',
-    applicantPhoneNumber: '0981988997',
-    email: 'luongdat97@gmail.com'
-  },
-  {
-    key: '2',
-    applicantName: 'Lương Mạnh Đạt',
-    applicantPhoneNumber: '0981988997',
-    email: 'luongdat97@gmail.com'
-  },
-]
 
 export default CandidateManage;

@@ -32,6 +32,12 @@ class AccountApi {
     }
     editAccount(payload) {
         return Http.post(`${API_ENDPOINT.BASE}/update`, payload)
+    }s
+    changePass(payload) {
+        return Http.post(`${API_ENDPOINT.BASE}/change-pass`, payload)
+    }
+    changeActive(payload) {
+        return Http.post(`${API_ENDPOINT.BASE}/change-active`, payload)
     }
 }
 

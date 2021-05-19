@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 
 import { NewAuthMiddleware, GetAuthData } from "../auth/auth.api.middleware";
 import { UserAuthNS } from "../auth/auth";
+const bcrypt = require('bcrypt');
 
 export function NewApplicantAPI(applicantBLL: ApplicantNS.BLL, profileBLL: ProfileNS.BLL, accountBLL: AccountNS.BLL) {
   const app = express();
@@ -42,7 +43,8 @@ export function NewApplicantAPI(applicantBLL: ApplicantNS.BLL, profileBLL: Profi
   });
 
   app.post("/register", async (req, res) => {
-    const {name, phone, email, password} = req.body
+    let {name, phone, email, password} = req.body
+    password = bcrypt.hashSync(password, 10);
     let account = await accountBLL.CreateAccount({username : email, password, role : "applicant", active: true})
     let profile = await profileBLL.CreateProfile({name, email, phone})
     let applicant = await applicantBLL.CreateApplicant({account_id: account.id, profile_id: profile.id})
@@ -60,7 +62,7 @@ export function NewApplicantAPI(applicantBLL: ApplicantNS.BLL, profileBLL: Profi
       return
     }
 
-    if (account.password === password) {
+    if (bcrypt.compareSync(password, account.password)) {
       let token = jwt.sign({
         accountId: account.id,
       }, process.env.TOKEN_SECRET);

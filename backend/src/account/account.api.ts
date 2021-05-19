@@ -4,8 +4,10 @@ import { AccountNS } from "./account";
 var jwt = require('jsonwebtoken');
 import { NewAuthMiddleware, GetAuthData } from "../auth/auth.api.middleware";
 import { UserAuthNS } from "../auth/auth";
+import { ProfileNS } from "../profile/profile";
+const bcrypt = require('bcrypt');
 
-export function NewAccountAPI(accountBLL: AccountNS.BLL) {
+export function NewAccountAPI(accountBLL: AccountNS.BLL, profileBLL: ProfileNS.BLL) {
   const app = express();
   app.post("/create", async (req, res) => {
     const title = HttpParamValidators.MustBeString(req.body, "title");
@@ -20,7 +22,12 @@ export function NewAccountAPI(accountBLL: AccountNS.BLL) {
     res.json(account);
   });
   app.get("/list", async (req, res) => {
-    const docs = await accountBLL.ListAccount();
+    let accountList = await accountBLL.ListAccount();
+
+    let docs = await Promise.all(accountList.map(async (account) => {
+      let profile = await profileBLL.GetProfileByEmail(account.username)
+      return ({ ...account, profile })
+    }))
     res.json(docs);
   });
 
@@ -34,8 +41,26 @@ export function NewAccountAPI(accountBLL: AccountNS.BLL) {
     res.json(1);
   });
 
+  app.post("/change-pass", async (req, res) => {
+    let { account_id, oldPassword, newPassword } = req.body
+    newPassword =  bcrypt.hashSync(newPassword, 10);
+    let account = await accountBLL.GetAccount(account_id)
+    if (!bcrypt.compareSync(oldPassword, account.password)) {
+      res.json({ code: 1001, message: "Password is incorrect" })
+    } else {
+      await accountBLL.ChangePassword(account_id, newPassword)
+      res.json({ code: 1000, message: "oke" })
+    }
+  });
+
+  app.post("/change-active", async (req, res) => {
+    const { account_id, active } = req.body
+    await accountBLL.setActiveAccount(account_id, active)
+    res.json("oke")
+  });
+
   app.get("/get", async (req, res) => {
-    const {id, username} = req.query
+    const { id, username } = req.query
     if (id) {
       const doc = await accountBLL.GetAccount(id as string);
       res.json(doc);
@@ -43,7 +68,7 @@ export function NewAccountAPI(accountBLL: AccountNS.BLL) {
       const doc = await accountBLL.GetAccountByUsername(username as string);
       res.json(doc);
     }
-    
+
   });
 
   app.post("/delete", async (req, res) => {

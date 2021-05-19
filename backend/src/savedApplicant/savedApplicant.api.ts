@@ -15,9 +15,9 @@ export function NewSavedApplicantAPI(savedApplicantBLL: SavedApplicantNS.BLL) {
   });
 
   app.get("/list", async (req, res) => {
-    let job_id = req.query.job_id as string
-    if (job_id) {
-      const docs = await savedApplicantBLL.ListSavedApplicantByJob(job_id);
+    let recruiter_id = req.query.recruiter_id as string
+    if (recruiter_id) {
+      const docs = await savedApplicantBLL.ListSavedApplicantByRecruiter(recruiter_id);
       res.json(docs);
     } else {
       const docs = await savedApplicantBLL.ListSavedApplicant();

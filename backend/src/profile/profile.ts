@@ -36,6 +36,7 @@ export namespace ProfileNS {
   export interface BLL {
     ListProfile(): Promise<Profile[]>;
     GetProfile(id: string): Promise<Profile>;
+    GetProfileByEmail(email: string): Promise<Profile>;
     CreateProfile(params: CreateProfileParams): Promise<Profile>;
     UpdateProfile(id: string, params: UpdateProfileParams): Promise<void>;
     DeleteProfile(id: string): Promise<Profile>;
@@ -44,6 +45,7 @@ export namespace ProfileNS {
   export interface DAL {
     ListProfile(): Promise<Profile[]>;
     GetProfile(id: string): Promise<Profile>;
+    GetProfileByEmail(email: string): Promise<Profile>;
     CreateProfile(Profile: Profile): Promise<void>;
     UpdateProfile(Profile: Profile): Promise<void>;
     DeleteProfile(id: string): Promise<void>;

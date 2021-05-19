@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 
 import { NewAuthMiddleware, GetAuthData } from "../auth/auth.api.middleware";
 import { UserAuthNS } from "../auth/auth";
+const bcrypt = require('bcrypt');
 
 export function NewEmployeeAPI(employeeBLL: EmployeeNS.BLL, profileBLL: ProfileNS.BLL, accountBLL: AccountNS.BLL) {
   const app = express();
@@ -42,7 +43,8 @@ export function NewEmployeeAPI(employeeBLL: EmployeeNS.BLL, profileBLL: ProfileN
   });
 
   app.post("/register", async (req, res) => {
-    const {name, phone, email, password} = req.body
+    let {name, phone, email, password} = req.body    
+    password = bcrypt.hashSync(password, 10);
     let account = await accountBLL.CreateAccount({username : email, password, role : "employee", active: true})
     let profile = await profileBLL.CreateProfile({name, email, phone})
     let employee = await employeeBLL.CreateEmployee({account_id: account.id, profile_id: profile.id})
@@ -50,7 +52,7 @@ export function NewEmployeeAPI(employeeBLL: EmployeeNS.BLL, profileBLL: ProfileN
   });
 
   app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
+    let { username, password } = req.body;
     const account = await accountBLL.GetAccountByUsername(username);
     console.log(account)
     if (!account) {
@@ -58,7 +60,7 @@ export function NewEmployeeAPI(employeeBLL: EmployeeNS.BLL, profileBLL: ProfileN
       return
     }
 
-    if (account.password === password) {
+    if (bcrypt.compareSync(password, account.password)) {
       let token = jwt.sign({
         accountId: account.id,
       }, process.env.TOKEN_SECRET);

@@ -1,3 +1,4 @@
+import { ApplicantNS } from "../applicant/applicant";
 import { JobNS } from "../job/job";
 
 export namespace InvitedApplicantNS {
@@ -5,6 +6,16 @@ export namespace InvitedApplicantNS {
     id: string;
     recruiter_id: string;
     applicant_id: string;
+    job_id: string;
+    mtime?: number;
+    ctime?: number;
+  }
+
+  export interface InvitedApplicantDetail {
+    id: string;
+    recruiter_id: string;
+    applicant_id: string;
+    applicant: ApplicantNS.Applicant;
     job_id: string;
     mtime?: number;
     ctime?: number;
@@ -25,7 +36,7 @@ export namespace InvitedApplicantNS {
 
   export interface BLL {
     ListInvitedApplicant(): Promise<InvitedApplicant[]>;
-    ListInvitedApplicantByJob(job_id: string): Promise<InvitedApplicant[]>;
+    ListInvitedApplicantByJob(job_id: string): Promise<InvitedApplicantDetail[]>;
     ListInvitedApplicantByRecruiterAndApplicant(recruiter_id: string, applicant_id: string): Promise<InvitedApplicant[]>;
     GetInvitedApplicant(id: string): Promise<InvitedApplicant>;
     GetInvitedApplicantByRecruiter(recruiter_id: string, applicant_id): Promise<InvitedApplicant>;

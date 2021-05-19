@@ -22,6 +22,14 @@ export class ProfileBLLBase implements ProfileNS.BLL {
         return profile;
     }
 
+    async GetProfileByEmail(email: string) {
+        const profile = await this.dal.GetProfileByEmail(email);
+        if (!profile) {
+            return null
+        }
+        return profile;
+    }
+
     async DeleteProfile(id: string) {
         const profile = await this.GetProfile(id);
         await this.dal.DeleteProfile(id);

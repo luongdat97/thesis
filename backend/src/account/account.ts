@@ -29,6 +29,8 @@ export namespace AccountNS {
     CreateAccount(params: CreateAccountParams): Promise<Account>;
     UpdateAccount(id: string, params: UpdateAccountParams): Promise<void>;
     DeleteAccount(id: string): Promise<Account>;
+    ChangePassword(account_id: string, newPassword: string): Promise<void>;
+    setActiveAccount(account_id: string, active: boolean): Promise<void>;
   }
 
   export interface DAL {

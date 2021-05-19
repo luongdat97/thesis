@@ -49,7 +49,7 @@ const InterestJobList = (props) => {
                     {
                         jobList.map(job => (
                             <Col key={job.id} span={24}>
-                                <Link to={`/applicant/job-detail/${job.id}`}>
+                                <Link to={`/job-detail/${job.id}`}>
                                     <HorizontalJobCard job={job} />
                                 </Link>
 

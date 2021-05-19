@@ -22,6 +22,11 @@ export class ProfileDALMongo implements ProfileNS.DAL {
         return FromMongoData.One<ProfileNS.Profile>(doc);
     }
 
+    async GetProfileByEmail(email: string) {
+        const doc = await this.col_profile.findOne({ email });
+        return FromMongoData.One<ProfileNS.Profile>(doc);
+    }
+
     async UpdateProfile(profile: ProfileNS.Profile) {
         const doc = ToMongoData.One(profile);
         await this.col_profile.updateOne({ _id: profile.id }, { $set: doc });

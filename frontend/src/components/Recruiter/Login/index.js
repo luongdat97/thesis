@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Button, Form, Input, message } from 'antd';
-import { useHistory } from 'react-router-dom'
+import {
+    useHistory,
+    useLocation
+} from "react-router-dom";
+import applicantApi from '../../../api/applicantApi'
+import accountApi from '../../../api/accountApi'
 import recruiterApi from '../../../api/recruiterApi'
+import employeeApi from '../../../api/employeeApi'
+import adminApi from '../../../api/adminApi'
 import { useCookies } from 'react-cookie';
+import { useAuth } from '../../authenticate'
 const { Title, Text } = Typography;
 const layout = {
     labelCol: { span: 8 },
@@ -15,9 +23,19 @@ const tailLayout = {
 const Login = (props) => {
     const [cookies, setCookie] = useCookies(['user']);
     let history = useHistory();
-    const onFinish = (values) => {
+    let location = useLocation();
+    let auth = useAuth();
+
+    if (cookies.user) {
+        let account = cookies.user.account_ref
+        history.replace({ pathname: `/${account.role}` })
+    }
+
+    const onFinish = async (values) => {
         console.log('Success:', values);
-        recruiterApi.login(values).then((res) => {
+        let api = recruiterApi
+
+        api.login(values).then((res) => {
             let data = res.data
             console.log(data)
             if (data.code === 9000) {
@@ -25,8 +43,10 @@ const Login = (props) => {
             } else if (data.code === 9001) {
                 message.error("Mật khẩu không đúng!")
             } else if (data.code === 1000) {
-                setCookie('user', data.data, { path: '/' });
-                history.push("/recruiter")
+                auth.signin(data.data, () => {
+                    let { from } = location.state || { from: { pathname: `/recruiter` } };
+                    history.replace(from);
+                });
             }
         })
     };

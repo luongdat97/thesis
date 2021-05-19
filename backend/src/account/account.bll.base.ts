@@ -35,7 +35,23 @@ export class AccountBLLBase implements AccountNS.BLL {
 
     async UpdateAccount(account_id: string, params: AccountNS.UpdateAccountParams) {
         let account = await this.GetAccount(account_id);
-        account = {...account, ...params}
+        account = { ...account, ...params }
+        account.mtime = Date.now();
+        await this.dal.UpdateAccount(account);
+    }
+
+    async ChangePassword(account_id: string, newPassword: string) {
+
+        let account = await this.GetAccount(account_id);
+        account = { ...account, password: newPassword }
+        account.mtime = Date.now();
+        await this.dal.UpdateAccount(account);
+    }
+
+    async setActiveAccount(account_id: string, active: boolean) {
+
+        let account = await this.GetAccount(account_id);
+        account = { ...account, active }
         account.mtime = Date.now();
         await this.dal.UpdateAccount(account);
     }

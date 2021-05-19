@@ -1,103 +1,115 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Checkbox, Button } from 'antd';
-
+import { Form, Input, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Checkbox, Button, Card, Popconfirm, message } from 'antd';
+import accountApi from '../../../api/accountApi'
+import AddAccount from './AddAccount'
+import EditAccount from './EditAccount'
 const { TabPane } = Tabs;
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
 
-const JobManager = (props) => {
-    return (
-        <>
-            <Title level={3}>Quản lý tài khoản</Title>
-            <Row>
-                <Col xs={16}>
-                <Button type="primary">Tạo mới tài khoản</Button>
+const AccountManage = (props) => {
+  const [accountList, setAccountList] = useState([])
+  useEffect(() => {
+    fetchAccountList()
+  }, [])
 
-                <Table columns={columns} dataSource={data} />
-                </Col>
-                <Col></Col>
-            </Row>
+  const fetchAccountList = () => {
+    accountApi.getAccountList().then(res => {
+      console.log(res.data)
+      let accountList = res.data
+      let accountListForTable = accountList.map((account) => ({
+        ...account.profile, ...account, key: account.id
+      }))
+      setAccountList(accountListForTable)
+    })
+  }
 
-        </>
-    )
+  const blockAccount = (account_id) => {
+    accountApi.changeActive({ account_id, active: false }).then(res => {
+      message.success("Bạn đã khóa tài khoản thành công!")
+      fetchAccountList()
+    })
+  }
+
+  const unblockAccount = (account_id) => {
+    accountApi.changeActive({ account_id, active: true }).then(res => {
+      message.success("Bạn đã mở khóa tài khoản thành công!")
+      fetchAccountList()
+    })
+  }
+
+  const columns = [
+    {
+      title: 'Họ tên',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Mã ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Tài khoản',
+      dataIndex: 'username',
+      key: 'username',
+    },
+    {
+      title: 'Số điện thoại',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: 'Vai trò',
+      dataIndex: 'role',
+      key: 'role',
+    },
+    {
+      title: 'Thao tác',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="small">
+          <EditAccount fetchAccountList={fetchAccountList} data={record}/>
+          {record.active &&
+            <Popconfirm
+              title="Bạn có muốn khóa tài khoản này?"
+              onConfirm={() => blockAccount(record.id)}
+              okText="Đồng ý"
+              cancelText="Thoát"
+            >
+              <Button type="primary" danger style={{width: 150}}>Khóa tài khoản</Button>
+            </Popconfirm>
+          }
+
+          {!record.active &&
+            <Popconfirm
+              title="Bạn có muốn mở khóa tài khoản này?"
+              onConfirm={() => unblockAccount(record.id)}
+              okText="Đồng ý"
+              cancelText="Thoát"
+            >
+              <Button type="primary" danger ghost style={{width: 150}}>Mở khóa tài khoản</Button>
+            </Popconfirm>
+          }
+
+
+        </Space>
+      ),
+    },
+  ];
+
+
+  return (
+    <>
+      <Card>
+        <Title level={4}>Quản lý tài khoản</Title>
+        <AddAccount fetchAccountList={fetchAccountList}/>
+
+
+        <Table columns={columns} dataSource={accountList} className="mt-3"/>
+      </Card>
+    </>
+  )
 }
-
-
-
-function callback(key) {
-  console.log(key);
-}
-
-const Demo = () => (
-  <Tabs defaultActiveKey="1" onChange={callback}>
-    <TabPane tab="Công ty mới cần duyệt " key="1">
-    <Table columns={columns} dataSource={data} />
-    </TabPane>
-    <TabPane tab="Công ty đã duyệt" key="2">
-      Content of Tab Pane 2
-    </TabPane>
-    <TabPane tab="Công ty bị từ chối" key="3">
-      Content of Tab Pane 3
-    </TabPane>
-  </Tabs>
-);
-
-const columns = [
-  {
-    title: 'Họ tên',
-    dataIndex: 'jobName',
-    key: 'jobName',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: 'Mã ID',
-    dataIndex: 'createdDate',
-    key: 'createdDate',
-  },
-  {
-    title: 'Tài khoản',
-    dataIndex: 'owner',
-    key: 'owner',
-  },
-  {
-    title: 'Số điện thoại',
-    dataIndex: 'createdDate',
-    key: 'createdDate',
-  },
-  {
-    title: 'Vai trò',
-    dataIndex: 'createdDate',
-    key: 'createdDate',
-  },
-  {
-    title: 'Thao tác',
-    key: 'action',
-    render: (text, record) => (
-      <Space size="small">
-        <Button type="primary">Xem</Button>
-        <Button type="primary">Sửa</Button>
-        <Button type="primary">Khóa tài khoản</Button>
-      </Space>
-    ),
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    jobName: 'FPT software',
-    owner: 'Lương Mạnh Đạt',
-    company: 'FPT software',
-    createdDate: '20/01/2021'
-  },
-  {
-    key: '2',
-    jobName: 'Samsung',
-    owner: 'Lương Mạnh Đạt',
-    company: 'Samsung',
-    createdDate: '20/01/2021'
-  },
-]
-
-export default JobManager;
+export default AccountManage;

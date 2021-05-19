@@ -32,7 +32,7 @@ export namespace SavedApplicantNS {
 
   export interface BLL {
     ListSavedApplicant(): Promise<SavedApplicant[]>;
-    ListSavedApplicantByJob(job_id: string): Promise<SavedApplicantDetail[]>;
+    ListSavedApplicantByRecruiter(recruiter_id: string): Promise<SavedApplicantDetail[]>;
     GetSavedApplicant(id: string): Promise<SavedApplicant>;
     GetSavedApplicantByRecruiter(recruiter_id: string, applicant_id: string): Promise<SavedApplicant>;
     CreateSavedApplicant(params: CreateSavedApplicantParams): Promise<SavedApplicant>;
@@ -42,7 +42,7 @@ export namespace SavedApplicantNS {
 
   export interface DAL {
     ListSavedApplicant(): Promise<SavedApplicant[]>;
-    ListSavedApplicantByJob(job_id: string): Promise<SavedApplicant[]>;
+    ListSavedApplicantByRecruiter(recruiter_id: string): Promise<SavedApplicant[]>;
     GetSavedApplicant(id: string): Promise<SavedApplicant>;
     GetSavedApplicantByRecruiter(recruiter_id: string, applicant_id: string): Promise<SavedApplicant>;
     CreateSavedApplicant(SavedApplicant: SavedApplicant): Promise<void>;

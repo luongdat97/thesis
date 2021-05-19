@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
 import {useCookies} from 'react-cookie'
 import {useHistory} from 'react-router-dom'
+import {useAuth} from '../../components/authenticate'
 const { Title } = Typography;
 
 const { Header } = Layout;
@@ -11,6 +12,7 @@ const { Header } = Layout;
 export default function MainHeader(props) {
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const history = useHistory();
+    let auth = useAuth();
     const logout = () => {
         console.log("logout.....")
         removeCookie("user",{ path: '/' })
@@ -35,7 +37,7 @@ export default function MainHeader(props) {
                         <Menu.Item key="7"><Link to={`/applicant/individual/suitable-job`}></Link>Việc làm phù hợp</Menu.Item>
                         <Menu.Item key="8"><Link to={`/applicant/individual/setting-job`}></Link>Cài đặt gợi ý</Menu.Item>
                         <Menu.Item key="9"><Link to={`/applicant/individual/recruiter-visit`}></Link>Nhà tuyển dụng xem hồ sơ</Menu.Item>
-                        <Menu.Item key="10" className="border-top"  onClick={logout}><i className="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>
+                        <Menu.Item key="10" className="border-top" onClick={() => auth.signout(() => history.push("/"))}><i className="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>
                 </Menu.SubMenu>
             </Menu>
             <div><span className="text-white mr-3">Chào, Đạt</span></div>

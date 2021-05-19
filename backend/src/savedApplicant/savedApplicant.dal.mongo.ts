@@ -16,8 +16,8 @@ export class SavedApplicantDALMongo implements SavedApplicantNS.DAL {
         return FromMongoData.Many<SavedApplicantNS.SavedApplicant>(docs);
     }
 
-    async ListSavedApplicantByJob(job_id: string) {
-        const docs = await this.col_savedApplicant.find({job_id}).toArray();
+    async ListSavedApplicantByRecruiter(recruiter_id: string) {
+        const docs = await this.col_savedApplicant.find({recruiter_id}).toArray();
         return FromMongoData.Many<SavedApplicantNS.SavedApplicant>(docs);
     }
 
