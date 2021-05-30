@@ -5,6 +5,7 @@ import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/ico
 import { useCookies } from 'react-cookie'
 import { useHistory } from 'react-router-dom'
 import {useAuth} from '../../components/authenticate'
+import Notification from './Notification'
 const { Title } = Typography;
 
 const { Header } = Layout;
@@ -20,28 +21,29 @@ export default function MainHeader(props) {
     }
     const url = props.url
     return (
-        <Header className="d-flex" style={{ position: 'fixed', zIndex: 1, width: '100%', padding: '0 100px' }}>
-            <div className="logo d-flex align-items-center">
+        <Header className="d-flex" style={{ position: 'fixed', zIndex: 1, width: '100%', padding: '0 180px' }}>
+            <div className="logo d-flex align-items-center mr-auto">
                 <img className="mr-2" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style={{ width: 50, height: 50 }} />
                 <Title level={3} className="text-white">Việc làm</Title>
             </div>
-            <div className="d-flex align-items-center mr-auto">
-                <Input style={{ width: 300, height: 50, borderRadius: 25 }} placeholder="Nhập việc làm bạn muốn tìm..." prefix={<i className="fas fa-search"></i>} />
-            </div>
+    
             <Menu theme="dark" style={{ width: 530 }} mode="horizontal" defaultSelectedKeys={['1']} overflowedIndicator={<i className="fas fa-bars"></i>}	>
                 <Menu.Item key="1"><Link to={`/recruiter/job-manager`}>Tin tuyển dụng</Link></Menu.Item>
                 <Menu.Item key="2"><Link to={`/recruiter/candidate-search`}>Tìm ứng viên</Link></Menu.Item>
-                <Menu.Item key="3"><Link to={`/recruiter/schedule`}>Đặt lịch hẹn</Link></Menu.Item>
                 <Menu.Item key="7"><Link to={`/recruiter/candidate-manage`}>Quản lý ứng viên</Link></Menu.Item>
                 
                 <Menu.SubMenu key="4" icon={<SettingOutlined />} title="Tài khoản">
-                        <Menu.Item key="5"><Link to={`/recruiter/saved-job`}></Link>Thông tin cá nhân</Menu.Item>
+                        <Menu.Item key="5"><Link to={`/recruiter/profile`}></Link>Thông tin cá nhân</Menu.Item>
                         <Menu.Item key="6"><Link to={`/recruiter/company-info`}></Link>Thông tin công ty</Menu.Item>
+                        <Menu.Item key="3"><Link to={`/recruiter/change-pass`}></Link>Đổi mật khẩu</Menu.Item>
                         <Menu.Item key="10" className="border-top" onClick={() => auth.signout(() => history.push("/"))}><i className="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>
                 </Menu.SubMenu>
             </Menu>
             <div><span className="text-white mr-3">Chào, Luân</span></div>
-            <div><span><i className="fas fa-bell text-white"></i></span></div>
+            <div className="position-relative">
+                <span><i className="fas fa-bell text-white"></i></span>
+                <Notification />
+            </div>
             
         </Header>
     )

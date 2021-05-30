@@ -186,7 +186,7 @@ const RejectModal = (props) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>Từ chối</Button>
+      <Button type="primary" onClick={showModal} danger>Từ chối</Button>
       <Modal
         title={`Từ chối công ty: ${company.name}`}
         visible={isModalVisible}

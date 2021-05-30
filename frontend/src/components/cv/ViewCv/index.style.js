@@ -9,20 +9,26 @@ const StyleList = styled.div`
   .ant-form-item {
     margin-bottom: 0px;
   }
-  .ant-input:hover {
-    border: 1px dashed #000;
-  }
   
   .avatar-uploader > .ant-upload {
-    width: 140px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
+    border-radius: 100px;
+  }
+
+  .avatar-uploader{
+    width: 180px;
+    height: 180px;
+  }
+
+  img{
+    width: 180px;
+    height: 180px;
+    border-radius: 100px;
   }
   .section-title {
     font-size: 18px;
     font-weight: bold;
-  }
-  .section:hover {
-    border: 2px solid #bae7ff;
   }
   .section {
     border: 2px solid #fff;
@@ -88,10 +94,25 @@ const StyleList = styled.div`
     border-color: #52c41a;
   }
   .ant-col-18 {
-    max-width: 100%
+    max-width: 100%;
   }
   .ant-upload.ant-upload-select-picture-card {
     border: none;
+  }
+  img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .input-none-bg .ant-input{
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: #ddd;
+  }
+
+  .input-none-bg .section {
+    border: 2px solid transparent;
+    position: relative;
   }
 `;
 export default StyleList;

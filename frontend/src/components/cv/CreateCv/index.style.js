@@ -14,8 +14,20 @@ const StyleList = styled.div`
   }
   
   .avatar-uploader > .ant-upload {
-    width: 140px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
+    border-radius: 100px;
+  }
+
+  .avatar-uploader{
+    width: 180px;
+    height: 180px;
+  }
+
+  img{
+    width: 180px;
+    height: 180px;
+    border-radius: 100px;
   }
   .section-title {
     font-size: 18px;
@@ -97,6 +109,19 @@ const StyleList = styled.div`
     width:100%;
     height:100%;
     object-fit:cover;
+  }
+  .input-none-bg .ant-input{
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: #ddd;
+  }
+
+  .input-none-bg .ant-input:hover {
+    border: 1px dashed #fff;
+  }
+  .input-none-bg .section {
+    border: 2px solid transparent;
+    position: relative;
   }
 `;
 export default StyleList;

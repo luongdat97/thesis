@@ -29,10 +29,12 @@ export default function JobSumary(props) {
                     <Text><i className="far fa-clock"></i> Hạn nộp hồ sơ: {moment(job.endDate).format("DD/MM/YYYY")}</Text>
                 </Col>
                 <Col span={8}>
-                    <Space direction="vertical" size="large">
-                        <Button onClick={() => message.warn("Bạn cần đăng nhập để sử dụng chức năng này")} size="large" style={{ width: 150 }} type="primary">Ứng tuyển</Button>
-                        <Button onClick={() => message.warn("Bạn cần đăng nhập để sử dụng chức năng này")} size="large" style={{ width: 150 }}>Lưu tin</Button>
-                    </Space>
+                    {!props.noAction &&
+                        <Space direction="vertical" size="large">
+                            <Button onClick={() => message.warn("Bạn cần đăng nhập để sử dụng chức năng này")} size="large" style={{ width: 150 }} type="primary">Ứng tuyển</Button>
+                            <Button onClick={() => message.warn("Bạn cần đăng nhập để sử dụng chức năng này")} size="large" style={{ width: 150 }}>Lưu tin</Button>
+                        </Space>
+                    }
                 </Col>
             </Row>
         </Card>

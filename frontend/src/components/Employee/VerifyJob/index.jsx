@@ -4,6 +4,7 @@ import jobApi from '../../../api/jobApi'
 import moment from "moment"
 import util from '../../../helper/util'
 import { useCookies } from 'react-cookie'
+import {Link} from "react-router-dom"
 const { TabPane } = Tabs;
 const { Title } = Typography
 const { TextArea } = Input
@@ -56,7 +57,7 @@ const JobManager = (props) => {
       title: 'Tin tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text, record) => <Link  target="_blank" to={`/employee/job-detail/${record.id}`}>{text}</Link>,
     },
     {
       title: 'Mức lương',
@@ -101,7 +102,7 @@ const JobManager = (props) => {
       title: 'Tin tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text, record) => <Link  target="_blank" to={`/employee/job-detail/${record.id}`}>{text}</Link>,
     },
     {
       title: 'Mức lương',
@@ -128,7 +129,7 @@ const JobManager = (props) => {
       title: 'Tin tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text, record) => <Link  target="_blank" to={`/employee/job-detail/${record.id}`}>{text}</Link>,
     },
     {
       title: 'Mức lương',
@@ -193,7 +194,7 @@ const RejectModal = (props) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>Từ chối</Button>
+      <Button type="primary" onClick={showModal} danger>Từ chối</Button>
       <Modal
         title={`Từ chối tin: ${job.title}`}
         visible={isModalVisible}

@@ -60,6 +60,11 @@ export function NewAdminAPI(adminBLL: AdminNS.BLL, profileBLL: ProfileNS.BLL, ac
       return
     }
 
+    if (!account.active) {
+      res.json({ code: 9002, mess: "tài khoản bị khóa" })
+      return
+    }
+
     if (bcrypt.compareSync(password, account.password)) {
       let token = jwt.sign({
         accountId: account.id,

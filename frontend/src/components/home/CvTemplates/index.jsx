@@ -25,9 +25,9 @@ const JobManager = (props) => {
                 <Col sm={16}>
                     <Card className="bg-white">
                         <Row gutter={[16, 16]}>
-                            {cvCovers.map(url =>
+                            {cvCovers.map((url, index) =>
                                 <Col span={8}>
-                                    <CvCard cover={url}></CvCard>
+                                    <CvCard cover={url} index={index}></CvCard>
                                 </Col>
                             )}
                         </Row>
@@ -44,7 +44,7 @@ const JobManager = (props) => {
 
 const CvCard = (props) => {
     return (
-        <Link to="/cv/create">
+        <Link to={props.index === 1 ? "/cv1/create": "/cv/create"}>
             <Card
                 hoverable
                 className='w-100'

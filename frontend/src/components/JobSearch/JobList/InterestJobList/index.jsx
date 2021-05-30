@@ -4,10 +4,16 @@ import HorizontalJobCard from '../../JobCard/HorizontalJobCard'
 import jobApi from '../../../../api/jobApi'
 import { Link } from 'react-router-dom'
 import { tag } from '../../../../Constances/const'
+import {useCookies} from 'react-cookie'
 const { CheckableTag } = Tag;
 const { Title, Text } = Typography;
 const { Option } = Select
 const InterestJobList = (props) => {
+    const [cookies, setCookie] = useCookies(['user']);
+    let url = ""
+    if (cookies.user) {
+        url="/applicant"
+    }
     let {jobList} = props
     return (
         <>
@@ -49,7 +55,7 @@ const InterestJobList = (props) => {
                     {
                         jobList.map(job => (
                             <Col key={job.id} span={24}>
-                                <Link to={`/job-detail/${job.id}`}>
+                                <Link to={`${url}/job-detail/${job.id}`}>
                                     <HorizontalJobCard job={job} />
                                 </Link>
 

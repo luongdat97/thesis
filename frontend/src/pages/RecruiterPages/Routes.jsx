@@ -16,10 +16,16 @@ import AddCompanyPage from '../../components/Recruiter/Company/AddCompany'
 import EditCompany from '../../components/Recruiter/Company/EditCompany'
 import Profile from '../../components/Profile'
 import ChangePass from '../../components/ChangePass'
+import ViewCv from '../../components/cv/ViewCv'
 export const routes = [
   {
     path: '/post-job',
     component: PostJobPage,
+    exact: true
+  },
+  {
+    path: '/view-cv/:id',
+    component: ViewCv,
     exact: true
   },
   {

@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from '../../components/home/Home';
 import JobDetailPage from '../../components/JobDetailHome'
 import CreateCvPage from '../../components/cv/CreateCv'
+import CreateCvPage1 from '../../components/cv1/CreateCv'
 import CvManagerPage from '../../components/cv/ManageCv'
 import JobSearchPage from '../../components/JobSearch'
 import JobSearchIT from '../../components/JobSearchIT'
@@ -53,6 +54,11 @@ export const routes = [
   {
     path: '/cv/create',
     component: CreateCvPage,
+    exact: true
+  },
+  {
+    path: '/cv1/create',
+    component: CreateCvPage1,
     exact: true
   },
   {

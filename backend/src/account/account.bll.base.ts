@@ -1,9 +1,13 @@
+import { AdminNS } from "../admin/admin";
+import { EmployeeNS } from "../employee/employee";
 import rand from "../lib/rand";
 import { AccountNS } from "./account";
 
 export class AccountBLLBase implements AccountNS.BLL {
     constructor(
         private dal: AccountNS.DAL,
+        private employeeDal: EmployeeNS.DAL,
+        private adminDal: AdminNS.DAL
     ) { }
 
     async init() {
@@ -35,6 +39,19 @@ export class AccountBLLBase implements AccountNS.BLL {
 
     async UpdateAccount(account_id: string, params: AccountNS.UpdateAccountParams) {
         let account = await this.GetAccount(account_id);
+        
+        if (params.role != account.role) {
+            if (account.role === "admin") {
+                let admin = await this.adminDal.GetAdminByAccount(account.id)
+                this.employeeDal.CreateEmployee(admin) 
+                this.adminDal.DeleteAdmin(admin.id)
+            } else {
+                let employee = await this.employeeDal.GetEmployeeByAccount(account.id)
+                this.adminDal.CreateAdmin(employee) 
+                this.employeeDal.DeleteEmployee(employee.id)
+            }
+        }
+
         account = { ...account, ...params }
         account.mtime = Date.now();
         await this.dal.UpdateAccount(account);

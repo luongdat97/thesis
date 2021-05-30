@@ -80,6 +80,19 @@ async function main() {
   await todoDAL.init();
   const todoBLL = new TodoBLLBase(todoDAL);
   await todoBLL.init();
+
+  //--------
+  const recruiterDAL = new RecruiterDALMongo(database);
+  await recruiterDAL.init();
+  const recruiterBLL = new RecruiterBLLBase(recruiterDAL);
+  await recruiterBLL.init();
+
+  //--------
+  const companyDAL = new CompanyDALMongo(database);
+  await companyDAL.init();
+  const companyBLL = new CompanyBLLBase(companyDAL);
+  await companyBLL.init();
+
   //----------
   const serviceDAL = new ServiceDALMongo(database);
   await serviceDAL.init();
@@ -93,14 +106,8 @@ async function main() {
   //--------
   const jobDAL = new JobDALMongo(database);
   await jobDAL.init();
-  const jobBLL = new JobBLLBase(jobDAL);
+  const jobBLL = new JobBLLBase(jobDAL, recruiterDAL, companyDAL);
   await jobBLL.init();
-
-  //--------
-  const accountDAL = new AccountDALMongo(database);
-  await accountDAL.init();
-  const accountBLL = new AccountBLLBase(accountDAL);
-  await accountBLL.init();
 
   //--------
   const profileDAL = new ProfileDALMongo(database);
@@ -113,12 +120,6 @@ async function main() {
   await applicantDAL.init();
   const applicantBLL = new ApplicantBLLBase(applicantDAL, profileDAL);
   await applicantBLL.init();
-
-  //--------
-  const recruiterDAL = new RecruiterDALMongo(database);
-  await recruiterDAL.init();
-  const recruiterBLL = new RecruiterBLLBase(recruiterDAL);
-  await recruiterBLL.init();
 
   //--------
   const cvDAL = new CvDALMongo(database);
@@ -139,12 +140,6 @@ async function main() {
   await savedJobBLL.init();
 
   //--------
-  const companyDAL = new CompanyDALMongo(database);
-  await companyDAL.init();
-  const companyBLL = new CompanyBLLBase(companyDAL);
-  await companyBLL.init();
-
-  //--------
   const employeeDAL = new EmployeeDALMongo(database);
   await employeeDAL.init();
   const employeeBLL = new EmployeeBLLBase(employeeDAL);
@@ -155,6 +150,12 @@ async function main() {
   await adminDAL.init();
   const adminBLL = new AdminBLLBase(adminDAL);
   await adminBLL.init();
+
+  //--------
+  const accountDAL = new AccountDALMongo(database);
+  await accountDAL.init();
+  const accountBLL = new AccountBLLBase(accountDAL, employeeDAL, adminDAL);
+  await accountBLL.init();
 
   //--------
   const desireDAL = new DesireDALMongo(database);

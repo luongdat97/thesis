@@ -86,7 +86,6 @@ export default function JobSumary(props) {
                 </Col>
                 <Col span={8}>
                     <Space direction="vertical" size="large">
-
                         {!appliedJobId && <ApplyModal user={user} chosenCv={chosenCv} setChosenCv={setChosenCv} applyJob={applyJob}></ApplyModal>}
                         {!!appliedJobId && <Button onClick={deleteAppliedJob} size="large" type="primary" style={{ background: "#73d13d", borderColor: "#73d13d", width: 150 }}>Đã ứng tuyển</Button>}
 

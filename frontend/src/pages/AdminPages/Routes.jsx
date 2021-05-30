@@ -23,6 +23,11 @@ export const routes = [
     exact: true
   },
   {
+    path: '/',
+    component: AccountManage,
+    exact: true
+  },
+  {
     path: '/profile',
     component: Profile,
     exact: true

@@ -36,7 +36,7 @@ const Home = (props) => {
     return (
         <>
             <div >
-                <JobSumary job={job}></JobSumary>
+                <JobSumary job={job} noAction={props.noAction}></JobSumary>
                 <Row gutter={30} className="mt-4">
                     <Col span={16}>
                         <JobDescription job={job}></JobDescription>

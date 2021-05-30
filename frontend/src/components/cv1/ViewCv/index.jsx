@@ -7,6 +7,8 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas"
 import printJS from 'print-js'
 import {useParams} from 'react-router-dom'
+import Util from '../../../helper/util'
+const generate = Util.generate
 const { Option } = Select;
 const { Panel } = Collapse;
 const { Meta } = Card;
@@ -18,31 +20,6 @@ const layout = {
 };
 
 
-let generate = function () {
-    html2canvas(document.getElementById("html2canvas"), { quality: 4 }).then(function (canvas) {
-        var imgData = canvas.toDataURL('image/png');
-        var imgWidth = 210;
-        var pageHeight = 295;
-        var imgHeight = canvas.height * imgWidth / canvas.width;
-        var heightLeft = imgHeight;
-        var doc = new jsPDF('p', 'mm');
-        var position = 10; // give some top padding to first page
-
-        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft >= 0) {
-            position += heightLeft - imgHeight; // top padding for other pages
-            doc.addPage();
-            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-        }
-        window.open(doc.output('bloburl'), '_blank');
-        //doc.output('dataurlnewwindow');
-
-        //doc.save('file.pdf');
-    });
-}
 const Home = () => {
     const [cvData, setCvData] = useState({})
     const [form] = Form.useForm()
@@ -87,7 +64,7 @@ const Home = () => {
                                     initialValues={cvData}
                                 >
                                     <Row>
-                                        <Col span={6} className="px-3"><UploadAvatar avatar={cvData.avatar}/></Col>
+                                        <Col span={6} className="px-3"><img src={avatar?.url} alt="avatar" style={{width: 180, height: 180}}></img></Col>
                                         <Col span={18}>
                                             <Form.Item
                                                 name="name"
@@ -144,7 +121,6 @@ const Home = () => {
                                     </Row>
                                     <Divider className="my-0 mt-3" />
                                     <div className="section">
-                                        <SectionTool />
                                         <div className="d-flex align-items-center section-title">
                                             <i className="fas fa-graduation-cap ml-3 mr-2"></i>
                                             <span className="section-title">Mục tiêu nghề nghiệp</span>
@@ -165,7 +141,6 @@ const Home = () => {
 
                                     <Divider className="my-0 mt-3" />
                                     <div className="section">
-                                        <SectionTool />
                                         <div className="d-flex align-items-center section-title">
                                             <i className="fas fa-graduation-cap ml-3 mr-2"></i>
                                             <span className="section-title">Học vấn</span>
@@ -176,7 +151,6 @@ const Home = () => {
                                                     <>
                                                         {fields.map(({ key, name, fieldKey, ...restField }, index) => (
                                                             <div className="section-item">
-                                                                <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
                                                                 <Row>
                                                                     <Col span={5}>
                                                                         <Form.Item
@@ -222,7 +196,6 @@ const Home = () => {
 
                                     <Divider className="my-0 mt-3" />
                                     <div className="section">
-                                        <SectionTool />
                                         <div className="d-flex align-items-center section-title">
                                             <i className="fas fa-graduation-cap ml-3 mr-2"></i>
                                             <span className="section-title">Kinh nghiệm làm việc</span>
@@ -233,7 +206,6 @@ const Home = () => {
                                                     <>
                                                         {fields.map(({ key, name, fieldKey, ...restField }, index) => (
                                                             <div className="section-item">
-                                                                <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
                                                                 <Row>
                                                                     <Col span={5}>
                                                                         <Form.Item
@@ -282,7 +254,6 @@ const Home = () => {
 
                                     <Divider className="my-0 mt-3" />
                                     <div className="section">
-                                        <SectionTool />
                                         <div className="d-flex align-items-center section-title">
                                             <i className="fas fa-graduation-cap ml-3 mr-2"></i>
                                             <span className="section-title">Hoạt động</span>
@@ -293,7 +264,6 @@ const Home = () => {
                                                     <>
                                                         {fields.map(({ key, name, fieldKey, ...restField }, index) => (
                                                             <div className="section-item">
-                                                                <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
                                                                 <Row>
                                                                     <Col span={5}>
                                                                         <Form.Item
@@ -335,7 +305,6 @@ const Home = () => {
 
                                     <Divider className="my-0 mt-3" />
                                     <div className="section">
-                                        <SectionTool />
                                         <div className="d-flex align-items-center section-title">
                                             <i className="fas fa-graduation-cap ml-3 mr-2"></i>
                                             <span className="section-title">Kỹ năng</span>
@@ -346,7 +315,6 @@ const Home = () => {
                                                     <>
                                                         {fields.map(({ key, name, fieldKey, ...restField }, index) => (
                                                             <div className="section-item">
-                                                                <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
                                                                 <Row>
                                                                     <Col span={5}>
                                                                         <Form.Item
@@ -378,7 +346,6 @@ const Home = () => {
 
                                     <Divider className="my-0 mt-3" />
                                     <div className="section">
-                                        <SectionTool />
                                         <div className="d-flex align-items-center section-title">
                                             <i className="fas fa-graduation-cap ml-3 mr-2"></i>
                                             <span className="section-title">Sở thích</span>
@@ -406,46 +373,5 @@ const Home = () => {
 
     );
 };
-
-function SectionTool(props) {
-    return (
-        <div className="section-tool">
-            <Space size="small">
-                <Button type="primary"><i className="fas fa-arrow-up light-icon"></i></Button>
-                <Button type="primary"><i className="fas fa-arrow-down light-icon"></i></Button>
-                <Button type="primary"><i className="fas fa-minus light-icon"></i></Button>
-            </Space>
-        </div>
-    )
-}
-
-function ItemTool(props) {
-    const { remove, index, add, length, move } = props
-    return (
-        <div className="section-item-tool">
-            <Space size="small">
-                {<Button type="primary" size="small" onClick={() => move(index, index - 1)}><i className="fas fa-arrow-up light-icon"></i></Button>}
-                {<Button type="primary" size="small" onClick={() => move(index, index + 1)}><i className="fas fa-arrow-down light-icon"></i></Button>}
-                <Button type="primary" size="small" onClick={() => add({}, index + 1)}><i className="fas fa-plus light-icon"></i></Button>
-
-                {length >= 2 && <Button type="primary" size="small" onClick={() => { remove(index) }}><i className="fas fa-minus light-icon"></i></Button>}
-            </Space>
-        </div>
-    )
-}
-
-function TempItemTool(props) {
-    return (
-        <div className="section-item-tool">
-
-            <Space size="small">
-                {<Button type="primary" size="small"><i className="fas fa-arrow-up light-icon"></i></Button>}
-                {<Button type="primary" size="small"><i className="fas fa-arrow-down light-icon"></i></Button>}
-                <Button type="primary" size="small"><i className="fas fa-plus light-icon"></i></Button>
-                {<Button type="primary" size="small"><i className="fas fa-minus light-icon"></i></Button>}
-            </Space>
-        </div>
-    )
-}
 
 export default Home

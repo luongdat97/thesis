@@ -26,10 +26,11 @@ const Login = (props) => {
     let location = useLocation();
     let auth = useAuth();
 
-    if (cookies.user) {
-        let account = cookies.user.account_ref
-        history.replace({pathname : `/${account.role}`})
-      }
+    // if (cookies.user) {
+    //     console.log(cookies.user)
+    //     let account = cookies.user.account_ref
+    //     history.replace({pathname : `/${account.role}`})
+    //   }
 
     const onFinish = async (values) => {
         try{
@@ -50,6 +51,8 @@ const Login = (props) => {
                     message.error("email không tồn tại!")
                 } else if (data.code === 9001) {
                     message.error("Mật khẩu không đúng!")
+                } else if (data.code === 9002) {
+                    message.error("Tài khoản của bạn đã bị khóa!")
                 } else if (data.code === 1000) {
                     auth.signin(data.data, () => {
                         let { from } = location.state || {from: {pathname : `/${account.role}`}} ;

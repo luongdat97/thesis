@@ -17,7 +17,7 @@ const AccountManage = (props) => {
   const fetchAccountList = () => {
     accountApi.getAccountList().then(res => {
       console.log(res.data)
-      let accountList = res.data
+      let accountList = res.data.filter(item => item.role === "admin" || item.role === "employee")
       let accountListForTable = accountList.map((account) => ({
         ...account.profile, ...account, key: account.id
       }))
@@ -64,6 +64,7 @@ const AccountManage = (props) => {
       title: 'Vai trò',
       dataIndex: 'role',
       key: 'role',
+      render: text => text === "admin" ? "Quản lý" : "Nhân viên"
     },
     {
       title: 'Thao tác',
@@ -103,7 +104,7 @@ const AccountManage = (props) => {
   return (
     <>
       <Card>
-        <Title level={4}>Quản lý tài khoản</Title>
+        <Title level={4}>Quản lý tài khoản nhân viên</Title>
         <AddAccount fetchAccountList={fetchAccountList}/>
 
 

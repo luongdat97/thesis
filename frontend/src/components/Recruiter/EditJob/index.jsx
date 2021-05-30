@@ -276,7 +276,7 @@ const Demo = (props) => {
                     <TextArea rows={4} />
                 </Form.Item>
                 <Button type="primary" htmlType="submit">
-                    Đăng tin
+                    Cập nhật
             </Button>
 
         </Form>

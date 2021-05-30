@@ -60,6 +60,11 @@ export function NewEmployeeAPI(employeeBLL: EmployeeNS.BLL, profileBLL: ProfileN
       return
     }
 
+    if (!account.active) {
+      res.json({ code: 9002, mess: "tài khoản bị khóa" })
+      return
+    }
+
     if (bcrypt.compareSync(password, account.password)) {
       let token = jwt.sign({
         accountId: account.id,

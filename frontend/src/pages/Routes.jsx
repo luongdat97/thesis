@@ -67,10 +67,10 @@ export const routes = [
 export default () => {
   const [cookies, setCookie] = useCookies(['user']);
   let history = useHistory();
-  if (cookies.user) {
-    let account = cookies.user.account_ref
-    history.replace({ pathname: `/${account.role}` })
-  }
+  // if (cookies.user) {
+  //   let account = cookies.user.account_ref
+  //   history.replace({ pathname: `/${account.role}` })
+  // }
   return (
     <Switch>
       {routes.map(({ path, exact = false, component: Component, ...rest }) => {

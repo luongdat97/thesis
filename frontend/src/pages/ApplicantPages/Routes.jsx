@@ -11,6 +11,8 @@ import JobSearch from '../../components/JobSearch'
 import JobDetail from '../../components/JobDetail'
 import CvTemplates from '../../components/home/CvTemplates'
 import IndividualPages from './IndividualPages'
+import Profile from '../../components/Profile'
+import ChangePass from '../../components/ChangePass'
 export const routes = [
   {
     path: '/individual',
@@ -34,6 +36,16 @@ export const routes = [
   {
     path: '/cv-template',
     component: CvTemplates,
+    exact: true
+  },
+  {
+    path: '/profile',
+    component: Profile,
+    exact: true
+  },
+  {
+    path: '/change-pass',
+    component: ChangePass,
     exact: true
   },
 ];

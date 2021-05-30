@@ -4,6 +4,7 @@ import util from "../../../../helper/util"
 import { Link } from "react-router-dom"
 import invitedApplicantAPI from "../../../../api/invitedApplicant"
 import savedApplicantAPI from "../../../../api/savedApplicant"
+import CvModal from './CvModal'
 const { Title, Text } = Typography
 const CandidateCard = (props) => {
     console.log(".........", props)
@@ -64,13 +65,10 @@ const CandidateCard = (props) => {
                             <InviteApplyModal jobList={jobList} recruiter_id={recruiter_id} applicant_id={desire.applicant_id} />
                             {!savedApplicant && <Button onClick={() => { saveApplicant() }} style={{ width: 110 }} size="small" type="primary">Lưu ứng viên</Button>}
                             {!!savedApplicant && <Button onClick={() => { delSavedApplicant() }} style={{ width: 110 }} size="small" type="primary">Đã lưu</Button>}
-                            <Button style={{ width: 110 }} size="small" type="primary">Xem CV</Button>
+                            <CvModal cv={cv}/>
                         </Space>
                     </Col>
-
                 </Row>
-
-
             </Card>
         </>
     )

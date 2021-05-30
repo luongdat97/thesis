@@ -1,9 +1,13 @@
+import { CompanyNS } from "../company/company";
 import rand from "../lib/rand";
+import { RecruiterNS } from "../recruiter/recruiter";
 import { JobNS } from "./job";
 
 export class JobBLLBase implements JobNS.BLL {
     constructor(
         private dal: JobNS.DAL,
+        private recruiterDal: RecruiterNS.DAL,
+        private companyDal: CompanyNS.DAL
     ) { }
 
     async init() {
@@ -24,11 +28,15 @@ export class JobBLLBase implements JobNS.BLL {
 
 
     async GetJob(id: string) {
-        const job = await this.dal.GetJob(id);
+        let job = await this.dal.GetJob(id);
         if (!job) {
             throw JobNS.Errors.ErrJobNotFound;
         }
-        return job;
+        let recruiter = await this.recruiterDal.GetRecruiter(job.recruiter_id)
+        console.log(recruiter)
+        let company = await this.companyDal.GetCompany(recruiter?.company_id)
+        
+        return {...job, company};
     }
 
     async DeleteJob(id: string) {

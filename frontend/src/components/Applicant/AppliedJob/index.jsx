@@ -21,7 +21,7 @@ const AppliedJob = (props) => {
     return (
         <>
             <Card>
-                <Title level={4} className="mb-3">Công việc đã ứng tuyển</Title>
+                <Title level={3} className="mb-5">Công việc đã ứng tuyển</Title>
                 {appliedList.map((item) => (
                     <>
                         <AppliedJobCard job={item.job_ref} key={item.id}></AppliedJobCard>

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Button, Popconfirm } from 'antd';
+import Util from "../../../../helper/util"
+import moment from "moment"
+import {Link} from "react-router-dom"
 const { Title, Text } = Typography;
 
 const GeneralJobCard = (props) => {
@@ -9,25 +12,25 @@ const GeneralJobCard = (props) => {
             <Col span={3}>
                 <img
                     alt="example"
-                    src={props.logoUrl}
+                    src={job.company?.logo.url}
                     style={{ width: "100%" }}
                 />
             </Col>
             <Col span={18}>
-                <Title level={5}>{job.title}</Title>
-                <Text strong type="secondary">Công ty FPT</Text>
+                <Link to={`/applicant/job-detail/${job.id}`}><Title level={5}>{job.title}</Title></Link>
+                <Text strong type="secondary">{job.company?.name}</Text>
                 <Row>
                     <Col span={8}>
                         <i className="fas fa-dollar-sign"></i>&nbsp;
-                        Lương: 11-21 triệu
+                        Lương: {Util.toSalaryString(job.salary)}
                     </Col>
                     <Col span={8}>
                         <i className="fas fa-map-marked-alt"></i>&nbsp;
-                        Địa điểm: Phú thọ, Vĩnh Phúc
+                        Địa điểm: {job.workplace}
                     </Col>
                     <Col span={8}>
                         <i className="far fa-clock"></i>&nbsp;
-                        Hạn nộp: 20/4/2021
+                        Hạn nộp: {moment(job.endDate).format("DD/MM/YYYY")}
                     </Col>
                 </Row>
             </Col>

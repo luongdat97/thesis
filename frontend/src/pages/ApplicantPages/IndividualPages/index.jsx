@@ -23,10 +23,10 @@ function HomePages() {
 
     return (
         <Row gutter={30}>
-            <Col span={6}>
+            {/* <Col span={6}>
                 <ApplicantSider path={path} url={url}></ApplicantSider>
-            </Col>
-            <Col span={18}>
+            </Col> */}
+            <Col span={24}>
                 <Routes path={path} />
             </Col>
         </Row>
