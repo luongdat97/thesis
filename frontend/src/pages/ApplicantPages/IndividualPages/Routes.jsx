@@ -10,6 +10,8 @@ import RecruiterVisitPage from '../../../components/Applicant/RecruiterVisit'
 import CvManage from '../../../components/cv/ManageCv'
 import ViewCv from '../../../components/cv/ViewCv'
 import EditCv from '../../../components/cv/EditCv'
+import ViewCv1 from '../../../components/cv1/ViewCv'
+import EditCv1 from '../../../components/cv1/EditCv'
 export const routes = [
   {
     path: '/saved-job',
@@ -49,6 +51,16 @@ export const routes = [
   {
     path: '/edit-cv/:id',
     component: EditCv,
+    exact: true
+  },
+  {
+    path: '/view-cv1/:id',
+    component: ViewCv1,
+    exact: true
+  },
+  {
+    path: '/edit-cv1/:id',
+    component: EditCv1,
     exact: true
   },
 ];

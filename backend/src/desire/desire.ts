@@ -45,7 +45,7 @@ export namespace DesireNS {
   }
 
   export interface BLL {
-    ListDesire(param): Promise<Desire[]>;
+    ListDesire(param, pageIndex): any;
     GetDesire(id: string): Promise<Desire>;
     GetDesireByApplicant(id: string): Promise<Desire>;
     CreateDesire(params: CreateDesireParams): Promise<Desire>;
@@ -54,7 +54,7 @@ export namespace DesireNS {
   }
 
   export interface DAL {
-    ListDesire(param): Promise<Desire[]>;
+    ListDesire(param, pageIndex): any;
     GetDesire(id: string): Promise<Desire>;
     GetDesireByApplicant(applicant_id: string): Promise<Desire>;
     CreateDesire(Desire: Desire): Promise<void>;

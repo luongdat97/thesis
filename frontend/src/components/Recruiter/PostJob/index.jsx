@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, Checkbox, Button, message } from 'antd';
+import { Form, Input, DatePicker, Select, Row, Col, InputNumber, Card, Typography, List, Checkbox, Button, message, Space } from 'antd';
 import jobApi from "../../../api/jobApi"
 import { useCookies } from 'react-cookie'
 import { province, career, tag } from '../../../Constances/const'
@@ -11,6 +11,7 @@ const { Option } = Select
 const PostJob = (props) => {
     console.log(props)
     const [cookies] = useCookies(["user"])
+    const [form] = Form.useForm()
     const postJob = (job) => {
         return jobApi.postJob(job)
     }
@@ -33,8 +34,8 @@ const PostJob = (props) => {
     };
 
     return (
-        <Card>
-            <Title level={4} className="mt-3">Đăng tin tuyển dụng</Title>
+        <>
+            <Title level={4}>Đăng tin tuyển dụng</Title>
             <Form
                 layout="vertical"
                 name="basic"
@@ -43,11 +44,13 @@ const PostJob = (props) => {
                 }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
+                form={form}
             >
                 <Title level={5}>Thông tin cơ bản</Title>
                 <Form.Item
                     label="Tiêu đề"
                     name="title"
+                    rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                 >
                     <Input />
                 </Form.Item>
@@ -56,6 +59,7 @@ const PostJob = (props) => {
                         <Form.Item
                             label="Ngành nghề"
                             name="career"
+                            rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                         >
                             <Select>
                                 {career.map(item => (
@@ -68,6 +72,7 @@ const PostJob = (props) => {
                         <Form.Item
                             label="Địa chỉ làm việc"
                             name="address"
+                            rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                         >
                             <Input />
                         </Form.Item>
@@ -76,6 +81,7 @@ const PostJob = (props) => {
                         <Form.Item
                             label="Tỉnh thành"
                             name="workplace"
+                            rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                         >
                             <Select>
                                 {province.map(item => (
@@ -108,7 +114,7 @@ const PostJob = (props) => {
                 <Row gutter={20}>
                     <Col span={12}>
                         <Form.Item
-                            label="Giới tính"
+                            label="Yêu cầu giới tính"
                             name="genderRequire"
                         >
                             <Select>
@@ -163,6 +169,7 @@ const PostJob = (props) => {
                         <Form.Item
                             label="Hạn nộp hồ sơ"
                             name="endDate"
+                            rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                         >
                             <DatePicker />
                         </Form.Item>
@@ -171,7 +178,7 @@ const PostJob = (props) => {
                 <Row gutter={20}>
                     <Col span={12}>
                         <Form.Item
-                            label="Kinh nghiệm"
+                            label="Yêu cầu kinh nghiệm"
                             name="experienceRequire"
                         >
                             <Select>
@@ -189,7 +196,7 @@ const PostJob = (props) => {
                     </Col>
                     <Col span={12}>
                         <Form.Item
-                            label="Từ khóa"
+                            label="Từ khóa tìm kiếm"
                             name="skillRequire"
                         >
                             <Select mode="tags" tokenSeparators={[',']}>
@@ -203,8 +210,6 @@ const PostJob = (props) => {
                 </Row>
 
 
-
-
                 <Title level={5}>Thông tin người nhận hồ sơ</Title>
 
                 <Form.Item
@@ -216,6 +221,7 @@ const PostJob = (props) => {
                 <Form.Item
                     label="Email nhận hồ sơ"
                     name={["receiver", "email"]}
+                    rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                 >
                     <Input />
                 </Form.Item>
@@ -229,27 +235,34 @@ const PostJob = (props) => {
                 <Form.Item
                     label="Mô tả công việc"
                     name="jobDescription"
+                    rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                 >
                     <TextArea rows={4} />
                 </Form.Item>
                 <Form.Item
                     label="Yêu cầu ứng viên"
                     name="jobRequire"
+                    rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                 >
                     <TextArea rows={4} />
                 </Form.Item>
                 <Form.Item
                     label="Quyền lợi ứng viên"
                     name="jobBenefit"
+                    rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                 >
                     <TextArea rows={4} />
                 </Form.Item>
-                <Button type="primary" htmlType="submit">
-                    Đăng tin
-            </Button>
-
+                <Space direction="horizontal" className="d-flex justify-content-end">
+                    <Button onClick={() => form.resetFields()}>
+                        Đặt lại dữ liệu
+                    </Button>
+                    <Button type="primary" htmlType="submit">
+                        Đăng tin
+                    </Button>
+                </Space>
             </Form>
-        </Card>
+        </>
     );
 };
 

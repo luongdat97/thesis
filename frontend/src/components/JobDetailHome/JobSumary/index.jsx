@@ -20,7 +20,7 @@ export default function JobSumary(props) {
         <Card>
             <Row gutter={16}>
                 <Col span={4} className="px-1">
-                    <img className="w-100" alt="company logo" src={job.company?.logo?.url}></img>
+                    <img className="w-100" style={{maxHeight: 120, objectFit: "contain"}} alt="company logo" src={job.company?.logo?.url}></img>
                 </Col>
                 <Col span={12}>
                     <Title level={3} className="text-uppercase text-success">{job.title}</Title>

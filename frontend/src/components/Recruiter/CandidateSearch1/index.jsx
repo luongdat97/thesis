@@ -16,6 +16,8 @@ const { Option } = Select
 const CandidateSearch = (props) => {
     const [desireList, setDesireList] = useState([])
     const [jobList, setJobList] = useState([])
+    const [total, setTotal] = useState(1)
+    const [pageIndex, setPageIndex] = useState(0)
     const [cookies] = useCookies(['user'])
     let recruiter_id = cookies.user.id
     useEffect(() => {
@@ -24,13 +26,14 @@ const CandidateSearch = (props) => {
             console.log(res.data)
             setJobList(res.data)
         })
-    }, [])
+    }, [pageIndex])
 
     const getDesireList = (params) => {
         console.log({ ...params, enable: true })
-        desireApi.getDesireList({ ...params, enable: true }).then((res) => {
+        desireApi.getDesireList({ ...params, enable: true, pageIndex }).then((res) => {
             console.log(res.data)
-            setDesireList(res.data)
+            setDesireList(res.data.data)
+            setTotal(res.data.total)
         })
 
     }
@@ -45,7 +48,7 @@ const CandidateSearch = (props) => {
                         <CandidateCard data={cv} key={cv.id} recruiter_id={recruiter_id} jobList={jobList}></CandidateCard>
                     )}
                     <div className="d-flex justify-content-center mt-3">
-                        <Pagination defaultCurrent={1} total={150} pageSizeOptions={[]} />
+                        <Pagination defaultCurrent={1} pageSize={5} total={total} onChange={(index) => setPageIndex(index - 1)} pageSizeOptions={[]} />
                     </div>
                 </Col>
                 <Col xs={8}>
@@ -69,7 +72,7 @@ const ExtraOption = (props) => {
                 <Title level={4}>Tìm kiếm nâng cao</Title>
                 <Form
                     {...layout}
-                    onFinish={(value) => {console.log(value);props.getDesireList(value)}}
+                    onFinish={(value) => { console.log(value); props.getDesireList(value) }}
                     form={form}
                 >
                     <Form.Item
@@ -85,7 +88,7 @@ const ExtraOption = (props) => {
                     </Form.Item>
                     <Form.Item
                         label="Địa điểm"
-                        name= 'address'
+                        name='address'
                     >
                         <Select>
                             <Option value={null}>Tất cả địa điểm</Option>
@@ -164,12 +167,12 @@ const ExtraOption = (props) => {
                     >
                         <RangePicker picker="year" />
                     </Form.Item> */}
-                   <div className="d-flex justify-content-end">
-                   <Button type="primary" htmlType="submit" className="mr-3">Tìm kiếm</Button>
-                        <Button onClick={()=> {form.resetFields()}}>Đặt lại dữ liệu</Button>
-                   </div>
-                        
-                    
+                    <div className="d-flex justify-content-end">
+                        <Button type="primary" htmlType="submit" className="mr-3">Tìm kiếm</Button>
+                        <Button onClick={() => { form.resetFields() }}>Đặt lại dữ liệu</Button>
+                    </div>
+
+
 
                 </Form>
             </Card>

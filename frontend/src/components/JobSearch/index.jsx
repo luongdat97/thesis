@@ -17,31 +17,22 @@ const { Title, Text } = Typography;
 
 const Home = () => {
     const [jobList, setJobList] = useState([])
-    const fetchJob = async () => {
-        let jobList = (await jobApi.getJobList()).data
-        setJobList(jobList)
-    }
-    useEffect(() => {
-        fetchJob()
-    }, [])
+    const [pageIndex, setPageIndex] = useState(0)
+    const [total, setTotal] = useState(1)
     return (
         <>
             <HomeSlider />
             <div style={{paddingTop: 25, backgroundColor: "#f0f2f5"}}>
                 <Row gutter={30}>
                     <Col sm={16}>
-                        <InterestJobList jobList={jobList}></InterestJobList>
+                        <InterestJobList jobList={jobList} setPageIndex={setPageIndex} total={total}></InterestJobList>
                     </Col>
                     <Col sm={8}>
-                        <FormSearch setJobList={setJobList}></FormSearch>
+                        <FormSearch setJobList={setJobList} pageIndex={pageIndex} setTotal={setTotal}></FormSearch>
                     </Col>
                 </Row>
-                
-                
             </div>
-
         </>
-
     );
 };
 

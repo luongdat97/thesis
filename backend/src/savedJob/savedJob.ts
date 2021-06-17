@@ -1,4 +1,4 @@
-import { JobNS } from "../job/job";
+import { JobNS } from "../job/Job";
 
 export namespace SavedJobNS {
   export interface SavedJob {

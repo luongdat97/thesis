@@ -41,7 +41,6 @@ export default function MainHeader(props) {
             </Menu>
             <div><span className="text-white mr-3">Chào, Luân</span></div>
             <div className="position-relative">
-                <span><i className="fas fa-bell text-white"></i></span>
                 <Notification />
             </div>
             

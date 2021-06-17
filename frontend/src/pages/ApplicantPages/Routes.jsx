@@ -8,11 +8,14 @@ import SettingJobPage from '../../components/Applicant/SettingJob'
 import SuitableJobPage from '../../components/Applicant/SuitableJob'
 import RecruiterVisitPage from '../../components/Applicant/RecruiterVisit'
 import JobSearch from '../../components/JobSearch'
+import JobSearchIT from '../../components/JobSearchIT'
 import JobDetail from '../../components/JobDetail'
 import CvTemplates from '../../components/home/CvTemplates'
 import IndividualPages from './IndividualPages'
 import Profile from '../../components/Profile'
 import ChangePass from '../../components/ChangePass'
+import CreateCvPage from '../../components/cv/CreateCv'
+import CreateCvPage1 from '../../components/cv1/CreateCv'
 export const routes = [
   {
     path: '/individual',
@@ -21,6 +24,11 @@ export const routes = [
   {
     path: '/job-search',
     component: JobSearch,
+    exact: true
+  },
+  {
+    path: '/job-search-it',
+    component: JobSearchIT,
     exact: true
   },
   {
@@ -46,6 +54,16 @@ export const routes = [
   {
     path: '/change-pass',
     component: ChangePass,
+    exact: true
+  },
+  {
+    path: '/cv/create',
+    component: CreateCvPage,
+    exact: true
+  },
+  {
+    path: '/cv1/create',
+    component: CreateCvPage1,
     exact: true
   },
 ];

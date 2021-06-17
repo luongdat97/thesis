@@ -28,8 +28,9 @@ export default function MainHeader(props) {
             <div className="d-flex align-items-center mr-auto">
                 <Input style={{ width: 300, height: 50, borderRadius: 25 }} placeholder="Nhập việc làm bạn muốn tìm..." prefix={<i className="fas fa-search"></i>} />
             </div>
-            <Menu theme="dark" style={{ width: 330 }} mode="horizontal" defaultSelectedKeys={['1']} overflowedIndicator={<i className="fas fa-bars"></i>}	>
+            <Menu theme="dark" style={{ width: 420 }} mode="horizontal" defaultSelectedKeys={['1']} overflowedIndicator={<i className="fas fa-bars"></i>}	>
                 <Menu.Item key="1"><Link to={`/applicant/job-search`}>Việc làm</Link></Menu.Item>
+                <Menu.Item key="2"><Link to={`/applicant/job-search-it`}>Việc làm IT</Link></Menu.Item>
                 <Menu.Item key="3"><Link to={`/applicant/cv-template`}>Mẫu CV</Link></Menu.Item>
                 <Menu.SubMenu key="4" icon={<SettingOutlined />} title="Tài khoản">
                     <Menu.Item key="9"><Link to={`/applicant/individual/manage-cv`}></Link>CV đã lưu</Menu.Item>

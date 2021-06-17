@@ -76,7 +76,7 @@ export default function JobSumary(props) {
         <Card>
             <Row gutter={16}>
                 <Col span={4} className="px-5">
-                    <img className="w-100" alt="company logo" src='https://res.cloudinary.com/project0407/image/upload/v1615347249/project/company%20logo/cong-ty-co-phan-dau-tu-phat-trien-anh-va-em-59db4c9957711_rs_abw9g7.jpg'></img>
+                    <img className="w-100" style={{maxHeight: 120, objectFit: "contain"}} alt="company logo" src={job.company?.logo.url}></img>
                 </Col>
                 <Col span={12}>
                     <Title level={3} className="text-uppercase text-success">{job.title}</Title>

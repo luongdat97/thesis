@@ -1,66 +1,61 @@
 import { ReadConfig } from "./config";
 import * as express from "express";
-import "./lib/express";
+import "./Helper/express";
 import * as cors from "cors";
 import { MongoClient } from "mongodb";
-import { UserAuthDALMongo } from "./auth/auth.dal.mongo";
-import { UserAuthBLLBase } from "./auth/auth.bll.base";
-import { NewAuthAPI } from "./auth/auth.api";
 
-import { TodoDALMongo } from "./todo/todo.dal.mongo";
-import { TodoBLLBase } from "./todo/todo.bll.base";
-import { JobDALMongo } from './job/job.dal.mongo';
-import { JobBLLBase } from "./job/job.bll.base";
-import { CustomerDALMongo } from "./customer/customer.dal.mongo";
-import { CustomerBLLBase } from "./customer/customer.bll.base";
-import { AccountDALMongo } from './account/account.dal.mongo';
-import { AccountBLLBase } from "./account/account.bll.base";
-import { ProfileDALMongo } from './profile/profile.dal.mongo';
-import { ProfileBLLBase } from "./profile/profile.bll.base";
-import { ApplicantDALMongo } from './applicant/applicant.dal.mongo';
-import { ApplicantBLLBase } from "./applicant/applicant.bll.base";
-import { RecruiterDALMongo } from './recruiter/recruiter.dal.mongo';
-import { RecruiterBLLBase } from "./recruiter/recruiter.bll.base";
-import { CvDALMongo } from "./cv/cv.dal.mongo"
-import { CvBLLBase } from './cv/cv.bll.base';
-import { SavedJobDALMongo } from "./savedJob/savedJob.dal.mongo"
-import { SavedJobBLLBase } from './savedJob/savedJob.bll.base';
-import { AppliedJobDALMongo } from "./appliedJob/appliedJob.dal.mongo"
-import { AppliedJobBLLBase } from './appliedJob/appliedJob.bll.base';
-import { CompanyDALMongo } from "./company/company.dal.mongo"
-import { CompanyBLLBase } from './company/company.bll.base';
-import { EmployeeDALMongo } from "./employee/employee.dal.mongo"
-import { EmployeeBLLBase } from './employee/employee.bll.base';
-import { InvitedApplicantDALMongo } from "./invitedApplicant/invitedApplicant.dal.mongo"
-import { InvitedApplicantBLLBase } from './invitedApplicant/invitedApplicant.bll.base';
-import { DesireDALMongo } from "./desire/desire.dal.mongo"
-import { DesireBLLBase } from './desire/desire.bll.base';
-import { SavedApplicantDALMongo } from "./savedApplicant/savedApplicant.dal.mongo"
-import { SavedApplicantBLLBase } from './savedApplicant/savedApplicant.bll.base';
-import { AdminDALMongo } from "./admin/admin.dal.mongo"
-import { AdminBLLBase } from './admin/admin.bll.base';
+import { JobDALMongo } from './job/JobRepository';
+import { JobBLLBase } from "./job/JobService";
+import { CustomerDALMongo } from "./customer/CustomerRepository";
+import { CustomerBLLBase } from "./customer/CustomerService";
+import { AccountDALMongo } from './account/AccountRepository';
+import { AccountBLLBase } from "./account/AccountService";
+import { ProfileDALMongo } from './profile/ProfileRepository';
+import { ProfileBLLBase } from "./profile/ProfileService";
+import { ApplicantDALMongo } from './applicant/ApplicantRepository';
+import { ApplicantBLLBase } from "./applicant/ApplicantService";
+import { RecruiterDALMongo } from './recruiter/RecruiterRepository';
+import { RecruiterBLLBase } from "./recruiter/RecruiterService";
+import { CvDALMongo } from "./cv/CvRepository"
+import { CvBLLBase } from './cv/CvService';
+import { SavedJobDALMongo } from "./savedJob/SavedJobRepository"
+import { SavedJobBLLBase } from './savedJob/SavedJobService';
+import { AppliedJobDALMongo } from "./appliedJob/AppliedJobRepository"
+import { AppliedJobBLLBase } from './appliedJob/AppliedJobService';
+import { CompanyDALMongo } from "./company/CompanyRepository"
+import { CompanyBLLBase } from './company/CompanyService';
+import { EmployeeDALMongo } from "./employee/EmployeeRepository"
+import { EmployeeBLLBase } from './employee/EmployeeService';
+import { InvitedApplicantDALMongo } from "./invitedApplicant/InvitedApplicantRepository"
+import { InvitedApplicantBLLBase } from './invitedApplicant/InvitedApplicantService';
+import { DesireDALMongo } from "./desire/DesireRepository"
+import { DesireBLLBase } from './desire/DesireService';
+import { SavedApplicantDALMongo } from "./savedApplicant/SavedApplicantRepository"
+import { SavedApplicantBLLBase } from './savedApplicant/SavedApplicantService';
+import { AdminDALMongo } from "./admin/AdminRepository"
+import { AdminBLLBase } from './admin/AdminService';
+import { NotificationDALMongo } from "./notification/NotificationRepository"
+import { NotificationBLLBase } from './notification/NotificationService';
 
-import { NewTodoAPI } from "./todo/todo.api";
-import { NewCustomerAPI } from "./customer/customer.api";
-import { NewJobAPI } from "./job/job.api";
-import { NewServiceAPI } from './service/service.api';
-import { NewAccountAPI } from "./account/account.api";
-import { NewProfileAPI } from "./profile/profile.api";
-import { NewApplicantAPI } from "./applicant/applicant.api";
-import { NewRecruiterAPI } from "./Recruiter/recruiter.api";
-import { NewCvAPI } from "./cv/cv.api"
-import { NewSavedJobAPI } from "./savedJob/savedJob.api"
-import { NewAppliedJobAPI } from "./appliedJob/appliedJob.api"
-import { NewCompanyAPI } from "./company/company.api"
-import { NewEmployeeAPI } from "./employee/employee.api"
+import { NewCustomerAPI } from "./customer/CustomerController";
+import { NewJobAPI } from "./job/JobController";
+import { NewAccountAPI } from "./account/AccountController";
+import { NewProfileAPI } from "./profile/ProfileController";
+import { NewApplicantAPI } from "./applicant/ApplicantController";
+import { NewRecruiterAPI } from "./recruiter/RecruiterController";
+import { NewCvAPI } from "./cv/CvController"
+import { NewSavedJobAPI } from "./savedJob/SavedJobController"
+import { NewAppliedJobAPI } from "./appliedJob/AppliedJobController"
+import { NewCompanyAPI } from "./company/CompanyController"
+import { NewEmployeeAPI } from "./employee/EmployeeController"
 import { NewCloudAPI } from "./cloud/cloud.api"
-import { NewDesireAPI } from "./desire/desire.api"
-import { NewSavedApplicantAPI } from "./savedApplicant/savedApplicant.api"
-import { NewInvitedApplicantAPI } from "./invitedApplicant/invitedApplicant.api"
-import { NewAdminAPI } from "./admin/admin.api"
+import { NewDesireAPI } from "./desire/DesireController"
+import { NewSavedApplicantAPI } from "./savedApplicant/SavedApplicantController"
+import { NewInvitedApplicantAPI } from "./invitedApplicant/InvitedApplicantController"
+import { NewAdminAPI } from "./admin/AdminController"
+import { NewNotificationAPI } from "./notification/NotificationController"
 
-import { ServiceBLLBase } from './service/service.bll.base'
-import { ServiceDALMongo } from './service/service.dal.mongo';
+
 
 async function main() {
   const config = await ReadConfig();
@@ -71,15 +66,6 @@ async function main() {
   await client.connect();
   console.log(new Date(), 'connected to database');
   const database = client.db(config.database.db_name);
-  /******************************************************* */
-  const userAuthDAL = new UserAuthDALMongo(database);
-  await userAuthDAL.init();
-  const userAuthBLL = new UserAuthBLLBase(userAuthDAL);
-  await userAuthBLL.init();
-  const todoDAL = new TodoDALMongo(database);
-  await todoDAL.init();
-  const todoBLL = new TodoBLLBase(todoDAL);
-  await todoBLL.init();
 
   //--------
   const recruiterDAL = new RecruiterDALMongo(database);
@@ -93,11 +79,6 @@ async function main() {
   const companyBLL = new CompanyBLLBase(companyDAL);
   await companyBLL.init();
 
-  //----------
-  const serviceDAL = new ServiceDALMongo(database);
-  await serviceDAL.init();
-  const serviceBLL = new ServiceBLLBase(serviceDAL);
-  await serviceBLL.init();
   //--------
   const customerDAL = new CustomerDALMongo(database);
   await customerDAL.init();
@@ -114,6 +95,12 @@ async function main() {
   await profileDAL.init();
   const profileBLL = new ProfileBLLBase(profileDAL);
   await profileBLL.init();
+
+  //--------
+  const notificationDAL = new NotificationDALMongo(database);
+  await notificationDAL.init();
+  const notificationBLL = new NotificationBLLBase(notificationDAL);
+  await notificationBLL.init();
 
   //--------
   const applicantDAL = new ApplicantDALMongo(database);
@@ -181,20 +168,17 @@ async function main() {
   app.use(express.json());
   /******************************************************* */
   //Servie
-  app.use('/api/auth/', NewAuthAPI(userAuthBLL));
-
-  app.use('/api/service', NewServiceAPI(serviceBLL));
   app.use("/api/customer/", NewCustomerAPI(customerBLL));
-  app.use('/api/todo/', NewTodoAPI(userAuthBLL, todoBLL));
-  app.use('/api/job/', NewJobAPI(jobBLL, companyBLL, recruiterBLL));
+  app.use('/api/job/', NewJobAPI(jobBLL, companyBLL, recruiterBLL, notificationBLL));
   app.use('/api/profile/', NewProfileAPI(profileBLL));
+  app.use('/api/notification/', NewNotificationAPI(notificationBLL));
   app.use('/api/account/', NewAccountAPI(accountBLL, profileBLL));
   app.use('/api/applicant/', NewApplicantAPI(applicantBLL, profileBLL, accountBLL));
   app.use('/api/recruiter/', NewRecruiterAPI(recruiterBLL, profileBLL, accountBLL));
   app.use('/api/employee/', NewEmployeeAPI(employeeBLL, profileBLL, accountBLL));
   app.use('/api/admin/', NewAdminAPI(adminBLL, profileBLL, accountBLL));
   app.use('/api/cv/', NewCvAPI(cvBLL))
-  app.use('/api/applied-job', NewAppliedJobAPI(appliedJobBLL))
+  app.use('/api/applied-job', NewAppliedJobAPI(appliedJobBLL, jobBLL, notificationBLL))
   app.use('/api/saved-job', NewSavedJobAPI(savedJobBLL))
   app.use('/api/company', NewCompanyAPI(companyBLL))
   app.use('/api/cloud', NewCloudAPI())

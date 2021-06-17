@@ -92,7 +92,7 @@ export namespace JobNS {
 
   export interface BLL {
     ListJob(recruiter_id?: string): Promise<Job[]>;
-    SearchJob(params): Promise<Job[]>;
+    SearchJob(params, index):any;
     GetJob(id: string): Promise<Job>;
     CreateJob(params: CreateJobParams): Promise<Job>;
     UpdateJob(id: string, params: UpdateJobParams): Promise<void>;
@@ -101,7 +101,7 @@ export namespace JobNS {
 
   export interface DAL {
     ListJob(recruiter_id?: string): Promise<Job[]>;
-    SearchJob(params): Promise<Job[]>;
+    SearchJob(params, index): any;
     GetJob(id: string): Promise<Job>;
     CreateJob(Job: Job): Promise<void>;
     UpdateJob(Job: Job): Promise<void>;

@@ -8,6 +8,7 @@ import html2canvas from "html2canvas"
 import { useCookies } from "react-cookie"
 import printJS from 'print-js'
 import Util from '../../../helper/util'
+import ChangeCv from '../../ChangeCv'
 const generate = Util.generate
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -20,9 +21,10 @@ const layout = {
 };
 
 
-const Home = () => {
+const Home = (props) => {
+    const [cv, setCv] = useState(props.location.state?.cv || {}) 
     const [cookies] = useCookies(["user"])
-    const [avatar, setAvatar] = useState({})
+    const [avatar, setAvatar] = useState(props.location.state?.avatar || {})
     const [display, setDisplay] = useState({
         objective: true,
         education: true,
@@ -40,7 +42,7 @@ const Home = () => {
         if (cookies.user) {
             values.applicant_id = cookies.user.id
             values.avatar = avatar
-            cvApi.postCv(values).then((res) => {
+            cvApi.postCv({...values, cvType: 1}).then((res) => {
                 console.log(res)
             }).catch((err) => {
                 console.log(err)
@@ -51,7 +53,7 @@ const Home = () => {
 
     }
 
-    console.log(avatar)
+    console.log(cv)
     return (
         <>
             <div style={{ backgroundColor: "#f0f2f5" }}>
@@ -65,6 +67,7 @@ const Home = () => {
                                     {...layout}
                                     onFinish={(values) => onSubmit(values)}
                                     form={form}
+                                    initialValues={cv}
                                 >
                                     <Row>
                                         <Col span={6} className="px-3"><UploadAvatar avatar={avatar} setAvatar={setAvatar} /></Col>
@@ -746,7 +749,7 @@ const Home = () => {
                                 </Space> */}
 
                                 <Space>
-                                    <Button type="primary" size="small" >&nbsp;Đổi mẫu</Button>
+                                <ChangeCv init={() => setCv(form.getFieldsValue())} initial={{ cv, avatar }} cvType={1} />
                                     <Button type="primary" size="small" onClick={() => generate()}>&nbsp;Tải xuống</Button>
                                     <Button type="primary" size="small" onClick={() => form.submit()}>&nbsp;Lưu</Button>
                                 </Space>

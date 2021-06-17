@@ -30,8 +30,8 @@ const SavedJob = (props) => {
     },[])
     return (
         <>
-            <Card>
-                <Title level={3} className="mb-5">Danh sách việc làm đã lưu</Title>
+            <Card className="px-4">
+                <Title level={3} className="mb-3">Danh sách việc làm đã lưu</Title>
                 {savedList.map((item) => (
                     <div>
                         <SavedJobCard job={item.job_ref} key={item.id} deleteSavedJob={()=> deleteSavedJob(item.id)}></SavedJobCard>

@@ -1,6 +1,5 @@
 import * as express from "express";
-import { HttpError, HttpStatusCodes, HttpParamValidators } from "../lib/http";
-import { UserAuthNS } from "../auth/auth";
+import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 const cloudinary = require('cloudinary/lib/cloudinary').v2
 cloudinary.config({
   cloud_name: 'project0407',

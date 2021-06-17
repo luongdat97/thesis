@@ -12,20 +12,12 @@ const { Option } = Select
 const SettingJob = (props) => {
     return (
         <>
-            <Card>
+            <Card className="px-4">
 
                 <Demo></Demo>
             </Card>
         </>
     )
-}
-const children = [];
-for (let i = 10; i < 36; i++) {
-    children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
-
-function handleChange(value) {
-    console.log(`selected ${value}`);
 }
 
 const layout = {
@@ -100,10 +92,9 @@ const Demo = () => {
                 >
                     <Switch defaultChecked={!!desire.enable} />
                 </Form.Item>
-
             </div>
-
-            <Title level={5}>Thông tin cơ bản</Title>
+            <Title level={5} className="mr-3 text-success" >Bạn đang muốn tìm việc làm? Bật chế độ tìm việc để giới thiệu CV của bạn tới nhà tuyển dụng ngay!</Title>
+            {/* <Title level={5}>Thông tin cơ bản</Title>
             <Row gutter={30}>
                 <Col span={12}>
                     <Form.Item
@@ -148,13 +139,14 @@ const Demo = () => {
                         <Input />
                     </Form.Item>
                 </Col>
-            </Row>
+            </Row> */}
+            <Title level={4}>Thông tin hiển thị tới nhà tuyển dụng</Title>
             <Row gutter={30}>
                 <Col span={12}>
-                    <Title level={5}>Giới thiệu bản thân</Title>
                     <Form.Item
                         label="CV cá nhân"
                         name={['desire', 'cv_id']}
+                        rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                     >
                         <Select >
                             {cvList.map(item => (
@@ -165,6 +157,7 @@ const Demo = () => {
                     <Form.Item
                         label="Ngành nghề"
                         name={['desire', 'field']}
+                        rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                     >
                         <Select>
                             {career.map(item => (
@@ -175,6 +168,7 @@ const Demo = () => {
                     <Form.Item
                         label="Kỹ năng"
                         name={['desire', 'skill']}
+                        rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                     >
                         <Select mode="tags" tokenSeparators={[',']}>
                             {tag.map((item) => (
@@ -185,6 +179,7 @@ const Demo = () => {
                     <Form.Item
                         label="Kinh nghiệm"
                         name={['desire', 'experience']}
+                        rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                     >
                         <Select >
                             <Option value="1">Chưa có kinh nghiệm</Option>
@@ -200,6 +195,7 @@ const Demo = () => {
                     <Form.Item
                         label="Trình độ"
                         name={['desire', 'level']}
+                        rules={[{ required: true, message: 'Thiếu thông tin!' }]}
                     >
                         <Select>
                             <Option value="1">Sinh viên</Option>
@@ -225,7 +221,6 @@ const Demo = () => {
                     </Form.Item>
                 </Col>
                 <Col span={12}>
-                    <Title level={5}>Mong muốn của bạn</Title>
                     <Form.Item
                         label="Địa điểm làm việc"
                         name={['desire', 'address']}
@@ -247,24 +242,21 @@ const Demo = () => {
                             <Option value="4">Remote (làm việc từ xa)</Option>
                         </Select>
                     </Form.Item>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Lương từ"
-                                name={['desire', 'salary', 'from']}
-                            >
-                                <Input></Input>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Lên đến"
-                                name={['desire', 'salary', 'to']}
-                            >
-                                <Input></Input>
-                            </Form.Item>
-                        </Col>
-                    </Row>
+
+                    <Form.Item
+                        label="Lương từ (triệu đồng)"
+                        name={['desire', 'salary', 'from']}
+                    >
+                        <Input></Input>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Lên đến (triệu đồng)"
+                        name={['desire', 'salary', 'to']}
+                    >
+                        <Input></Input>
+                    </Form.Item>
+
                 </Col>
             </Row>
 

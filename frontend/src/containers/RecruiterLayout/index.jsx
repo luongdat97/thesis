@@ -13,7 +13,7 @@ function MainLayout(props) {
             <Layout>
                 <Header url={url}/>
                 <Content className="site-layout" style={{marginTop: 64 }}>
-                    <div className="bootstrap-container site-layout-background" style={{minHeight: "100vh"}}>
+                    <div className="bootstrap-container site-layout-background"  style={{minHeight: 550}}>
                         {props.children}
                     </div>
                 </Content>

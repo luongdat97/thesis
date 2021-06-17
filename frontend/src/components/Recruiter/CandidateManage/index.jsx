@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Tabs, Select, Row, Col, Table, Card, Typography, Space, Checkbox, Button, Popconfirm, message } from 'antd';
+import { Form, Input, Tabs, Select, Row, Col, Table, Card, Typography, Space, Checkbox, Button, Popconfirm, message, Badge } from 'antd';
 import { useCookies } from 'react-cookie'
 import jobApi from '../../../api/jobApi'
 import appliedJobApi from '../../../api/appliedJobApi'
@@ -8,6 +8,8 @@ import savedApplicantApi from '../../../api/savedApplicant'
 import moment from 'moment'
 import util from '../../../helper/util'
 import { jobState } from '../../../Constances/const'
+import CvModal from '../../CvModal'
+import ApproveModal from './ApproveModal'
 
 const { TabPane } = Tabs;
 const { Title } = Typography
@@ -23,32 +25,39 @@ const CandidateManage = (props) => {
     jobApi.getJobList({ recruiter_id }).then(res => {
       console.log(res.data)
       setJobList(res.data)
+      setChosenJob(res.data[0])
     })
   }, [])
   return (
     <>
-      <Card>
-        <Title level={3}>Quản lý ứng viên</Title>
-        <Form>
-          <Form.Item
-            label="Chọn tin tuyển dụng liên quan"
-          >
-            <Select placeholder="Chọn tin tuyển dụng" size="large" onChange={(value) => { setChosenJob(jobList.find(item => item.id === value)) }}>
-              {jobList.map(item =>
-                <Option value={item.id} key={item.id}>{item.title}</Option>
-              )}
+      <div className="bg-white p-3">
+        {!!chosenJob &&
+          <>
+            <Title level={3}>Quản lý ứng viên</Title>
+            <div className="mb-3">
+              Chọn tin tuyển dụng liên quan:&nbsp;
+            <Select style={{ width: 500 }} placeholder="Chọn tin tuyển dụng" size="large" value={chosenJob.id} onChange={(value) => { setChosenJob(jobList.find(item => item.id === value)) }}>
+                {jobList.map(item =>
+                  <Option value={item.id} key={item.id}>{item.title}</Option>
+                )}
+              </Select>
+            </div>
 
-            </Select>
-          </Form.Item>
-        </Form>
-        {!!chosenJob.id && <>
-          Trạng thái tin tuyển dụng: {util.isOutDate(chosenJob.endDate) ? "Tin đã hết hạn" : (jobState.find(item => { console.log(chosenJob); return item.code == chosenJob.state }))?.label}
-          <br />
-            Hạn tuyển: {moment(chosenJob.endDate).format("DD/MM/YYYY")}
-          <br />
-          <CandidateTable chosenJob={chosenJob} recruiter_id={recruiter_id} />
-        </>}
-      </Card>
+            <div className="mb-3">
+              Trạng thái tin tuyển dụng: {util.isOutDate(chosenJob.endDate) ? "Tin đã hết hạn" : (jobState.find(item => { console.log(chosenJob); return item.code == chosenJob.state || !item.code }))?.label}
+            </div>
+
+            <div className="mb-3">
+              Hạn tuyển: {moment(chosenJob.endDate).format("DD/MM/YYYY")}
+            </div>
+
+            <CandidateTable chosenJob={chosenJob} recruiter_id={recruiter_id} />
+          </>
+        }
+        {!chosenJob &&
+          <Title level={3}>Bạn chưa có tin tuyển dụng nào, hãy đăng tin mới để sử dụng chức năng này!</Title>
+        }
+      </div>
     </>
   )
 }
@@ -58,6 +67,8 @@ const CandidateTable = (props) => {
   const [applicantList, setApplicantList] = useState([])
   const [invitedList, setInvitedList] = useState([])
   const [savedList, setSavedList] = useState([])
+  const [dayMeet, setDayMeet] = useState(null)
+  const [approveMessage, setApproveMessage] = useState("")
 
   const approvedList = (applicantList.filter((item) => item.state == 1)).map(item => ({
     ...item.applicant_ref.profile, key: item.id, ...item,
@@ -102,7 +113,7 @@ const CandidateTable = (props) => {
   }
 
   const approve = (appliedJobId) => {
-    appliedJobApi.editAppliedJob({ id: appliedJobId, state: 1 }).then(res => {
+    appliedJobApi.editAppliedJob({ id: appliedJobId, state: 1, dayMeet, message }).then(res => {
       message.success("Bạn đã chấp nhận đơn của ứng viên!")
       fetchAppliedList()
     })
@@ -116,7 +127,7 @@ const CandidateTable = (props) => {
   }
 
   const delInvite = (invitedId) => {
-    invitedApplicantApi.delInvitedApplicant({id: invitedId}).then(res => {
+    invitedApplicantApi.delInvitedApplicant({ id: invitedId }).then(res => {
       message.success("Bạn đã xóa lời mời thành công!")
       fetchInvitedList()
     })
@@ -146,20 +157,26 @@ const CandidateTable = (props) => {
       key: 'email',
     },
     {
+      title: 'Ngày phỏng vấn',
+      dataIndex: 'dayMeet',
+      key: 'dayMeet',
+      render: text => moment(text).format(" HH:mm DD/MM/YYYY")
+    },
+    {
       title: 'Thao tác',
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button size="small" type="primary">Xem CV</Button>
+          <CvModal cvId={record.cv_id} smallButton />
 
-          <Popconfirm
+          {/* <Popconfirm
             title="Bạn có muốn từ chối ứng viên này?"
             onConfirm={() => { reject(record.id) }}
             okText="Đồng ý"
             cancelText="Thoát"
           >
             <Button size="small" type="primary" danger>Từ chối</Button>
-          </Popconfirm>
+          </Popconfirm> */}
 
 
         </Space>
@@ -188,15 +205,15 @@ const CandidateTable = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button size="small" type="primary">Xem CV</Button>
-          <Popconfirm
+          <CvModal cvId={record.cv_id} smallButton />
+          {/* <Popconfirm
             title="Bạn có muốn duyệt ứng viên này?"
             onConfirm={() => { approve(record.id) }}
             okText="Đồng ý"
             cancelText="Thoát"
           >
             <Button size="small" type="primary">Duyệt</Button>
-          </Popconfirm>
+          </Popconfirm> */}
         </Space>
       ),
     },
@@ -223,15 +240,8 @@ const CandidateTable = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button size="small" type="primary">Xem CV</Button>
-          <Popconfirm
-            title="Bạn có muốn duyệt ứng viên này?"
-            onConfirm={() => { approve(record.id) }}
-            okText="Đồng ý"
-            cancelText="Thoát"
-          >
-            <Button size="small" type="primary">Duyệt</Button>
-          </Popconfirm>
+          <CvModal cvId={record.cv_id} smallButton />
+          <ApproveModal dayMeet={dayMeet} message={approveMessage} setMessage={setApproveMessage} setDayMeet={setDayMeet} handleApprove={() => approve(record.id)} />
 
           <Popconfirm
             title="Bạn có muốn từ chối ứng viên này?"
@@ -241,7 +251,6 @@ const CandidateTable = (props) => {
           >
             <Button size="small" type="primary" danger>Từ chối</Button>
           </Popconfirm>
-
 
         </Space>
       ),
@@ -268,7 +277,7 @@ const CandidateTable = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button size="small" type="primary">Xem CV</Button>
+          <CvModal cvId={record.cv_id} smallButton />
 
           <Popconfirm
             title="Bạn có muốn bỏ lưu ứng viên này?"
@@ -278,8 +287,6 @@ const CandidateTable = (props) => {
           >
             <Button size="small" type="primary" danger>Bỏ lưu</Button>
           </Popconfirm>
-
-
         </Space>
       ),
     },
@@ -306,7 +313,7 @@ const CandidateTable = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button size="small" type="primary">Xem CV</Button>
+          <CvModal cvId={record.cv_id} smallButton />
 
           <Popconfirm
             title="Bạn có muốn xóa lời mời ứng viên này?"
@@ -325,12 +332,13 @@ const CandidateTable = (props) => {
 
   return (
     <Tabs defaultActiveKey="1" >
-      <TabPane tab="Ứng viên đã duyệt" key="1">
-        <Table columns={approvedColumns} dataSource={approvedList} />
-      </TabPane>
-      <TabPane tab="Ứng viên chờ duyệt" key="2">
+      <TabPane tab={<Badge count={waitedList.length} offset={[10, 0]}><span>Ứng viên mới chờ duyệt</span></Badge>} key="1">
         <Table columns={waitedColumns} dataSource={waitedList} />
       </TabPane>
+      <TabPane tab="Ứng viên đã duyệt" key="2">
+        <Table columns={approvedColumns} dataSource={approvedList} />
+      </TabPane>
+
       <TabPane tab="Ứng viên bị từ chối" key="3">
         <Table columns={rejectedColumns} dataSource={rejectedList} />
       </TabPane>

@@ -8,7 +8,7 @@ const { Title, Text } = Typography;
 const GeneralJobCard = (props) => {
     const { job, deleteSavedJob } = props
     return (
-        <Row gutter={16} className="border-bottom">
+        <Row gutter={16} className="border p-3">
             <Col span={3}>
                 <img
                     alt="example"
@@ -17,7 +17,7 @@ const GeneralJobCard = (props) => {
                 />
             </Col>
             <Col span={18}>
-                <Link to={`/applicant/job-detail/${job.id}`}><Title level={5}>{job.title}</Title></Link>
+                <Link to={`/applicant/job-detail/${job.id}`}><Title level={5}><a>{job.title}</a></Title></Link>
                 <Text strong type="secondary">{job.company?.name}</Text>
                 <Row>
                     <Col span={8}>

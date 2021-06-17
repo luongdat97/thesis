@@ -4,7 +4,8 @@ import util from "../../../../helper/util"
 import { Link } from "react-router-dom"
 import invitedApplicantAPI from "../../../../api/invitedApplicant"
 import savedApplicantAPI from "../../../../api/savedApplicant"
-import CvModal from './CvModal'
+import CvModal from '../../../CvModal'
+import { experienceRequire } from "../../../../Constances/const"
 const { Title, Text } = Typography
 const CandidateCard = (props) => {
     console.log(".........", props)
@@ -21,7 +22,7 @@ const CandidateCard = (props) => {
     }, [])
 
     const saveApplicant = () => {
-        savedApplicantAPI.postSavedApplicant({ recruiter_id, applicant_id: desire.applicant_id }).then(res => {
+        savedApplicantAPI.postSavedApplicant({ recruiter_id, applicant_id: desire.applicant_id, cv_id: desire.cv_id  }).then(res => {
             console.log(res)
             setSavedApplicant(res.data)
         })
@@ -36,11 +37,11 @@ const CandidateCard = (props) => {
     return (
         <>
             <Card style={{ width: "100%" }}>
-                <Row gutter={16}>
-                    <Col span={4}>
-                        <img style={{ width: 100, height: 130, objectFit: 'cover' }} src={cv.avatar.url} />
-                    </Col>
-                    <Col span={20}>
+                <Row gutter={32}>
+
+                    <img style={{ width: 130, height: 130, objectFit: 'cover' }} src={cv.avatar.url} />
+
+                    <Col>
 
                         <Title level={4} className="m-0">{profile.name}</Title>
                         <Title level={5} className="m-0"> {cv.jobPosition}</Title>
@@ -50,22 +51,21 @@ const CandidateCard = (props) => {
                         </div>
 
                         <Space size="large" className="mt-1">
-                            <Text>20 tuổi</Text>
-                            <Text>Kinh nghiệm: {desire.experience}</Text>
+                            <Text>Kinh nghiệm: {experienceRequire.find(item => item.code == desire.experience).label}</Text>
                             <Text>Địa điểm: {desire.address}</Text>
                         </Space>
                         <br />
-                        {cv.experience.map(item => (
+                        {/* {cv.experience.map(item => (
                             <div key={item.id}>
                                 <Text><i className="fas fa-briefcase"></i> {item.workPlace} - {item.level}</Text>
                             </div>
-                        ))}
+                        ))} */}
                         <Text><i className="fas fa-graduation-cap"></i>{cv.education[0].major + " - " + cv.education[0].schoolName}</Text><br />
                         <Space size="small" className="mt-1">
-                            <InviteApplyModal jobList={jobList} recruiter_id={recruiter_id} applicant_id={desire.applicant_id} />
+                            <InviteApplyModal jobList={jobList} recruiter_id={recruiter_id} applicant_id={desire.applicant_id} desire={desire} />
                             {!savedApplicant && <Button onClick={() => { saveApplicant() }} style={{ width: 110 }} size="small" type="primary">Lưu ứng viên</Button>}
                             {!!savedApplicant && <Button onClick={() => { delSavedApplicant() }} style={{ width: 110 }} size="small" type="primary">Đã lưu</Button>}
-                            <CvModal cv={cv}/>
+                            <CvModal cvId={cv.id} cvType={cv.cvType ? cv.cvType : 0} smallButton />
                         </Space>
                     </Col>
                 </Row>
@@ -89,19 +89,19 @@ const InviteApplyModal = (props) => {
         setIsModalVisible(true);
     };
 
-    useEffect(()=> {
-        invitedApplicantAPI.getInvitedApplicantList({recruiter_id, applicant_id}).then(res => {
+    useEffect(() => {
+        invitedApplicantAPI.getInvitedApplicantList({ recruiter_id, applicant_id }).then(res => {
             console.log(res.data)
-            let listInvitedJob = res.data.map(item => item.job_id) 
+            let listInvitedJob = res.data.map(item => item.job_id)
             setChosenJob(listInvitedJob)
         })
-    },[])
+    }, [])
 
     const handleOk = () => {
         setIsModalVisible(false);
-        invitedApplicantAPI.delInvitedApplicant({recruiter_id, applicant_id}).then(res => {
+        invitedApplicantAPI.delInvitedApplicant({ recruiter_id, applicant_id }).then(res => {
             chosenJob.forEach(chosenJob => {
-                invitedApplicantAPI.postInvitedApplicant({ applicant_id, recruiter_id, job_id: chosenJob }).then((res) => {
+                invitedApplicantAPI.postInvitedApplicant({ applicant_id, recruiter_id, job_id: chosenJob, cv_id: props.desire.cv_id  }).then((res) => {
                     console.log("hahha")
                     console.log(res)
                 }).catch(err => {
@@ -109,7 +109,7 @@ const InviteApplyModal = (props) => {
                 })
             })
         })
-        
+
     };
 
 

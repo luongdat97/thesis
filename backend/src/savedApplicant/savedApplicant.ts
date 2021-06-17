@@ -1,5 +1,5 @@
-import { ApplicantNS } from "../applicant/applicant";
-import { JobNS } from "../job/job";
+import { ApplicantNS } from "../applicant/Applicant";
+import { JobNS } from "../job/Job";
 
 export namespace SavedApplicantNS {
   export interface SavedApplicant {

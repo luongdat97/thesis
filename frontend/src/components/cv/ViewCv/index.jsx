@@ -20,12 +20,12 @@ const layout = {
     wrapperCol: { span: 18 },
 };
 
-const Home = () => {
+const Home = (props) => {
     const [cookies] = useCookies(["user"])
     const [avatar, setAvatar] = useState({})
     const [cvData, setCvData] = useState({})
     const [form] = Form.useForm()
-    const { id } = useParams()
+    const id = useParams().id || props.cvId
     useEffect(() => {
         cvApi.getCvById(id).then(res => {
             setCvData(res.data)
@@ -59,10 +59,12 @@ const Home = () => {
     console.log(avatar)
     return (
         <>
-            <div style={{ backgroundColor: "#f0f2f5" }}>
+            <div>
                 <StyleCv>
-                    <Title level={3}>Tạo CV cá nhân</Title>
-                    <Button type="primary" size="small" onClick={() => generate()} className="mb-3" >&nbsp;Tải xuống</Button>
+                    <div className="d-flex">
+                        <Title level={5}>CV cá nhân </Title>
+                        {/* <Button type="primary" size="small" onClick={() => generate(props.scrollP)} className="mb-3 ml-3" >&nbsp;Tải xuống</Button> */}
+                    </div>
                     <Row gutter={30}>
                         <Col>
                             <div id="html2canvas" style={{ width: 794, height: 1123, backgroundColor: "#fff" }}>

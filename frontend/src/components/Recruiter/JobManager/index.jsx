@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import util from '../../../helper/util'
 import recruiterApi from '../../../api/recruiterApi'
+import PostJobModal from './PostJobModal'
+import EditJobModal from './EditJobModal'
+import JobModal from '../../JobModal'
 
 const { TabPane } = Tabs;
 const { Title } = Typography
@@ -17,9 +20,9 @@ const { Option } = Select
 const JobManager = (props) => {
   const [jobList, setJobList] = useState([])
   const [recruiter, setRecruiter] = useState({})
-  let displayedList = jobList.filter(item => item.state === 1 && !util.isOutDate(item.endDate))
-  let waitedList = jobList.filter(item => !item.state && !util.isOutDate(item.endDate))
-  let rejectedList = jobList.filter(item => item.state === 2 && !util.isOutDate(item.endDate))
+  let displayedList = jobList.filter(item => item.state === 1)
+  let waitedList = jobList.filter(item => !item.state )
+  let rejectedList = jobList.filter(item => item.state === 2 )
   let outDateList = jobList.filter(item => util.isOutDate(item.endDate))
   const [cookies] = useCookies(['user'])
   let recruiter_id = cookies.user.id
@@ -61,8 +64,8 @@ const JobManager = (props) => {
     console.log("jobid.................")
     console.log(jobId)
     handleDelJob(jobId).then((res) => {
-      removeJobFromList()
-      message.success('Click on Yes');
+      removeJobFromList(jobId)
+      message.success('Bạn đã xóa thành công!');
 
     })
 
@@ -73,7 +76,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
     },
     {
       title: 'Mã tin',
@@ -96,12 +99,12 @@ const JobManager = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="small">
-          <Link to={`/recruiter/edit-job/${record.id}`} ><Button type="primary" size="small">Sửa</Button></Link>
+          <EditJobModal jobId={record.id} fetchJobList={fetchJobList} />
           <Popconfirm
-            title="Are you sure to delete this task?"
+            title="Bạn có muốn xóa tin này?"
             onConfirm={() => delConfirm(record.id)}
-            okText="Yes"
-            cancelText="No"
+            okText="Đồng ý"
+            cancelText="Thoát"
           >
             <Button type="primary" size="small" danger>Xóa</Button>
           </Popconfirm>
@@ -116,7 +119,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
     },
     {
       title: 'Mã tin',
@@ -129,23 +132,23 @@ const JobManager = (props) => {
       key: 'endDate',
       render: endDate => moment(endDate).format("DD/MM/YYYY")
     },
-    {
-      title: 'Tổng CV apply',
-      dataIndex: 'numberApply',
-      key: 'numberApply',
-    },
+    // {
+    //   title: 'Tổng CV apply',
+    //   dataIndex: 'numberApply',
+    //   key: 'numberApply',
+    // },
     {
       title: 'Thao tác',
       key: 'action',
       render: (text, record) => (
         <Space size="small">
-          <Button type="primary" size="small">Xem CV apply</Button>
-          <Link to={`/recruiter/edit-job/${record.id}`} ><Button type="primary" size="small">Sửa</Button></Link>
+          <Button type="primary" size="small">Quản lý ứng viên</Button>
+          <EditJobModal jobId={record.id} fetchJobList={fetchJobList} />
           <Popconfirm
-            title="Are you sure to delete this task?"
+            title="Bạn có muốn xóa tin này?"
             onConfirm={() => delConfirm(record.id)}
-            okText="Yes"
-            cancelText="No"
+            okText="Đồng ý"
+            cancelText="Thoát"
           >
             <Button type="primary" size="small" danger>Xóa</Button>
           </Popconfirm>
@@ -160,7 +163,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
     },
     {
       title: 'Mã tin',
@@ -184,12 +187,12 @@ const JobManager = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="small">
-          <Link to={`/recruiter/edit-job/${record.id}`} ><Button type="primary" size="small">Sửa</Button></Link>
+          <EditJobModal jobId={record.id} fetchJobList={fetchJobList} />
           <Popconfirm
-            title="Are you sure to delete this task?"
+            title="Bạn có muốn xóa tin này?"
             onConfirm={() => delConfirm(record.id)}
-            okText="Yes"
-            cancelText="No"
+            okText="Đồng ý"
+            cancelText="Thoát"
           >
             <Button type="primary" size="small" danger>Xóa</Button>
           </Popconfirm>
@@ -204,7 +207,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
     },
     {
       title: 'Mã tin',
@@ -222,12 +225,12 @@ const JobManager = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="small">
-          <Link to={`/recruiter/edit-job/${record.id}`} ><Button type="primary" size="small">Sửa</Button></Link>
+          <EditJobModal jobId={record.id} fetchJobList={fetchJobList} />
           <Popconfirm
-            title="Are you sure to delete this task?"
+            title="Bạn có muốn xóa tin này?"
             onConfirm={() => delConfirm(record.id)}
-            okText="Yes"
-            cancelText="No"
+            okText="Đồng ý"
+            cancelText="Thoát"
           >
             <Button type="primary" size="small" danger>Xóa</Button>
           </Popconfirm>
@@ -242,7 +245,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
     },
     {
       title: 'Mã tin',
@@ -260,12 +263,12 @@ const JobManager = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="small">
-          <Link to={`/recruiter/edit-job/${record.id}`} ><Button type="primary" size="small">Sửa</Button></Link>
+          <EditJobModal jobId={record.id} fetchJobList={fetchJobList} />
           <Popconfirm
-            title="Are you sure to delete this task?"
+            title="Bạn có muốn xóa tin này?"
             onConfirm={() => delConfirm(record.id)}
-            okText="Yes"
-            cancelText="No"
+            okText="Đồng ý"
+            cancelText="Thoát"
           >
             <Button type="primary" size="small" danger>Xóa</Button>
           </Popconfirm>
@@ -279,25 +282,23 @@ const JobManager = (props) => {
       {!!recruiter.company_id &&
         <Card>
           <Title level={3}>Quản lý tin tuyển dụng</Title>
-          <Tabs defaultActiveKey="1">
-            <TabPane tab="Đăng tin" key="6">
-              <PostJob fetchJobList={fetchJobList}></PostJob>
-            </TabPane>
-            <TabPane tab="Tin đang hiển thị" key="1">
-              <Table columns={displayedColumns} dataSource={displayedList} />
-            </TabPane>
+          <PostJobModal fetchJobList={fetchJobList} />
+          <Tabs defaultActiveKey="5">
             <TabPane tab="Tất cả tin" key="5">
               <Table columns={allStateColumns} dataSource={jobList} />
+            </TabPane>
+            <TabPane tab="Tin đã được xác thực" key="1">
+              <Table columns={displayedColumns} dataSource={displayedList} />
+            </TabPane>
+            <TabPane tab="Tin không được duyệt" key="4">
+              <Table columns={rejectedColumns} dataSource={rejectedList} />
             </TabPane>
             <TabPane tab="Tin chờ xác thực" key="2">
               <Table columns={waitedColumns} dataSource={waitedList} />
             </TabPane>
             <TabPane tab="Tin hết hạn" key="3">
               <Table columns={outDateColumns} dataSource={outDateList} />
-            </TabPane>
-            <TabPane tab="Tin bị từ chối" key="4">
-              <Table columns={rejectedColumns} dataSource={rejectedList} />
-            </TabPane>
+            </TabPane>      
           </Tabs>
         </Card>
       }
@@ -313,7 +314,7 @@ const JobManager = (props) => {
 const CompanyRequre = (props) => {
   return (
     <>
-      <Card style={{textAlign: 'center'}}>
+      <Card style={{ textAlign: 'center' }}>
         Bạn chưa cập nhật thông tin công ty!<br />
         Để sử dụng chức năng này, vui lòng cập nhật thông tin công ty <Link to="/recruiter/add-company">tại đây</Link> <br />
         <Link to="/recruiter/add-company"><Button type="primary">Cập nhật thông tin công ty</Button></Link>

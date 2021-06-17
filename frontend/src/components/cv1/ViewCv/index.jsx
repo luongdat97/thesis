@@ -6,7 +6,7 @@ import UploadAvatar from './UploadAvatar'
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas"
 import printJS from 'print-js'
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Util from '../../../helper/util'
 const generate = Util.generate
 const { Option } = Select;
@@ -20,19 +20,20 @@ const layout = {
 };
 
 
-const Home = () => {
+const Home = (props) => {
+    const [avatar, setAvatar] = useState({})
     const [cvData, setCvData] = useState({})
     const [form] = Form.useForm()
-    const {id} = useParams()
-    useEffect(()=> {
-        cvApi.getCvById(id).then(res=> {
+    const id = useParams().id || props.cvId
+    useEffect(() => {
+        cvApi.getCvById(id).then(res => {
             console.log(res.data)
-            
+            setAvatar(res.data.avatar)
             setCvData(res.data)
         })
-    },[])
+    }, [])
 
-    useEffect(() => { form.resetFields()}, [cvData]);
+    useEffect(() => { form.resetFields() }, [cvData]);
 
     const onSubmit = (values) => {
         console.log(values)
@@ -45,17 +46,15 @@ const Home = () => {
     }
     return (
         <>
-            <div style={{ backgroundColor: "#f0f2f5" }}>
+            <div >
                 <StyleCv>
-                    <Title level={3}>CV cá nhân</Title>
-                    <div className="mb-3">
-                            <Space>
-                                <Button type="primary" size="small" onClick={generate}>&nbsp;Tải xuống</Button>
-                            </Space>
-                        </div>
+                    <div className="d-flex">
+                        <Title level={5}>CV cá nhân </Title>
+                        {/* <Button type="primary" size="small" onClick={() => generate(props.scrollP)} className="mb-3 ml-3" >&nbsp;Tải xuống</Button> */}
+                    </div>
                     <Row gutter={30}>
                         <Col>
-                            <div id="html2canvas" style={{ width: 750, backgroundColor: "#fff", paddingTop: 25 }}>
+                            <div id="html2canvas" style={{ width: 794, height: 1123, backgroundColor: "#fff", paddingTop: 25 }}>
 
                                 <Form
                                     {...layout}
@@ -64,7 +63,7 @@ const Home = () => {
                                     initialValues={cvData}
                                 >
                                     <Row>
-                                        <Col span={6} className="px-3"><img src={avatar?.url} alt="avatar" style={{width: 180, height: 180}}></img></Col>
+                                        <Col span={6} className="px-3"><img src={avatar?.url} alt="avatar" style={{ width: 180, height: 180, objectFit: 'cover' }}></img></Col>
                                         <Col span={18}>
                                             <Form.Item
                                                 name="name"
@@ -365,7 +364,7 @@ const Home = () => {
                             </div>
 
                         </Col>
-    
+
                     </Row>
                 </StyleCv>
             </div>

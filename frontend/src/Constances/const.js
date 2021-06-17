@@ -165,3 +165,13 @@ export const applyState = [
     {code: 2, label: "Đã từ chối"},
     {code: 3, label: "Đã đặt lịch hẹn"},
 ]
+
+export const companyScale = [
+    {code: 1, label: "Dưới 10 nhân viên"},
+    {code: 2, label: "Từ 10 đến 24 nhân viên"},
+    {code: 3, label: "Từ 25 đến 49 nhân viên"},
+    {code: 4, label: "Từ 50 đến 100 nhân viên"},
+    {code: 5, label: "Từ 100 đến 500 nhân viên"},
+    {code: 6, label: "Trên 500 nhân viên"},
+    {code: 7, label: "trên 1000 nhân viên"},
+]

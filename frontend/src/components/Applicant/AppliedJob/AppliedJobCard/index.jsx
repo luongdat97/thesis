@@ -8,7 +8,7 @@ const { Title, Text } = Typography;
 const GeneralJobCard = (props) => {
     let job = props.job
     return (
-        <Row gutter={16} className="mb-4 border-bottom" >
+        <Row gutter={16} className="p-3 border" >
             <Col span={3}>
                 <img
                     alt="example"
@@ -16,8 +16,8 @@ const GeneralJobCard = (props) => {
                     style={{ width: "100%" }}
                 />
             </Col>
-            <Col span={11}>
-                <Link to={`/applicant/job-detail/${job.id}`}><Title level={5}>{job.title}</Title></Link>
+            <Col span={9}>
+                <Link to={`/applicant/job-detail/${job.id}`}><Title level={5}><a>{job.title}</a></Title></Link>
                 <Text strong type="secondary">{job.company?.name}</Text>
                 <Row>
                     <Col span={24}>
@@ -31,9 +31,10 @@ const GeneralJobCard = (props) => {
                 </Row>
             </Col>
             <Col span={6}>
-                Trạng thái: chờ phản hồi
-                <br></br>
                 Hạn nộp đơn: {moment(job.endDate).format("DD/MM/YYYY")}
+            </Col>
+            <Col span={6}>
+                Trạng thái: { !job.state ? "chờ phản hồi": job.state == 1 ? "Đã chấp nhận đơn" : "Bị từ chối"}
             </Col>
             {/* <Col span={4}>
                 <Space direction="vertical">

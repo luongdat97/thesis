@@ -65,7 +65,7 @@ const Home = () => {
                     <Title level={3}>Tạo CV cá nhân</Title>
                     <Row gutter={30}>
                         <Col>
-                            <div id="html2canvas" style={{ width: 794, height: 1123, backgroundColor: "#fff" }}>
+                            <div style={{ width: 794, height: 1123, backgroundColor: "#fff" }}>
                                 <Form
                                     {...layout}
                                     onFinish={(values) => onSubmit(values)}
@@ -416,6 +416,362 @@ const Home = () => {
                                 </Form>
 
                             </div>
+                            <div style={{ position: "absolute", opacity: "0.0" }}>
+                                <div id="html2canvas" style={{ width: 794, height: 1123, backgroundColor: "#fff" }}>
+                                    <Form
+                                        {...layout}
+                                        onFinish={(values) => onSubmit(values)}
+                                        form={form}
+                                        initialValues={cvData}
+                                        className="h-100"
+                                    >
+                                        <Row className="h-100">
+                                            <Col span={7} className="px-0 input-none-bg text-white" style={{ background: "#37474f" }}>
+                                                <div style={{ background: "#263238" }}>
+                                                    <div className="d-flex justify-content-center pt-4">
+                                                        <div className="bg-white" style={{ borderRadius: 100 }}>
+                                                            <img src={avatar?.url} alt="avatar" style={{ width: 180, height: 180, objectFit: "cover" }}></img>
+                                                        </div>
+                                                    </div>
+
+                                                    <Form.Item
+                                                        name="name"
+                                                    >
+                                                        <Input style={{ fontSize: 22, fontWeight: "bold" }} placeholder="Họ và tên" placeholder="Nguyễn Văn A" className="text-center" />
+                                                    </Form.Item>
+
+                                                    <Form.Item
+                                                        name="jobPosition"
+                                                    >
+                                                        <Input style={{ fontSize: 16, fontWeight: "bold" }} placeholder="Vị trí ứng tuyển" className="text-center" />
+                                                    </Form.Item>
+                                                </div>
+                                                <div className="p-2 mt-3">
+
+                                                    <Form.Item
+                                                        colon={false}
+                                                        labelCol={{ span: 3 }}
+                                                        wrapperCol={{ span: 21 }}
+                                                        label={<i className="far fa-calendar-alt"></i>}
+                                                        name="birthday"
+                                                    >
+                                                        <Input bordered={false} placeholder="30/01/1997" />
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                        colon={false}
+                                                        labelCol={{ span: 3 }}
+                                                        wrapperCol={{ span: 21 }}
+                                                        label={<i className="fas fa-user"></i>}
+                                                        name="gender"
+                                                    >
+                                                        <Input placeholder="Nam" />
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                        colon={false}
+                                                        labelCol={{ span: 3 }}
+                                                        wrapperCol={{ span: 21 }}
+                                                        label={<i className="fas fa-phone"></i>}
+                                                        name="phoneNumber"
+                                                    >
+                                                        <Input placeholder="0981988997" />
+                                                    </Form.Item>
+
+                                                    <Form.Item
+                                                        colon={false}
+                                                        labelCol={{ span: 3 }}
+                                                        wrapperCol={{ span: 21 }}
+                                                        label={<i className="fas fa-envelope"></i>}
+                                                        name="email"
+                                                    >
+                                                        <Input placeholder="luongdat97@gmail.com" />
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                        colon={false}
+                                                        labelCol={{ span: 3 }}
+                                                        wrapperCol={{ span: 21 }}
+                                                        label={<i className="fas fa-map-marker-alt"></i>}
+                                                        name="address"
+                                                    >
+                                                        <Input placeholder="Kim Xa, Vinh Phúc" />
+                                                    </Form.Item>
+
+
+                                                    {display.objective && <>
+                                                        <div className="section mt-3">
+                                                            <SectionTool action={() => setDisplay({ ...display, objective: false })} />
+                                                            <div className="d-flex align-items-center section-title">
+                                                                <span className="section-title">Mục tiêu nghề nghiệp</span>
+                                                            </div>
+                                                            <div className="ml-2">
+                                                                <Form.Item
+                                                                    name="objective"
+                                                                >
+                                                                    <TextArea
+                                                                        placeholder={`-Môi trường chuyên nghiệp\n-Cống hiến hết mình`}
+                                                                        autoSize={{ minRows: 2, maxRows: 6 }}
+                                                                    />
+                                                                </Form.Item>
+                                                            </div>
+                                                        </div>
+
+                                                        <Divider className="my-0 mt-3" />
+                                                    </>}
+
+                                                    {display.favorite && <>
+                                                        <div className="section">
+                                                            <SectionTool action={() => setDisplay({ ...display, favorite: false })} />
+                                                            <div className="d-flex align-items-center section-title">
+                                                                <span className="section-title">Sở thích</span>
+                                                            </div>
+                                                            <div className="ml-2">
+                                                                <Form.Item
+                                                                    name="favorite"
+                                                                >
+                                                                    <TextArea
+                                                                        placeholder={`-Đá bóng \n-Đọc sách`}
+                                                                        autoSize={{ minRows: 2, maxRows: 6 }}
+                                                                    />
+                                                                </Form.Item>
+                                                            </div>
+                                                        </div>
+                                                    </>}
+                                                </div>
+
+                                            </Col>
+                                            <Col span={17}>
+
+                                                {display.education && <>
+                                                    <div className="section mt-4">
+                                                        <SectionTool action={() => setDisplay({ ...display, education: false })} />
+                                                        <div className="d-flex align-items-center section-title">
+                                                            <i className="fas fa-graduation-cap ml-3 mr-2"></i>
+                                                            <span className="section-title">Học vấn</span>
+                                                        </div>
+                                                        <div className="ml-4">
+                                                            <Form.List name="education" initialValue={[{}]}>
+                                                                {(fields, { add, remove, move }) => (
+                                                                    <>
+                                                                        {fields.map(({ key, name, fieldKey, ...restField }, index) => (
+                                                                            <div className="section-item">
+                                                                                <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
+                                                                                <Row>
+                                                                                    <Col span={18}>
+                                                                                        <Form.Item
+                                                                                            name={[name, 'schoolName']}
+                                                                                            fieldKey={[fieldKey, 'schoolName']}
+                                                                                        >
+                                                                                            <Input placeholder="Đại học TOPCV" style={{ fontWeight: 'bold' }} />
+                                                                                        </Form.Item>
+                                                                                    </Col>
+                                                                                    <Col span={6}>
+                                                                                        <Form.Item
+                                                                                            {...restField}
+                                                                                            name={[name, 'duration']}
+                                                                                            fieldKey={[fieldKey, 'duration']}
+                                                                                        >
+                                                                                            <Input placeholder="10/2021 - hiện tại" />
+                                                                                        </Form.Item>
+                                                                                    </Col>
+                                                                                </Row>
+
+                                                                                <Form.Item
+                                                                                    {...restField}
+                                                                                    name={[name, 'major']}
+                                                                                    fieldKey={[fieldKey, 'major']}
+                                                                                >
+                                                                                    <Input placeholder="Chuyên ngành: Quản trị Doanh nghiệp" />
+                                                                                </Form.Item>
+                                                                                <Form.Item
+                                                                                    {...restField}
+                                                                                    name={[name, 'description']}
+                                                                                    fieldKey={[fieldKey, 'description']}
+                                                                                >
+                                                                                    <Input placeholder="CPA 3.2/4" />
+                                                                                </Form.Item>
+
+
+                                                                            </div>
+                                                                        ))}
+                                                                    </>
+                                                                )}
+                                                            </Form.List>
+                                                        </div>
+                                                    </div>
+
+                                                    <Divider className="my-0 mt-3" />
+                                                </>}
+
+                                                {display.experience && <>
+                                                    <div className="section">
+                                                        <SectionTool action={() => setDisplay({ ...display, experience: false })} />
+                                                        <div className="d-flex align-items-center section-title">
+                                                            <i className="fas fa-briefcase ml-3 mr-2"></i>
+                                                            <span className="section-title">Kinh nghiệm làm việc</span>
+                                                        </div>
+                                                        <div className="ml-4">
+                                                            <Form.List name="experience" initialValue={[{}]}>
+                                                                {(fields, { add, remove, move }) => (
+                                                                    <>
+                                                                        {fields.map(({ key, name, fieldKey, ...restField }, index) => (
+                                                                            <div className="section-item">
+                                                                                <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
+                                                                                <Row>
+                                                                                    <Col span={18}>
+                                                                                        <Form.Item
+                                                                                            name={[name, 'workplace']}
+                                                                                            fieldKey={[fieldKey, 'workplace']}
+                                                                                        >
+                                                                                            <Input placeholder="Công ty Vietel" style={{ fontWeight: 'bold' }} />
+                                                                                        </Form.Item>
+                                                                                    </Col>
+                                                                                    <Col span={6}>
+                                                                                        <Form.Item
+                                                                                            {...restField}
+                                                                                            name={[name, 'duration']}
+                                                                                            fieldKey={[fieldKey, 'duration']}
+                                                                                        >
+                                                                                            <Input placeholder="10/2021 - hiện tại" />
+                                                                                        </Form.Item>
+                                                                                    </Col>
+                                                                                </Row>
+                                                                                <Form.Item
+                                                                                    {...restField}
+                                                                                    name={[name, 'level']}
+                                                                                    fieldKey={[fieldKey, 'level']}
+                                                                                >
+                                                                                    <Input placeholder="Vị trí công việc: Nhân viên" />
+                                                                                </Form.Item>
+                                                                                <Form.Item
+                                                                                    {...restField}
+                                                                                    name={[name, 'description']}
+                                                                                    fieldKey={[fieldKey, 'description']}
+                                                                                >
+                                                                                    <TextArea
+                                                                                        placeholder={`- Hỗ trợ viết bài quảng cáo sản phẩm qua kênh facebook, các forum,...\n- Giới thiệu, tư vấn sản phẩm, giải đáp các vấn đề thắc mắc của khách hàng qua điện thoại và email.`}
+                                                                                        autoSize={{ minRows: 1, maxRows: 6 }}
+                                                                                    />
+                                                                                </Form.Item>
+                                                                            </div>
+                                                                        ))}
+                                                                    </>
+                                                                )}
+                                                            </Form.List>
+                                                        </div>
+                                                    </div>
+
+                                                    <Divider className="my-0 mt-3" />
+                                                </>}
+                                                {display.activity && <>
+                                                    <div className="section">
+                                                        <SectionTool action={() => setDisplay({ ...display, activity: false })} />
+                                                        <div className="d-flex align-items-center section-title">
+                                                            <i className="fas fa-user-edit ml-3 mr-2"></i>
+                                                            <span className="section-title">Hoạt động</span>
+                                                        </div>
+                                                        <div className="ml-4">
+                                                            <Form.List name="activity" initialValue={[{}]}>
+                                                                {(fields, { add, remove, move }) => (
+                                                                    <>
+                                                                        {fields.map(({ key, name, fieldKey, ...restField }, index) => (
+                                                                            <div className="section-item">
+                                                                                <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
+                                                                                <Row>
+                                                                                    <Col span={18}>
+                                                                                        <Form.Item
+
+                                                                                            name={[name, 'name']}
+                                                                                            fieldKey={[fieldKey, 'name']}
+                                                                                        >
+                                                                                            <Input placeholder="Nhóm tình nguyện hiến máu nhân đạo" style={{ fontWeight: 'bold' }} />
+                                                                                        </Form.Item>
+
+                                                                                    </Col>
+                                                                                    <Col span={6}>
+                                                                                        <Form.Item
+                                                                                            {...restField}
+                                                                                            name={[name, 'duration']}
+                                                                                            fieldKey={[fieldKey, 'duration']}
+                                                                                        >
+                                                                                            <Input placeholder="10/2021 - hiện tại" />
+                                                                                        </Form.Item>
+
+                                                                                    </Col>
+
+                                                                                </Row>
+                                                                                <Form.Item
+                                                                                    {...restField}
+                                                                                    name={[name, 'description']}
+                                                                                    fieldKey={[fieldKey, 'description']}
+                                                                                >
+                                                                                    <TextArea
+                                                                                        placeholder={`-Tập hợp các món quà và phân phát tới người vô gia cư.\n- Chia sẻ, động viên họ vượt qua giai đoạn khó khăn, giúp họ có những suy nghĩ lạc quan.`}
+                                                                                        autoSize={{ minRows: 1, maxRows: 6 }}
+                                                                                    />
+                                                                                </Form.Item>
+                                                                            </div>
+                                                                        ))}
+                                                                    </>
+                                                                )}
+                                                            </Form.List>
+                                                        </div>
+                                                    </div>
+
+                                                    <Divider className="my-0 mt-3" />
+                                                </>}
+
+                                                {display.skill && <>
+                                                    <div className="section">
+                                                        <SectionTool action={() => setDisplay({ ...display, skill: false })} />
+                                                        <div className="d-flex align-items-center section-title">
+                                                            <i className="far fa-sticky-note ml-3 mr-2"></i>
+                                                            <span className="section-title">Kỹ năng</span>
+                                                        </div>
+                                                        <div className="ml-4">
+                                                            <Form.List name="skill" initialValue={[{}]}>
+                                                                {(fields, { add, remove, move }) => (
+                                                                    <>
+                                                                        {fields.map(({ key, name, fieldKey, ...restField }, index) => (
+                                                                            <div className="section-item">
+                                                                                <ItemTool add={add} remove={remove} move={move} index={index} length={fields.length} />
+                                                                                <Row>
+                                                                                    <Col span={6}>
+                                                                                        <Form.Item
+                                                                                            {...restField}
+                                                                                            name={[name, 'name']}
+                                                                                            fieldKey={[fieldKey, 'name']}
+                                                                                        >
+                                                                                            <Input placeholder="Tin học" />
+                                                                                        </Form.Item>
+
+                                                                                    </Col>
+                                                                                    <Col span={18}>
+                                                                                        <Form.Item
+
+                                                                                            name={[name, 'description']}
+                                                                                            fieldKey={[fieldKey, 'description']}
+                                                                                        >
+                                                                                            <Input placeholder="Sử dụng thành thạo các công cụ Word, Excel, Power Point" />
+                                                                                        </Form.Item>
+                                                                                    </Col>
+                                                                                </Row>
+                                                                            </div>
+                                                                        ))}
+                                                                    </>
+                                                                )}
+                                                            </Form.List>
+                                                        </div>
+                                                    </div>
+                                                    <Divider className="my-0 mt-3" />
+                                                </>}
+                                            </Col>
+                                        </Row>
+
+
+                                    </Form>
+
+                                </div>
+
+                            </div>
 
                         </Col>
                         <Col sm={7}>
@@ -438,13 +794,11 @@ const Home = () => {
                                     <Button type="primary" size="small" icon={<i className="fas fa-download light-icon"></i>}>&nbsp;Tải xuống</Button>
                                     <Button type="primary" size="small" icon={<i className="far fa-save light-icon"></i>}>&nbsp;Lưu</Button>
                                 </Space> */}
-
-                                <Space>
-                                    <Button type="primary" size="small" >&nbsp;Đổi mẫu</Button>
-                                    <Button type="primary" size="small" onClick={() => generate()}>&nbsp;Xem trước</Button>
-                                    <Button type="primary" size="small" >&nbsp;Tải xuống</Button>
-                                    <Button type="primary" size="small" onClick={() => form.submit()}>&nbsp;Lưu</Button>
-                                </Space>
+                                <div className="bg-white py-3 px-5">
+                                    <Button style={{width: "100%"}} type="primary" size="large" onClick={() => form.submit()} className="mb-3">&nbsp;Lưu</Button>
+                                    <Button style={{width: "100%"}} type="primary" size="large" onClick={() => generate()}>&nbsp;Tải xuống</Button>
+                                </div>
+                                
                             </div>
                             {/* <div style={{ backgroundColor: "#fff" }} className="p-2">
                                 <Title level={4}>Tùy chỉnh CV</Title>

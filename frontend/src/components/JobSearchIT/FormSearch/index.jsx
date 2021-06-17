@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List } from 'antd';
+import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List, Space } from 'antd';
 import { provice, career, province } from "../../../Constances/const"
 import styled from 'styled-components'
 import jobApi from "../../../api/jobApi"
+import {tag} from "../../../Constances/const"
 const { Option } = Select;
 const { Panel } = Collapse;
 const { Meta } = Card;
@@ -11,7 +12,7 @@ const { Title, Text } = Typography;
 const SearchJobForm = (props) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useState({}); // To disable submit button at the beginning.
-    const { setJobList, setParamFilter, handleSearch } = props
+    const { setJobList, setParamFilter, handleSearch, workType, setWorkType } = props
     useEffect(() => {
         forceUpdate({});
     }, []);
@@ -45,13 +46,44 @@ const SearchJobForm = (props) => {
         <>
 
             <Card className="bg-white">
-                <Title level={4}>Lọc kết quả tìm kiếm</Title>
+                <Title level={4}>Nhập thông tin tìm kiếm</Title>
                 <Form form={form} name="horizontal_login" onFinish={onFinish} onFieldsChange={(changedFields, allFields) => setParamFilter(form.getFieldsValue())}>
-                    {/* <Form.Item
+                    <Form.Item
                         name="textSearch"
                     >
                         <Input prefix={<i className="fas fa-search"></i>} placeholder="Tên công việc bạn muốn ứng tuyển..." />
-                    </Form.Item> */}
+                    </Form.Item>
+
+                    <Form.Item
+                        name="jobType"
+                    >
+                        <Select
+                            placeholder="Loại việc làm"
+                            value={workType}
+                            onChange={setWorkType}
+                        >
+                            <Option value="">Tất cả loại hình</Option>
+                            <Option value="Frontend">Frontend</Option>
+                            <Option value="Backend">Backend</Option>
+                            <Option value="Fullstack">Fullstack</Option>
+                            <Option value="Tester">Tester</Option>
+                        </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                        name="skillRequire"
+                    >
+                        <Select
+                            placeholder="Nhập từ khóa tìm kiếm"
+                             mode="tags"
+                            style={{ width: '100%' }}
+                            tokenSeparators={[',']}
+                        >
+                            {tag.map(item => (
+                                <Option key={item} value={item}>{item}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
 
                     <Form.Item
                         name="workplace"
@@ -292,7 +324,11 @@ const SearchJobForm = (props) => {
                             >Remote (làm việc từ xa)</Option>
                         </Select>
                     </Form.Item>
-                    <Button style={{ width: '100%' }} type="primary" onClick={handleSearch}>Lọc kết quả</Button>
+                    <Space>
+                        <Button onClick={() => {form.resetFields(); setWorkType("")}}>Đặt lại</Button>
+                        <Button type="primary" onClick={handleSearch}>Tìm kiếm</Button>
+                    </Space>
+                    
                 </Form>
             </Card>
         </>

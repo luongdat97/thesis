@@ -4,8 +4,10 @@ import cvApi from '../../../api/cvApi'
 import StyleCv from "./index.style"
 import UploadAvatar from './UploadAvatar'
 import { useCookies } from "react-cookie"
+import { Link } from 'react-router-dom'
 import printJS from 'print-js'
 import Util from '../../../helper/util'
+import ChangeCv from '../../ChangeCv'
 const generate = Util.generate
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -17,9 +19,10 @@ const layout = {
     wrapperCol: { span: 18 },
 };
 
-const Home = () => {
+const Home = (props) => {
+    const [cv, setCv] = useState(props.location.state?.cv || {})
     const [cookies] = useCookies(["user"])
-    const [avatar, setAvatar] = useState({})
+    const [avatar, setAvatar] = useState(props.location.state?.avatar || {})
     const [display, setDisplay] = useState({
         objective: true,
         education: true,
@@ -37,8 +40,9 @@ const Home = () => {
         if (cookies.user) {
             values.applicant_id = cookies.user.id
             values.avatar = avatar
-            cvApi.postCv(values).then((res) => {
+            cvApi.postCv({...values, cvType: 0}).then((res) => {
                 console.log(res)
+                message.success("Bạn đã tạo mới CV thành công!")
             }).catch((err) => {
                 console.log(err)
             })
@@ -48,7 +52,6 @@ const Home = () => {
 
     }
 
-    console.log(avatar)
     return (
         <>
             <div style={{ backgroundColor: "#f0f2f5" }}>
@@ -61,6 +64,7 @@ const Home = () => {
                                     {...layout}
                                     onFinish={(values) => onSubmit(values)}
                                     form={form}
+                                    initialValues={cv}
                                     className="h-100"
                                 >
                                     <Row className="h-100">
@@ -404,7 +408,7 @@ const Home = () => {
                                 </Form>
 
                             </div>
-                            <div style={{position: "absolute", opacity: "0.0"}}>
+                            <div style={{ position: "absolute", opacity: "0.0" }}>
                                 <div id="html2canvas" style={{ width: 794, height: 1123, backgroundColor: "#fff" }}>
                                     <Form
                                         {...layout}
@@ -416,7 +420,7 @@ const Home = () => {
                                             <Col span={7} className="px-0 input-none-bg text-white" style={{ background: "#37474f" }}>
                                                 <div style={{ background: "#263238" }}>
                                                     <div className="d-flex justify-content-center pt-4">
-                                                        <img src={avatar?.url} alt="avatar" style={{width: 180, height: 180}}></img>
+                                                        <img src={avatar?.url} alt="avatar" style={{ width: 180, height: 180 }}></img>
                                                     </div>
                                                     <Form.Item
                                                         name="name"
@@ -778,7 +782,7 @@ const Home = () => {
                                 </Space> */}
 
                                 <Space>
-                                    <Button type="primary" size="small" >&nbsp;Đổi mẫu</Button>
+                                    <ChangeCv init={() => setCv(form.getFieldsValue())} initial={{ cv, avatar }} cvType={0} />
                                     <Button type="primary" size="small" onClick={() => generate()}>&nbsp;Tải xuống</Button>
                                     <Button type="primary" size="small" onClick={() => form.submit()}>&nbsp;Lưu</Button>
                                 </Space>

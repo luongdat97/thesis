@@ -20,7 +20,7 @@ const RegisterRecruiter = (props) => {
     const onFinish = (values) => {
         console.log('Success:', values);
         handleSubmit(values).then(res => {
-
+            message.success("Bạn đã đăng ký tài khoản thành công!")
         }).catch(err => {
             console.log(err)
             message.error("Email đã tồn tại!")

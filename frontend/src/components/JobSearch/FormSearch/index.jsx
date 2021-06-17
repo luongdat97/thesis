@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List } from 'antd';
 import { provice, career, province } from "../../../Constances/const"
+import util from '../../../helper/util'
 import styled from 'styled-components'
 import jobApi from "../../../api/jobApi"
 const { Option } = Select;
@@ -11,11 +12,15 @@ const { Title, Text } = Typography;
 const SearchJobForm = (props) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useState({}); // To disable submit button at the beginning.
-    const { setJobList } = props
+    const { setJobList, pageIndex, setTotal } = props
     useEffect(() => {
         forceUpdate({});
     }, []);
 
+    useEffect(() => {
+        handleSearch()
+        console.log("hahaha")
+    }, [pageIndex]);
     const onFinish = (values) => {
         console.log('Finish:', values);
     };
@@ -23,9 +28,10 @@ const SearchJobForm = (props) => {
     const handleSearch = () => {
         console.log(form.getFieldsValue())
         let params = form.getFieldsValue()
-        jobApi.searchJob(params).then((res) => {
+        jobApi.searchJob({...params, index: pageIndex}).then((res) => {
             console.log(res.data)
-            setJobList(res.data)
+            setJobList(res.data.data)
+            setTotal(res.data.total)
         })
     }
 
@@ -35,16 +41,13 @@ const SearchJobForm = (props) => {
         style: { width: "100%" },
         optionFilterProp: "children",
         filterOption: (input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
+            util.normalString(option.children).indexOf(util.normalString(input)) >= 0,
         filterSort: (optionA, optionB) =>
             optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-
     }
 
     return (
         <>
-
-
             <Card className="bg-white">
                 <Title level={4}>Nhập thông tin tìm kiếm</Title>
                 <Form form={form} name="horizontal_login" onFinish={onFinish}>
@@ -202,10 +205,10 @@ const SearchJobForm = (props) => {
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
                                                 &nbsp;
-                                                {"Chưa có kinh nghiệm"}
+                                                {"Không yêu cầu"}
                                     </React.Fragment>
                                 }
-                            >Chưa có kinh nghiệm</Option>
+                            >Không yêu cầu</Option>
                             <Option value={2}
                                 label={
                                     <React.Fragment>

@@ -5,7 +5,14 @@ import html2canvas from "html2canvas"
 export default class Util {
 
     constructor() { }
-
+    
+    static normalString = (str) => {
+        
+        return str.toLowerCase().normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d")
+        .replace(/Đ/g, "D")
+    }
     static toSalaryString = ({from, to}) => {
         if (!from && to == 1000000) return "Thỏa thuận"
         if (!from) return `Lên đến ${to} triệu` 
@@ -17,10 +24,11 @@ export default class Util {
        return moment() > moment(date)
     }
 
-    static generate = function () {
+    static generate = function (scrollP) {
+        console.log(scrollP)
         html2canvas(document.getElementById("html2canvas"), {
-            scrollX: -window.scrollX,
-            scrollY: -window.scrollY,
+            scrollX: -scrollP?.x || -window.scrollX,
+            scrollY: -scrollP?.y || -window.scrollY,
             windowWidth: document.documentElement.offsetWidth,
             windowHeight: document.documentElement.offsetHeight,
             logging: true, letterRendering: 1, allowTaint: true, useCORS: true

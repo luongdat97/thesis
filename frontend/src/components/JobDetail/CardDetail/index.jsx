@@ -13,6 +13,7 @@ const CardDetail = (props) => {
     return (
         <>
             <Card title="Thông tin tuyển dụng" className="w-100" headStyle={{ backgroundColor: "#b5f5ec" }}>
+                <p><Text strong>Email nhận hồ sơ:</Text> {job.receiver?.email}</p>
                 <p><Text strong>Mức lương:</Text> {!!job.salary && util.toSalaryString(job.salary)}</p>
                 <p><Text strong>Hình thức làm việc:</Text> {constance.workType.find(item => item.code === job.workType)?.label}</p>
                 <p><Text strong>Số lượng cần tuyển:</Text> {job.numberHire} người</p>

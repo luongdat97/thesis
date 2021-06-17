@@ -3,44 +3,50 @@ import { Form, Input, Select, Row, Col, Collapse, Card, Typography, Button, Spac
 import { Link } from 'react-router-dom'
 import StyleManageCv from './index.style'
 import cvApi from '../../../api/cvApi'
-import {useCookies} from 'react-cookie'
+import { useCookies } from 'react-cookie'
+import moment from 'moment'
+import CvModal from '../../CvModal'
 const { Option } = Select;
 const { Panel } = Collapse;
 const { Meta } = Card;
 const { Title, Text } = Typography;
 const { TextArea } = Input
+const cvCovers = [
+    { cover: 'https://www.topcv.vn/images/cv/screenshots/thumbs/cv-template-thumbnails-v1.1/onepage_impressive.png?v=1.0.3', url: '/cv/create' },
+    { cover: 'https://www.topcv.vn/images/cv/screenshots/thumbs/cv-template-thumbnails-v1.1/default.png?v=1.0.3', url: '/cv1/create' },
+]
 
 function CvCard(props) {
+    let cv = props.data
+    if (!cv.cvType) cv.cvType = 0
     return (
         <>
-            <Row gutter={16}>
-                <Col span={4}>
-                    <img className="w-100" alt="cv cover" src="https://res.cloudinary.com/project0407/image/upload/v1615735746/project/CV%20cover/modern_5_cktoed.webp"></img>
+            <Row gutter={16} className="border p-3">
+                <Col span={8}>
+                    <img className="w-100" alt="cv cover" src={cvCovers[cv.cvType].cover}></img>
                 </Col>
-                <Col span={20}>
+                <Col span={16}>
                     <div className="d-flex justify-content-between">
-                        <Title level={4}>Tên file CV</Title>
-                        <Space>
-                            <Link to={`/applicant/individual/view-cv/${props.cvId}`}><Button type="primary">Xem</Button></Link>
-                            <Link to={`/applicant/individual/edit-cv/${props.cvId}`}><Button type="primary">Sửa</Button></Link>
-                            <Popconfirm
-                                title="Bạn có muốn xóa cv này?"
-                                onConfirm={() => props.deleteCv(props.cvId)}
-                                // onCancel={}
-                                okText="Đồng ý"
-                                cancelText="Thoát"
-                            >
-                                <Button type="primary">Xóa</Button>
-                            </Popconfirm>
-                            
-                        </Space>
+                        <Title level={4}>{cv.jobPosition}</Title>
                     </div>
 
 
-                    <Text>Ngày tạo: 14-03-2021 16:31 PM</Text>
+                    <Text>Ngày tạo: {moment(cv.ctime).format("DD/MM/YYYY")}</Text>
                     <br></br>
-                    <Text>Link CV: https://i.topcv.vn/nguyenvana?ref=3881639</Text>
-                    <br></br>
+                    <Space className="mt-2">
+                        {/* <CvModal cvType={cv.cvType} cvId={cv.id}/> */}
+                        <Link to={`/applicant/individual/edit-cv${cv.cvType ? cv.cvType : ''}/${props.cvId}`}><Button type="primary">Cập nhật</Button></Link>
+                        <Popconfirm
+                            title="Bạn có muốn xóa cv này?"
+                            onConfirm={() => props.deleteCv(props.cvId)}
+                            // onCancel={}
+                            okText="Đồng ý"
+                            cancelText="Thoát"
+                        >
+                            <Button type="primary">Xóa</Button>
+                        </Popconfirm>
+
+                    </Space>
 
                 </Col>
             </Row>
@@ -57,8 +63,8 @@ export default function ManageCv() {
     }, [])
 
     const fetchCv = () => {
-        console.log("l.=............",applicant_id)
-        cvApi.getCvList({applicant_id}).then((res) => {
+        console.log("l.=............", applicant_id)
+        cvApi.getCvList({ applicant_id }).then((res) => {
             console.log(res.data)
             setCvList(res.data)
         })
@@ -73,19 +79,20 @@ export default function ManageCv() {
     return (
         <>
             <StyleManageCv>
-                <div className="bg-white p-3">
-                    <Space direction="vertical" size="large">
+                <div className="bg-white px-5 pt-4">
+                    <Title level={3}>Danh sách CV đã tạo</Title>
+                    <Row gutter={[70, 32]}>
                         {cvList.map(item => (
-                            <CvCard key={item.id} cvId={item.id} deleteCv={deleteCv}></CvCard>
+                            <Col span={12}>
+                                <CvCard key={item.id} cvId={item.id} deleteCv={deleteCv} data={item}></CvCard>
+                            </Col>
+
                         ))}
-                    </Space>
+                    </Row>
+
+
                 </div>
-
-
             </StyleManageCv>
-
-
-
         </>
     )
 }

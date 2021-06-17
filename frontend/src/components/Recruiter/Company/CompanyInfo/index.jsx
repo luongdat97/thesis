@@ -3,6 +3,7 @@ import { Form, Input, DatePicker, Select, Row, Col, Button, Card, Typography, Li
 import { useParams, Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import companyApi from '../../../../api/companyApi'
+import {companyScale} from '../../../../Constances/const'
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
@@ -58,7 +59,7 @@ const CompanyInfo = (props) => {
                     </Row>
                     <Row className="mb-2">
                         <Col span={4}>Quy mô</Col>
-                        <Col span={20}>{company.scale}</Col>
+                        <Col span={20}>{companyScale.find((item) => item.code == company.scale)?.label}</Col>
                     </Row>
                     <Row className="mb-2">
                         <Col span={4}>Mô tả</Col>
