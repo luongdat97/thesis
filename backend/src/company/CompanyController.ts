@@ -1,10 +1,11 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { CompanyNS } from "./Company";
 
 export function NewCompanyAPI(companyBLL: CompanyNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
     const params: CompanyNS.CreateCompanyParams = {
       ...req.body
     };
@@ -16,7 +17,7 @@ export function NewCompanyAPI(companyBLL: CompanyNS.BLL) {
     res.json(docs);
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const company_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: CompanyNS.UpdateCompanyParams = { ...req.body };
     await companyBLL.UpdateCompany(company_id, params);
@@ -28,7 +29,7 @@ export function NewCompanyAPI(companyBLL: CompanyNS.BLL) {
     res.json(doc);
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await companyBLL.DeleteCompany(req.body.id as string);
     res.json(doc);
   });

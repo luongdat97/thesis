@@ -44,6 +44,7 @@ const Home = (props) => {
             values.avatar = avatar
             cvApi.postCv({...values, cvType: 1}).then((res) => {
                 console.log(res)
+                message.success("Bạn đã tạo CV thành công!")
             }).catch((err) => {
                 console.log(err)
             })

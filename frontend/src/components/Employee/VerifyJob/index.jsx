@@ -5,13 +5,13 @@ import moment from "moment"
 import util from '../../../helper/util'
 import { useCookies } from 'react-cookie'
 import {Link} from "react-router-dom"
+import JobModal from '../../JobModal';
 const { TabPane } = Tabs;
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
 
 const JobManager = (props) => {
-  console.log("haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...............")
   const [cookies] = useCookies(["user"])
   const [jobList, setJobList] = useState([])
   let waitedList = jobList.filter(item => !item.state)
@@ -57,7 +57,7 @@ const JobManager = (props) => {
       title: 'Tin tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <Link  target="_blank" to={`/employee/job-detail/${record.id}`}>{text}</Link>,
+      render: (text, record) => <JobModal jobId={record.id} title={record.title}></JobModal>,
     },
     {
       title: 'Mức lương',
@@ -102,7 +102,7 @@ const JobManager = (props) => {
       title: 'Tin tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <Link  target="_blank" to={`/employee/job-detail/${record.id}`}>{text}</Link>,
+      render: (text, record) => <JobModal jobId={record.id} title={record.title}></JobModal>,
     },
     {
       title: 'Mức lương',
@@ -129,7 +129,7 @@ const JobManager = (props) => {
       title: 'Tin tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <Link  target="_blank" to={`/employee/job-detail/${record.id}`}>{text}</Link>,
+      render: (text, record) => <JobModal jobId={record.id} title={record.title}></JobModal>,
     },
     {
       title: 'Mức lương',

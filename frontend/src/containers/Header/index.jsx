@@ -17,7 +17,7 @@ export default function MainHeader(props) {
             <div className="d-flex align-items-center mr-auto">
                 <Input style={{ width: 300, height: 50, borderRadius: 25 }} placeholder="Nhập việc làm bạn muốn tìm..." prefix={<i className="fas fa-search"></i>} />
             </div>
-            <Menu theme="dark" style={{ width: 684 }} mode="horizontal" defaultSelectedKeys={['1']} overflowedIndicator={<i className="fas fa-bars"></i>}	>
+            <Menu theme="dark" style={{ width:584 }} mode="horizontal" defaultSelectedKeys={['1']} overflowedIndicator={<i className="fas fa-bars"></i>}	>
                 <Menu.SubMenu key="4"  title="Việc làm">
                     <Menu.Item key="1"><Link to={`/job-search`}>Tất cả việc làm</Link></Menu.Item>
                     <Menu.Item key="2"><Link to={`/job-search-it`}>Việc làm IT</Link></Menu.Item>

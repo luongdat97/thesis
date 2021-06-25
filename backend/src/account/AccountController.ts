@@ -1,6 +1,8 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { AccountNS } from "./Account";
+
 var jwt = require('jsonwebtoken');
 import { ProfileNS } from "../profile/Profile";
 const bcrypt = require('bcrypt');
@@ -29,7 +31,7 @@ export function NewAccountAPI(accountBLL: AccountNS.BLL, profileBLL: ProfileNS.B
     res.json(docs);
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const account_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: AccountNS.UpdateAccountParams = { ...req.body };
     if (req.body.password) {
@@ -69,7 +71,7 @@ export function NewAccountAPI(accountBLL: AccountNS.BLL, profileBLL: ProfileNS.B
 
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await accountBLL.DeleteAccount(req.body.id as string);
     res.json(doc);
   });

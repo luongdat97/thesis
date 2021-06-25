@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 // import { NewAuthMiddleware, GetAuthData } from "../auth/auth.api.middleware";
 // import { UserAuthNS } from "../auth/auth";

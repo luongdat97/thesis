@@ -18,14 +18,14 @@ const { Option } = Select
 
 const CandidateManage = (props) => {
   const [jobList, setJobList] = useState([])
-  const [chosenJob, setChosenJob] = useState({})
+  const [chosenJob, setChosenJob] = useState(props.location.state?.job || {})
   const [cookies] = useCookies(["user"])
   let recruiter_id = cookies.user.id
   useEffect(() => {
     jobApi.getJobList({ recruiter_id }).then(res => {
       console.log(res.data)
       setJobList(res.data)
-      setChosenJob(res.data[0])
+      if (!chosenJob.id) setChosenJob(res.data[0])
     })
   }, [])
   return (
@@ -44,7 +44,7 @@ const CandidateManage = (props) => {
             </div>
 
             <div className="mb-3">
-              Trạng thái tin tuyển dụng: {util.isOutDate(chosenJob.endDate) ? "Tin đã hết hạn" : (jobState.find(item => { console.log(chosenJob); return item.code == chosenJob.state || !item.code }))?.label}
+              Trạng thái tin tuyển dụng: {util.isOutDate(chosenJob.endDate) ? "Tin đã hết hạn" : !chosenJob.state? "Chờ duyệt" : (jobState.find(item =>  item.code == chosenJob.state ))?.label}
             </div>
 
             <div className="mb-3">

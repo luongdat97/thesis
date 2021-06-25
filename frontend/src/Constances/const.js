@@ -154,8 +154,8 @@ export const experienceRequire = [
 
 export const jobState = [
     {code: 0, label: "Chờ duyệt"},
-    {code: 1, label: "Đang hiển thị"},
-    {code: 2, label: "Tin bị từ chối"},
+    {code: 1, label: "Đã xác thực"},
+    {code: 2, label: "Tin bị từ chối xác thực"},
     {code: 3, label: "Tin đã hết hạn"},
 ]
 

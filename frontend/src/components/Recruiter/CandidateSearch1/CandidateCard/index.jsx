@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Avatar, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Checkbox, Button, Modal, Radio } from 'antd';
+import { Card, Avatar, Tabs, Select, Row, Col, Table, Tag, Typography, Space, Checkbox, Button, Modal, Radio, message } from 'antd';
 import util from "../../../../helper/util"
 import { Link } from "react-router-dom"
 import invitedApplicantAPI from "../../../../api/invitedApplicant"
@@ -47,7 +47,7 @@ const CandidateCard = (props) => {
                         <Title level={5} className="m-0"> {cv.jobPosition}</Title>
 
                         <div>
-                            Mức lương mong muốn: {util.toSalaryString(desire.salary)}
+                            Mức lương mong muốn: {util.toSalaryStringWithoutDefault(desire.salary)}
                         </div>
 
                         <Space size="large" className="mt-1">
@@ -60,7 +60,7 @@ const CandidateCard = (props) => {
                                 <Text><i className="fas fa-briefcase"></i> {item.workPlace} - {item.level}</Text>
                             </div>
                         ))} */}
-                        <Text><i className="fas fa-graduation-cap"></i>{cv.education[0].major + " - " + cv.education[0].schoolName}</Text><br />
+                        <Text><i className="fas fa-graduation-cap mr-2"></i>{ cv.education[0].schoolName + " - " + cv.education[0].major}</Text><br />
                         <Space size="small" className="mt-1">
                             <InviteApplyModal jobList={jobList} recruiter_id={recruiter_id} applicant_id={desire.applicant_id} desire={desire} />
                             {!savedApplicant && <Button onClick={() => { saveApplicant() }} style={{ width: 110 }} size="small" type="primary">Lưu ứng viên</Button>}
@@ -104,10 +104,12 @@ const InviteApplyModal = (props) => {
                 invitedApplicantAPI.postInvitedApplicant({ applicant_id, recruiter_id, job_id: chosenJob, cv_id: props.desire.cv_id  }).then((res) => {
                     console.log("hahha")
                     console.log(res)
+                    
                 }).catch(err => {
                     console.log(err)
                 })
             })
+            message.success("Bạn đã mời ứng tuyển thành công!")
         })
 
     };
@@ -133,7 +135,7 @@ const InviteApplyModal = (props) => {
             >
                 <Checkbox.Group style={{ width: '100%' }} value={chosenJob} onChange={(value) => setChosenJob(value)}>
                     <Row>
-                        {jobList.map(job => (
+                        {jobList.filter(item => item.state == 1).map(job => (
                             <Col span={24}>
                                 <Checkbox value={job.id}>{job.title}</Checkbox>
                             </Col>

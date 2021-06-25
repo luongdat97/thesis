@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { InvitedApplicantNS } from "./InvitedApplicant";
 import { ProfileNS } from "../profile/Profile"
@@ -7,7 +8,7 @@ import { JobNS } from "../job/Job";
 
 export function NewInvitedApplicantAPI(invitedApplicantBLL: InvitedApplicantNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
     const invitedApplicant = await invitedApplicantBLL.CreateInvitedApplicant({ ...req.body });
     res.json(invitedApplicant);
   });
@@ -27,7 +28,7 @@ export function NewInvitedApplicantAPI(invitedApplicantBLL: InvitedApplicantNS.B
     }
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const invitedApplicant_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: InvitedApplicantNS.UpdateInvitedApplicantParams = { ...req.body };
     await invitedApplicantBLL.UpdateInvitedApplicant(invitedApplicant_id, params);
@@ -46,7 +47,7 @@ export function NewInvitedApplicantAPI(invitedApplicantBLL: InvitedApplicantNS.B
 
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     let { recruiter_id, applicant_id, id } = req.body
     if (id) {
       const doc = await invitedApplicantBLL.DeleteInvitedApplicant(req.body.id as string);

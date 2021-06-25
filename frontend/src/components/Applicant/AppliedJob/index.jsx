@@ -25,7 +25,7 @@ const AppliedJob = (props) => {
                 {appliedList.map((item) => {
                     if (item.job_ref) {
                         return <>
-                            <AppliedJobCard job={item.job_ref} key={item.id}></AppliedJobCard>
+                            <AppliedJobCard job={item.job_ref} appliedJob={item} key={item.id}></AppliedJobCard>
                             <br></br>
                         </>
                     }

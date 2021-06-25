@@ -1,4 +1,4 @@
-import { Http } from "../helper/http"
+import Http from "../helper/http"
 const API_ENDPOINT = {
     BASE: '/desire',
 }

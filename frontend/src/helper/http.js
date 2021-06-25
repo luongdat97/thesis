@@ -1,11 +1,14 @@
 import Axios from 'axios';
 import { BASE_URL } from '../Constances/const'
-
-export class Http {
-    get header() {
+import { withCookies, Cookies } from 'react-cookie';
+import { getUniversalCookies } from './cookies';
+ class Http {
+    static get headers() {
+        //console.log(getUniversalCookies().get("user"))
+        let token = getUniversalCookies().get("user")?.token
         return {
             'X-Refresh': 'refreshToken',
-            'Authorization': 'authToken',
+            'Authorization': "Bearer " + token,
             'x-userId': 'userId',
             'Access-Control-Allow-Origin': '*',
         }
@@ -17,8 +20,9 @@ export class Http {
 
 
     static get = (endPoint, params) => {
+        console.log(this.headers)
         const options = {
-            header: this.header,
+            headers: this.headers,
         }
         if (params && Object.keys(params).length) {
             options.params = params;
@@ -28,25 +32,26 @@ export class Http {
 
     static post = (endPoint, payload) => {
         return Axios.post(BASE_URL + endPoint, payload, {
-            header: this.header,
+            headers: this.headers,
         })
     }
 
     static put = (endPoint, payload) => {
         return Axios.put(BASE_URL + endPoint, payload, {
-            header: this.header,
+            headers: this.headers,
         })
     }
 
     static patch = (endPoint, payload) => {
         return Axios.patch(BASE_URL + endPoint, payload, {
-            header: this.header,
+            headers: this.headers,
         })
     }
 
     static delete = (endPoint, id) => {
         return Axios.delete(BASE_URL + endPoint + '/' + id, {
-            header: this.header,
+            headers: this.headers,
         });
     }
 }
+export default Http;

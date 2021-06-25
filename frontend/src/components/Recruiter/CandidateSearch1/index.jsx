@@ -7,12 +7,21 @@ import jobApi from '../../../api/jobApi'
 import SearchInput from "./SearchInput"
 import { useCookies } from 'react-cookie'
 import { province, career, tag } from '../../../Constances/const'
+import util from "../../../helper/util"
 
 const { RangePicker } = DatePicker
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
 
+const searchSelectProps = {
+    showSearch: true,
+    optionFilterProp: "children",
+    filterOption: (input, option) =>
+        util.normalString(option.children).indexOf(util.normalString(input)) >= 0,
+    filterSort: (optionA, optionB) =>
+        optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+}
 const CandidateSearch = (props) => {
     const [desireList, setDesireList] = useState([])
     const [jobList, setJobList] = useState([])
@@ -69,17 +78,23 @@ const ExtraOption = (props) => {
     return (
         <>
             <Card className="bg-white">
-                <Title level={4}>Tìm kiếm nâng cao</Title>
+                <Title level={4}>Nhập thông tin tìm kiếm</Title>
                 <Form
                     {...layout}
                     onFinish={(value) => { console.log(value); props.getDesireList(value) }}
                     form={form}
                 >
+                    {/* <Form.Item
+                        label="Từ khóa"
+                        name="textSearch"
+                    >
+                        <Input prefix={<i className="fas fa-search"></i>} placeholder="Nhập từ khóa bạn muốn tìm..." />
+                    </Form.Item> */}
                     <Form.Item
                         label="Ngành nghề"
                         name='field'
                     >
-                        <Select>
+                        <Select {...searchSelectProps}>
                             <Option value={null}>Tất cả ngành nghề</Option>
                             {career.map(item => (
                                 <Option value={item} key={item}>{item}</Option>
@@ -90,7 +105,7 @@ const ExtraOption = (props) => {
                         label="Địa điểm"
                         name='address'
                     >
-                        <Select>
+                        <Select {...searchSelectProps}>
                             <Option value={null}>Tất cả địa điểm</Option>
                             {province.map(item => (
                                 <Option value={item} key={item}>{item}</Option>
@@ -101,7 +116,7 @@ const ExtraOption = (props) => {
                         label="Kinh nghiệm"
                         name='experience'
                     >
-                        <Select >
+                        <Select {...searchSelectProps}>
                             <Option value={null}>Tất cả kinh nghiệm</Option>
                             <Option value="1">Chưa có kinh nghiệm</Option>
                             <Option value="2">Dưới 1 năm</Option>
@@ -117,7 +132,7 @@ const ExtraOption = (props) => {
                         label="Trình độ"
                         name='level'
                     >
-                        <Select>
+                        <Select {...searchSelectProps}>
                             <Option value={null}>Tất cả trình độ</Option>
                             <Option value="1">Sinh viên</Option>
                             <Option value="2">mới ra trường</Option>
@@ -132,7 +147,7 @@ const ExtraOption = (props) => {
                         label="Tiếng Anh"
                         name='english'
                     >
-                        <Select>
+                        <Select {...searchSelectProps}>
                             <Option value={null}>Tất cả mức độ</Option>
                             <Option value="1">Không biết</Option>
                             <Option value="2">Đọc hiểu cơ bản</Option>
@@ -145,7 +160,7 @@ const ExtraOption = (props) => {
                         label="Thời gian"
                         name='workType'
                     >
-                        <Select >
+                        <Select {...searchSelectProps}>
                             <Option value={null}>Tất cả</Option>
                             <Option value="1">Toàn thời gian</Option>
                             <Option value="2">Bán thời gian</Option>
@@ -167,7 +182,7 @@ const ExtraOption = (props) => {
                     >
                         <RangePicker picker="year" />
                     </Form.Item> */}
-                    <div className="d-flex justify-content-end">
+                    <div className="d-flex justify-content-center">
                         <Button type="primary" htmlType="submit" className="mr-3">Tìm kiếm</Button>
                         <Button onClick={() => { form.resetFields() }}>Đặt lại dữ liệu</Button>
                     </div>

@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { CvNS } from "./Cv";
 import { ProfileNS } from "../profile/Profile"
@@ -6,7 +7,7 @@ import { AccountNS } from "../account/Account"
 
 export function NewCvAPI(cvBLL: CvNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
     let cvData = req.body
     console.log(".........")
     console.log(cvData.activity)
@@ -79,7 +80,7 @@ export function NewCvAPI(cvBLL: CvNS.BLL) {
     res.json(detailDocs);
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     let cvData = req.body
     const cv_id = HttpParamValidators.MustBeString(req.body, "id");
 
@@ -123,7 +124,7 @@ export function NewCvAPI(cvBLL: CvNS.BLL) {
     res.json(cv);
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await cvBLL.DeleteCv(req.body.id as string);
     res.json(doc);
   });

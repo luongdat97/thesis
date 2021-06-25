@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { AdminNS } from "./Admin";
 import {ProfileNS} from "../profile/Profile"
@@ -23,7 +24,7 @@ export function NewAdminAPI(adminBLL: AdminNS.BLL, profileBLL: ProfileNS.BLL, ac
     res.json(docs);
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const admin_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: AdminNS.UpdateAdminParams = { ...req.body };
     await adminBLL.UpdateAdmin(admin_id, params);
@@ -35,7 +36,7 @@ export function NewAdminAPI(adminBLL: AdminNS.BLL, profileBLL: ProfileNS.BLL, ac
     res.json(doc);
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await adminBLL.DeleteAdmin(req.body.id as string);
     res.json(doc);
   });

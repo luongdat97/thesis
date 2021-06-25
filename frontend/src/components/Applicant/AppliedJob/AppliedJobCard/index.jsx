@@ -13,7 +13,7 @@ const GeneralJobCard = (props) => {
                 <img
                     alt="example"
                     src={job.company?.logo.url}
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", maxHeight: 100, objectFit: "contain" }}
                 />
             </Col>
             <Col span={9}>
@@ -34,7 +34,7 @@ const GeneralJobCard = (props) => {
                 Hạn nộp đơn: {moment(job.endDate).format("DD/MM/YYYY")}
             </Col>
             <Col span={6}>
-                Trạng thái: { !job.state ? "chờ phản hồi": job.state == 1 ? "Đã chấp nhận đơn" : "Bị từ chối"}
+                Trạng thái: { !props.appliedJob.state ? "chờ phản hồi": props.appliedJob.state == 1 ? "Đã chấp nhận đơn" : "Bị từ chối"}
             </Col>
             {/* <Col span={4}>
                 <Space direction="vertical">

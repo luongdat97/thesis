@@ -98,5 +98,18 @@ const StyleList = styled.div`
     height:100%;
     object-fit:cover;
   }
+  .logo-preview-inner {
+    height: 160px;
+    width: 140px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    img {
+      height: 100%;
+      width: auto;
+    }
 `;
 export default StyleList;

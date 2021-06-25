@@ -1,10 +1,11 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { NotificationNS } from "./Notification";
 
 export function NewNotificationAPI(notificationBLL: NotificationNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
     const notification = await notificationBLL.CreateNotification(req.body);
     res.json(notification);
   });
@@ -18,7 +19,7 @@ export function NewNotificationAPI(notificationBLL: NotificationNS.BLL) {
     }
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const notification_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: NotificationNS.UpdateNotificationParams = { ...req.body };
     await notificationBLL.UpdateNotification(notification_id, params);
@@ -30,7 +31,7 @@ export function NewNotificationAPI(notificationBLL: NotificationNS.BLL) {
     res.json(doc);
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await notificationBLL.DeleteNotification(req.body.id as string);
     res.json(doc);
   });

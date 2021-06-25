@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { DesireNS } from "./Desire";
 import { ProfileNS } from "../profile/Profile";
@@ -8,7 +9,7 @@ import { ApplicantNS } from "../applicant/Applicant";
 
 export function NewDesireAPI(desireBLL: DesireNS.BLL, applicantBLL: ApplicantNS.BLL, cvBLL: CvNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
 
     const params: DesireNS.CreateDesireParams = {
       ...req.body
@@ -54,7 +55,7 @@ export function NewDesireAPI(desireBLL: DesireNS.BLL, applicantBLL: ApplicantNS.
     res.json({data: newDocs.filter((item: any) => !!item.cv_id), total});
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const desire_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: DesireNS.UpdateDesireParams = { ...req.body };
     await desireBLL.UpdateDesire(desire_id, params);
@@ -74,7 +75,7 @@ export function NewDesireAPI(desireBLL: DesireNS.BLL, applicantBLL: ApplicantNS.
 
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await desireBLL.DeleteDesire(req.body.id as string);
     res.json(doc);
   });

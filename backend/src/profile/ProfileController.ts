@@ -1,10 +1,11 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { ProfileNS } from "./Profile";
 
 export function NewProfileAPI(profileBLL: ProfileNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
     const { name, phone, email, address, birthday, gender, avatar } = req.body
     const params: ProfileNS.CreateProfileParams = {
       name,
@@ -23,7 +24,7 @@ export function NewProfileAPI(profileBLL: ProfileNS.BLL) {
     res.json(docs);
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const profile_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: ProfileNS.UpdateProfileParams = { ...req.body };
     await profileBLL.UpdateProfile(profile_id, params);
@@ -35,7 +36,7 @@ export function NewProfileAPI(profileBLL: ProfileNS.BLL) {
     res.json(doc);
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await profileBLL.DeleteProfile(req.body.id as string);
     res.json(doc);
   });

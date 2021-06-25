@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { AppliedJobNS } from "./AppliedJob";
 import { ProfileNS } from "../profile/Profile"
@@ -9,7 +10,7 @@ import { JobNS } from "../job/Job";
 
 export function NewAppliedJobAPI(appliedJobBLL: AppliedJobNS.BLL, jobBLL: JobNS.BLL, notificationBLL: NotificationNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
     const { applicant_id, job_id, cv_id } = req.body
     const params: AppliedJobNS.CreateAppliedJobParams = {
       applicant_id,
@@ -38,7 +39,7 @@ export function NewAppliedJobAPI(appliedJobBLL: AppliedJobNS.BLL, jobBLL: JobNS.
     }
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const appliedJob_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: AppliedJobNS.UpdateAppliedJobParams = { ...req.body };
     await appliedJobBLL.UpdateAppliedJob(appliedJob_id, params);
@@ -63,7 +64,7 @@ export function NewAppliedJobAPI(appliedJobBLL: AppliedJobNS.BLL, jobBLL: JobNS.
 
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await appliedJobBLL.DeleteAppliedJob(req.body.id as string);
     res.json(doc);
   });

@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { SavedApplicantNS } from "./SavedApplicant";
 import { ProfileNS } from "../profile/Profile"
@@ -7,7 +8,7 @@ import { JobNS } from "../job/Job";
 
 export function NewSavedApplicantAPI(savedApplicantBLL: SavedApplicantNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
     const savedApplicant = await savedApplicantBLL.CreateSavedApplicant({...req.body});
     res.json(savedApplicant);
   });
@@ -23,7 +24,7 @@ export function NewSavedApplicantAPI(savedApplicantBLL: SavedApplicantNS.BLL) {
     }
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const savedApplicant_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: SavedApplicantNS.UpdateSavedApplicantParams = { ...req.body };
     await savedApplicantBLL.UpdateSavedApplicant(savedApplicant_id, params);
@@ -42,7 +43,7 @@ export function NewSavedApplicantAPI(savedApplicantBLL: SavedApplicantNS.BLL) {
       
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await savedApplicantBLL.DeleteSavedApplicant(req.body.id as string);
     res.json(doc);
   });

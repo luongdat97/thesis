@@ -74,8 +74,8 @@ const Home = () => {
                                     className="h-100"
                                 >
                                     <Row className="h-100">
-                                        <Col span={7} className="px-0 input-none-bg text-white" style={{ background: "#37474f" }}>
-                                            <div style={{ background: "#263238" }}>
+                                        <Col span={7} className="px-0 input-none-bg text-white" style={{ backgroundColor: "#37474f" }}>
+                                            <div style={{ backgroundColor: "#263238" }}>
                                                 <div className="d-flex justify-content-center pt-4">
                                                     <UploadAvatar avatar={avatar} setAvatar={setAvatar} />
                                                 </div>
@@ -184,10 +184,10 @@ const Home = () => {
                                             </div>
 
                                         </Col>
-                                        <Col span={17}>
+                                        <Col span={17} className="pt-4">
 
                                             {display.education && <>
-                                                <div className="section mt-4">
+                                                <div className="section">
                                                     <SectionTool action={() => setDisplay({ ...display, education: false })} />
                                                     <div className="d-flex align-items-center section-title">
                                                         <i className="fas fa-graduation-cap ml-3 mr-2"></i>
@@ -416,7 +416,7 @@ const Home = () => {
                                 </Form>
 
                             </div>
-                            <div style={{ position: "absolute", opacity: "0.0" }}>
+                            <div style={{ position: "absolute", opacity: "0.0", top: 0, zIndex: -1 }}>
                                 <div id="html2canvas" style={{ width: 794, height: 1123, backgroundColor: "#fff" }}>
                                     <Form
                                         {...layout}
@@ -426,8 +426,8 @@ const Home = () => {
                                         className="h-100"
                                     >
                                         <Row className="h-100">
-                                            <Col span={7} className="px-0 input-none-bg text-white" style={{ background: "#37474f" }}>
-                                                <div style={{ background: "#263238" }}>
+                                            <Col span={7} className="px-0 input-none-bg text-white" style={{ backgroundColor: "#37474f" }}>
+                                                <div style={{ backgroundColor: "#263238" }}>
                                                     <div className="d-flex justify-content-center pt-4">
                                                         <div className="bg-white" style={{ borderRadius: 100 }}>
                                                             <img src={avatar?.url} alt="avatar" style={{ width: 180, height: 180, objectFit: "cover" }}></img>
@@ -538,10 +538,10 @@ const Home = () => {
                                                 </div>
 
                                             </Col>
-                                            <Col span={17}>
+                                            <Col span={17} className="pt-4">
 
                                                 {display.education && <>
-                                                    <div className="section mt-4">
+                                                    <div className="section">
                                                         <SectionTool action={() => setDisplay({ ...display, education: false })} />
                                                         <div className="d-flex align-items-center section-title">
                                                             <i className="fas fa-graduation-cap ml-3 mr-2"></i>

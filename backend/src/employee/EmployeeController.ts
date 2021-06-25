@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { EmployeeNS } from "./Employee";
 import {ProfileNS} from "../profile/Profile"
@@ -23,7 +24,7 @@ export function NewEmployeeAPI(employeeBLL: EmployeeNS.BLL, profileBLL: ProfileN
     res.json(docs);
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const employee_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: EmployeeNS.UpdateEmployeeParams = { ...req.body };
     await employeeBLL.UpdateEmployee(employee_id, params);
@@ -35,7 +36,7 @@ export function NewEmployeeAPI(employeeBLL: EmployeeNS.BLL, profileBLL: ProfileN
     res.json(doc);
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await employeeBLL.DeleteEmployee(req.body.id as string);
     res.json(doc);
   });

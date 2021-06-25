@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { ApplicantNS } from "./Applicant";
 import {ProfileNS} from "../profile/Profile"
@@ -23,7 +24,7 @@ export function NewApplicantAPI(applicantBLL: ApplicantNS.BLL, profileBLL: Profi
     res.json(docs);
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     const applicant_id = HttpParamValidators.MustBeString(req.body, "id");
     const params: ApplicantNS.UpdateApplicantParams = { ...req.body };
     await applicantBLL.UpdateApplicant(applicant_id, params);
@@ -35,7 +36,7 @@ export function NewApplicantAPI(applicantBLL: ApplicantNS.BLL, profileBLL: Profi
     res.json(doc);
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await applicantBLL.DeleteApplicant(req.body.id as string);
     res.json(doc);
   });

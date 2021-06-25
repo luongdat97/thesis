@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List } from 'antd';
+import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List, Space } from 'antd';
 import { provice, career, province } from "../../../Constances/const"
 import util from '../../../helper/util'
 import styled from 'styled-components'
@@ -28,7 +28,7 @@ const SearchJobForm = (props) => {
     const handleSearch = () => {
         console.log(form.getFieldsValue())
         let params = form.getFieldsValue()
-        jobApi.searchJob({...params, index: pageIndex}).then((res) => {
+        jobApi.searchJob({ ...params, index: pageIndex }).then((res) => {
             console.log(res.data)
             setJobList(res.data.data)
             setTotal(res.data.total)
@@ -80,8 +80,8 @@ const SearchJobForm = (props) => {
                                     label={
                                         <React.Fragment>
                                             <i className="fas fa-map-marked"></i>
-                                        &nbsp;
-                                        {item}
+                                            &nbsp;
+                                            {item}
                                         </React.Fragment>
                                     }
                                 >{item}</Option>
@@ -110,8 +110,8 @@ const SearchJobForm = (props) => {
                                     label={
                                         <React.Fragment>
                                             <i className="fas fa-tools"></i>
-                                        &nbsp;
-                                        {item}
+                                            &nbsp;
+                                            {item}
                                         </React.Fragment>
                                     }
                                 >{item}</Option>
@@ -132,8 +132,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-money-bill-wave"></i>
-                                                &nbsp;
-                                                {"Tất cả mức lương"}
+                                        &nbsp;
+                                        {"Tất cả mức lương"}
                                     </React.Fragment>
                                 }
                             >Tất cả mức lương</Option>
@@ -141,8 +141,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-money-bill-wave"></i>
-                                                &nbsp;
-                                                {"dưới 3 triệu"}
+                                        &nbsp;
+                                        {"dưới 3 triệu"}
                                     </React.Fragment>
                                 }
                             > dưới 3 triệu</Option>
@@ -150,8 +150,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-money-bill-wave"></i>
-                                            &nbsp;
-                                            {"3 - 5 triệu"}
+                                        &nbsp;
+                                        {"3 - 5 triệu"}
                                     </React.Fragment>
                                 }
                             >3 - 5 triệu</Option>
@@ -159,8 +159,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-money-bill-wave"></i>
-                                            &nbsp;
-                                            {"5 - 8 triệu"}
+                                        &nbsp;
+                                        {"5 - 8 triệu"}
                                     </React.Fragment>
                                 }
                             >5 - 8 triệu</Option>
@@ -168,8 +168,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-money-bill-wave"></i>
-                                            &nbsp;
-                                            {"8 - 15 triệu"}
+                                        &nbsp;
+                                        {"8 - 15 triệu"}
                                     </React.Fragment>
                                 }
                             >8 - 15 triệu</Option>
@@ -177,8 +177,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-money-bill-wave"></i>
-                                            &nbsp;
-                                            {"trên 15 triệu"}
+                                        &nbsp;
+                                        {"trên 15 triệu"}
                                     </React.Fragment>
                                 }
                             >trên 15 triệu</Option>
@@ -195,8 +195,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"Tất cả kinh nghiệm"}
+                                        &nbsp;
+                                        {"Tất cả kinh nghiệm"}
                                     </React.Fragment>
                                 }
                             >Tất cả kinh nghiệm</Option>
@@ -204,8 +204,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"Không yêu cầu"}
+                                        &nbsp;
+                                        {"Không yêu cầu"}
                                     </React.Fragment>
                                 }
                             >Không yêu cầu</Option>
@@ -213,8 +213,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"Dưới 1 năm"}
+                                        &nbsp;
+                                        {"Dưới 1 năm"}
                                     </React.Fragment>
                                 }
                             >Dưới 1 năm</Option>
@@ -222,8 +222,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"1 năm"}
+                                        &nbsp;
+                                        {"1 năm"}
                                     </React.Fragment>
                                 }
                             >1 năm</Option>
@@ -231,8 +231,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"2 năm"}
+                                        &nbsp;
+                                        {"2 năm"}
                                     </React.Fragment>
                                 }
                             >2 năm</Option>
@@ -240,8 +240,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"3 năm"}
+                                        &nbsp;
+                                        {"3 năm"}
                                     </React.Fragment>
                                 }
                             >3 năm</Option>
@@ -249,8 +249,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"4 năm"}
+                                        &nbsp;
+                                        {"4 năm"}
                                     </React.Fragment>
                                 }
                             >4 năm</Option>
@@ -258,8 +258,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"5 năm"}
+                                        &nbsp;
+                                        {"5 năm"}
                                     </React.Fragment>
                                 }
                             >5 năm</Option>
@@ -267,8 +267,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="fas fa-business-time"></i>
-                                                &nbsp;
-                                                {"trên 5 năm"}
+                                        &nbsp;
+                                        {"trên 5 năm"}
                                     </React.Fragment>
                                 }
                             >trên 5 năm</Option>
@@ -285,8 +285,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="far fa-clock"></i>
-                                                &nbsp;
-                                                {"Tất cả loại hình"}
+                                        &nbsp;
+                                        {"Tất cả loại hình"}
                                     </React.Fragment>
                                 }
                             >Tất cả loại hình</Option>
@@ -294,8 +294,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="far fa-clock"></i>
-                                                &nbsp;
-                                                {"Toàn thời gian"}
+                                        &nbsp;
+                                        {"Toàn thời gian"}
                                     </React.Fragment>
                                 }
                             >Toàn thời gian</Option>
@@ -303,8 +303,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="far fa-clock"></i>
-                                                &nbsp;
-                                                {"Bán thời gian"}
+                                        &nbsp;
+                                        {"Bán thời gian"}
                                     </React.Fragment>
                                 }
                             >Bán thời gian</Option>
@@ -312,8 +312,8 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="far fa-clock"></i>
-                                                &nbsp;
-                                                {"Thực tập"}
+                                        &nbsp;
+                                        {"Thực tập"}
                                     </React.Fragment>
                                 }
                             >Thực tập</Option>
@@ -321,14 +321,21 @@ const SearchJobForm = (props) => {
                                 label={
                                     <React.Fragment>
                                         <i className="far fa-clock"></i>
-                                                &nbsp;
-                                                {"Remote (làm việc từ xa)"}
+                                        &nbsp;
+                                        {"Remote (làm việc từ xa)"}
                                     </React.Fragment>
                                 }
                             >Remote (làm việc từ xa)</Option>
                         </Select>
                     </Form.Item>
-                    <Button style={{ width: '100%' }} type="primary" onClick={handleSearch}>Tìm kiếm</Button>
+                    <div className="d-flex justify-content-center">
+                        <Space>
+                            <Button onClick={() => { form.resetFields() }}>Đặt lại</Button>
+                            <Button type="primary" onClick={handleSearch}>Tìm kiếm</Button>
+                        </Space>
+                    </div>
+
+                    {/* <Button style={{ width: '100%' }} type="primary" onClick={handleSearch}>Tìm kiếm</Button> */}
                 </Form>
             </Card>
         </>

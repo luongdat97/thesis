@@ -1,4 +1,5 @@
 import * as express from "express";
+import { authenticateToken } from "../Middleware/jwtMiddleware"
 import { HttpError, HttpStatusCodes, HttpParamValidators } from "../Helper/http";
 import { JobNS } from "./Job";
 import { CompanyNS } from "../company/Company";
@@ -7,7 +8,7 @@ import { NotificationNS } from "../notification/Notification";
 
 export function NewJobAPI(jobBLL: JobNS.BLL, companyBLL: CompanyNS.BLL, recruiterBLL: RecruiterNS.BLL, notificationBLL: NotificationNS.BLL) {
   const app = express();
-  app.post("/create", async (req, res) => {
+  app.post("/create", authenticateToken, async (req, res) => {
     const title = HttpParamValidators.MustBeString(req.body, "title");
     let params = req.body
     if (params.salary.from) {
@@ -49,7 +50,7 @@ export function NewJobAPI(jobBLL: JobNS.BLL, companyBLL: CompanyNS.BLL, recruite
   });
 
   app.get("/search", async (req, res) => {
-    let {index, ...param} = req.query
+    let { index, ...param } = req.query
     let docs = await jobBLL.SearchJob(param, index);
     //console.log(docs)
 
@@ -66,10 +67,10 @@ export function NewJobAPI(jobBLL: JobNS.BLL, companyBLL: CompanyNS.BLL, recruite
 
       return { ...job, company }
     }))
-    res.json({data: newDocs, total: docs.total});
+    res.json({ data: newDocs, total: docs.total });
   });
 
-  app.post("/update", async (req, res) => {
+  app.post("/update", authenticateToken, async (req, res) => {
     if (req.body.salary?.from) req.body.salary.from = parseInt(req.body.salary.from)
     if (req.body.salary?.to) req.body.salary.to = parseInt(req.body.salary.to)
 
@@ -107,7 +108,7 @@ export function NewJobAPI(jobBLL: JobNS.BLL, companyBLL: CompanyNS.BLL, recruite
     res.json(doc);
   });
 
-  app.post("/delete", async (req, res) => {
+  app.post("/delete", authenticateToken, async (req, res) => {
     const doc = await jobBLL.DeleteJob(req.body.id as string);
     res.json(doc);
   });

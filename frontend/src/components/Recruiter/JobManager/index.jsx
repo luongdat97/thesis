@@ -21,8 +21,8 @@ const JobManager = (props) => {
   const [jobList, setJobList] = useState([])
   const [recruiter, setRecruiter] = useState({})
   let displayedList = jobList.filter(item => item.state === 1)
-  let waitedList = jobList.filter(item => !item.state )
-  let rejectedList = jobList.filter(item => item.state === 2 )
+  let waitedList = jobList.filter(item => !item.state)
+  let rejectedList = jobList.filter(item => item.state === 2)
   let outDateList = jobList.filter(item => util.isOutDate(item.endDate))
   const [cookies] = useCookies(['user'])
   let recruiter_id = cookies.user.id
@@ -76,7 +76,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction />,
     },
     {
       title: 'Mã tin',
@@ -119,7 +119,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction />,
     },
     {
       title: 'Mã tin',
@@ -142,7 +142,12 @@ const JobManager = (props) => {
       key: 'action',
       render: (text, record) => (
         <Space size="small">
-          <Button type="primary" size="small">Quản lý ứng viên</Button>
+          <Link to={{
+            pathname: "/recruiter/candidate-manage",
+            state: {job: record}
+          }}>
+            <Button type="primary" size="small">Quản lý ứng viên</Button>
+          </Link>
           <EditJobModal jobId={record.id} fetchJobList={fetchJobList} />
           <Popconfirm
             title="Bạn có muốn xóa tin này?"
@@ -163,7 +168,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction />,
     },
     {
       title: 'Mã tin',
@@ -207,7 +212,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction />,
     },
     {
       title: 'Mã tin',
@@ -245,7 +250,7 @@ const JobManager = (props) => {
       title: 'Vị trí tuyển dụng',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <JobModal title={text} jobId={record.id} noAction/>,
+      render: (text, record) => <JobModal title={text} jobId={record.id} noAction />,
     },
     {
       title: 'Mã tin',
@@ -298,7 +303,7 @@ const JobManager = (props) => {
             </TabPane>
             <TabPane tab="Tin hết hạn" key="3">
               <Table columns={outDateColumns} dataSource={outDateList} />
-            </TabPane>      
+            </TabPane>
           </Tabs>
         </Card>
       }
