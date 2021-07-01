@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import StyleList from './index.style'
 import { Layout, Menu, Input, Typography } from 'antd';
 import Header from '../AdminHeader'
+import Footer from '../Footer'
 const {Title} = Typography;
 
-const { Content, Footer } = Layout;
+const { Content} = Layout;
 
 function MainLayout(props) {
     const url = props.url
@@ -17,7 +18,7 @@ function MainLayout(props) {
                         {props.children}
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                <Footer></Footer>
             </Layout>
         </StyleList>
     )

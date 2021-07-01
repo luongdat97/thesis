@@ -26,9 +26,9 @@ export default function MainHeader(props) {
                 <Title level={3} className="text-white">Việc làm</Title>
             </div>
             <Menu theme="dark" style={{ width: 290 }} mode="horizontal" defaultSelectedKeys={['1']} overflowedIndicator={<i className="fas fa-bars"></i>}	>
-                <Menu.Item key="1"><Link to={`/admin/account-manage`}>Quản lý tài khoản</Link></Menu.Item>
+                <Menu.Item key="1"><Link to={`/admin/account-manage`}>Quản lý</Link></Menu.Item>
                 
-                <Menu.SubMenu key="4" icon={<SettingOutlined />} title="Chào, Luân">
+                <Menu.SubMenu key="4" icon={<SettingOutlined />} title="Tài khoản">
                         <Menu.Item key="5"><Link to={`/admin/profile`}></Link>Thông tin cá nhân</Menu.Item>
                         <Menu.Item key="6"><Link to={`/admin/change-pass`}></Link>Đổi mật khẩu</Menu.Item>
                         <Menu.Item key="10" className="border-top"  onClick={() => auth.signout(() => history.push("/"))}><i className="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>

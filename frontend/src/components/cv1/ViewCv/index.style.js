@@ -10,7 +10,7 @@ const StyleList = styled.div`
     margin-bottom: 0px;
   }
   .ant-input:hover {
-    border: 1px dashed #000;
+    border: 1px dashed #fff;
   }
   
   .avatar-uploader > .ant-upload {
@@ -20,9 +20,11 @@ const StyleList = styled.div`
   .section-title {
     font-size: 18px;
     font-weight: bold;
+    margin-left: 10px;
+    margin-top: 3px;
   }
   .section:hover {
-    border: 2px solid #bae7ff;
+    border: 2px solid #fff;
   }
   .section {
     border: 2px solid #fff;

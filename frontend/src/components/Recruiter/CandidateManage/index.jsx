@@ -28,6 +28,10 @@ const CandidateManage = (props) => {
       if (!chosenJob.id) setChosenJob(res.data[0])
     })
   }, [])
+
+  useEffect(() => {
+    setChosenJob(props.location.state?.job)
+  }, [props.location.state?.job])
   return (
     <>
       <div className="bg-white p-3">
@@ -113,7 +117,7 @@ const CandidateTable = (props) => {
   }
 
   const approve = (appliedJobId) => {
-    appliedJobApi.editAppliedJob({ id: appliedJobId, state: 1, dayMeet, message }).then(res => {
+    appliedJobApi.editAppliedJob({ id: appliedJobId, state: 1, dayMeet, message: approveMessage }).then(res => {
       message.success("Bạn đã chấp nhận đơn của ứng viên!")
       fetchAppliedList()
     })

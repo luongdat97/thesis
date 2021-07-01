@@ -29,13 +29,12 @@ export default function MainHeader(props) {
                 <Menu.Item key="1"><Link to={`/employee/verify-job`}>Xác thực tin</Link></Menu.Item>
                 <Menu.Item key="2"><Link to={`/employee/verify-company`}>Xác thực công ty</Link></Menu.Item>
                 
-                <Menu.SubMenu key="4" icon={<SettingOutlined />} title="Chào, Luân">
+                <Menu.SubMenu key="4" icon={<SettingOutlined />} title="Tài khoản">
                         <Menu.Item key="5"><Link to={`/employee/profile`}></Link>Thông tin cá nhân</Menu.Item>
                         <Menu.Item key="6"><Link to={`/employee/change-pass`}></Link>Đổi mật khẩu</Menu.Item>
                         <Menu.Item key="10" className="border-top" onClick={() => auth.signout(() => history.push("/"))}><i className="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>
                 </Menu.SubMenu>
             </Menu>
-            <div><span><i className="fas fa-bell text-white"></i></span></div>
             
         </Header>
     )

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import ImageCloud from '../../../../helper/ImageCloud'
+import ImageCloud from '../../../helper/ImageCloud'
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -24,10 +24,10 @@ function beforeUpload(file) {
 export default class Avatar extends React.Component {
   state = {
     loading: false,
-    imageUrl: this.props.avatar.url
   };
 
   handleChange = async (info) => {
+    this.setState({imageUrl: ""})
     let { signature, timestamp } = (await ImageCloud.getSignature()).data
     console.log(signature, timestamp)
     if (this.props.avatar.public_id) {
@@ -37,12 +37,15 @@ export default class Avatar extends React.Component {
 
     getBase64(info.file.originFileObj, imageUrl => {
       this.setState({
-        imageUrl,
-        loading: false,
+        loading: true,
       })
       ImageCloud.postImage({ file: imageUrl, timestamp, signature }).then((res) => {
         console.log(res)
         this.props.setAvatar({url: res.data.url, public_id: res.data.public_id})
+        this.setState({
+          imageUrl,
+          loading: false,
+        })
       })
     },
     );
@@ -50,9 +53,8 @@ export default class Avatar extends React.Component {
   };
 
   render() {
-    let { loading, imageUrl } = this.state;
+    const { loading, imageUrl } = this.state;
     const {avatar, setAvatar} = this.props
-    if (!imageUrl) imageUrl=avatar.url
     const uploadButton = (
       <div>
         <div style={{ marginTop: 8, fontSize: 70 }}><i className="fas fa-camera"></i></div>
@@ -69,7 +71,7 @@ export default class Avatar extends React.Component {
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        {imageUrl || avatar.url ? <img src={avatar.url} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
 
       </Upload>
     );

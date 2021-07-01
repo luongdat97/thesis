@@ -13,12 +13,12 @@ export class NotificationDALMongo implements NotificationNS.DAL {
     private col_notification = this.db.collection("notification");
 
     async ListNotification() {
-        const docs = await this.col_notification.find().toArray();
+        const docs = await this.col_notification.find().sort({$natural:-1}).toArray();
         return FromMongoData.Many<NotificationNS.Notification>(docs);
     }
 
     async ListNotificationByUserId(user_id: string) {
-        const docs = await this.col_notification.find({user_id}).toArray();
+        const docs = await this.col_notification.find({user_id}).sort({$natural:-1}).toArray();
         return FromMongoData.Many<NotificationNS.Notification>(docs);
     }
 

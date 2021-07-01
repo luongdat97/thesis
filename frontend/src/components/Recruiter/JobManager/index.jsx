@@ -20,6 +20,7 @@ const { Option } = Select
 const JobManager = (props) => {
   const [jobList, setJobList] = useState([])
   const [recruiter, setRecruiter] = useState({})
+  const [isRecruiterFetched, setIsRecruiterFetched] = useState(false)
   let displayedList = jobList.filter(item => item.state === 1)
   let waitedList = jobList.filter(item => !item.state)
   let rejectedList = jobList.filter(item => item.state === 2)
@@ -46,6 +47,7 @@ const JobManager = (props) => {
     recruiterApi.getRecruiterById(recruiter_id).then(res => {
       console.log(res.data)
       setRecruiter(res.data)
+      setIsRecruiterFetched(true)
     })
   }
 
@@ -284,7 +286,7 @@ const JobManager = (props) => {
 
   return (
     <>
-      {!!recruiter.company_id &&
+      {!!recruiter.company_id && isRecruiterFetched &&
         <Card>
           <Title level={3}>Quản lý tin tuyển dụng</Title>
           <PostJobModal fetchJobList={fetchJobList} />
@@ -308,7 +310,7 @@ const JobManager = (props) => {
         </Card>
       }
 
-      {!recruiter.company_id && <CompanyRequre />}
+      {!recruiter.company_id && isRecruiterFetched && <CompanyRequre />}
 
 
 

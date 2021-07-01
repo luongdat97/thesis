@@ -48,9 +48,9 @@ export default class Util {
             img.src = dataUrl;
             var imgWidth = 210;
             var pageHeight = 300;
-            var imgHeight = 1123 * imgWidth / 794;
+            var imgHeight = domNode.clientHeight * imgWidth / domNode.clientWidth;
             var heightLeft = imgHeight;
-            var doc = new jsPDF('p', 'mm');
+            var doc = new jsPDF('p', 'mm','a4');
             //var doc = new jsPDF('p', 'pt','a4',true);
             var position = 0; // give some top padding to first page
 

@@ -20,6 +20,8 @@ const StyleList = styled.div`
   .section-title {
     font-size: 18px;
     font-weight: bold;
+    margin-left: 10px;
+    margin-top: 3px;
   }
   .section:hover {
     border: 2px solid #bae7ff;

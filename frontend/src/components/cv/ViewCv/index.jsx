@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Row, Col, Collapse, Card, Typography, Button, Space, Slider, Radio, Divider, Checkbox, message } from 'antd';
 import cvApi from '../../../api/cvApi'
 import StyleCv from "./index.style"
-import UploadAvatar from './UploadAvatar'
+import UploadAvatar from '../UploadAvatar'
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas"
 import { useCookies } from "react-cookie"
@@ -30,6 +30,7 @@ const Home = (props) => {
         cvApi.getCvById(id).then(res => {
             setCvData(res.data)
             setAvatar(res.data.avatar)
+            if (res.data.display) setDisplay(res.data.display )
             console.log(res.data)
         })
     }, [])
@@ -63,7 +64,7 @@ const Home = (props) => {
                 <StyleCv>
                     <div className="d-flex">
                         <Title level={5}>CV cá nhân </Title>
-                        {/* <Button type="primary" size="small" onClick={() => generate(props.scrollP)} className="mb-3 ml-3" >&nbsp;Tải xuống</Button> */}
+                        <Button type="primary" size="small" onClick={() => generate(props.scrollP)} className="mb-3 ml-3" >&nbsp;Tải xuống</Button>
                     </div>
                     <Row gutter={30}>
                         <Col>
@@ -155,7 +156,7 @@ const Home = (props) => {
                                                             >
                                                                 <TextArea
                                                                     placeholder={`-Môi trường chuyên nghiệp\n-Cống hiến hết mình`}
-                                                                    autoSize={{ minRows: 2, maxRows: 6 }}
+                                                                    autoSize={{ minRows: 1, maxRows: 20 }}
                                                                     readOnly
                                                                 />
                                                             </Form.Item>
@@ -176,7 +177,7 @@ const Home = (props) => {
                                                             >
                                                                 <TextArea
                                                                     placeholder={`-Đá bóng \n-Đọc sách`}
-                                                                    autoSize={{ minRows: 2, maxRows: 6 }}
+                                                                    autoSize={{ minRows: 1, maxRows: 20 }}
                                                                     readOnly
                                                                 />
                                                             </Form.Item>
@@ -186,10 +187,10 @@ const Home = (props) => {
                                             </div>
 
                                         </Col>
-                                        <Col span={17}>
+                                        <Col span={17} className="pt-4">
 
                                             {display.education && <>
-                                                <div className="section mt-4">
+                                                <div className="section">
                                                     <div className="d-flex align-items-center section-title">
                                                         <i className="fas fa-graduation-cap ml-3 mr-2"></i>
                                                         <span className="section-title">Học vấn</span>
@@ -292,7 +293,7 @@ const Home = (props) => {
                                                                             >
                                                                                 <TextArea
                                                                                     placeholder={`- Hỗ trợ viết bài quảng cáo sản phẩm qua kênh facebook, các forum,...\n- Giới thiệu, tư vấn sản phẩm, giải đáp các vấn đề thắc mắc của khách hàng qua điện thoại và email.`}
-                                                                                    autoSize={{ minRows: 1, maxRows: 6 }}
+                                                                                    autoSize={{ minRows: 1, maxRows: 20 }}
                                                                                     readOnly
                                                                                 />
                                                                             </Form.Item>
@@ -348,7 +349,7 @@ const Home = (props) => {
                                                                             >
                                                                                 <TextArea
                                                                                     placeholder={`-Tập hợp các món quà và phân phát tới người vô gia cư.\n- Chia sẻ, động viên họ vượt qua giai đoạn khó khăn, giúp họ có những suy nghĩ lạc quan.`}
-                                                                                    autoSize={{ minRows: 1, maxRows: 6 }}
+                                                                                    autoSize={{ minRows: 1, maxRows: 20 }}
                                                                                     readOnly
                                                                                 />
                                                                             </Form.Item>

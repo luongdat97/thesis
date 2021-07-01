@@ -82,29 +82,70 @@ export function NewCvAPI(cvBLL: CvNS.BLL) {
 
   app.post("/update", authenticateToken, async (req, res) => {
     let cvData = req.body
-    const cv_id = HttpParamValidators.MustBeString(req.body, "id");
-
+    let cv_id = cvData.id
     console.log(".........")
-    console.log(cvData.activity)
-    const { applicant_id, jobPosition, objective, favorite, avatar } = req.body
+    //console.log(cvData.activity)
 
-    const params: CvNS.UpdateCvParams = { jobPosition, objective, favorite, avatar };
+    const params = req.body;
     await cvBLL.UpdateCv(cv_id, params);
 
-    for (const activity of cvData.activity) {
-      await cvBLL.UpdateActivity(activity.id, activity)
+    let cvOld :any = await cvBLL.GetCv(cv_id)
+    console.log(cvOld.activity)
+    for (const activity of cvOld.activity) {
+      if (activity.id) await cvBLL.DeleteActivity(activity.id)
     }
 
-    for (const education of cvData.education) {
-      await cvBLL.UpdateEducation(education.id, education)
+    for (const education of cvOld.education) {
+      if (education.id) await cvBLL.DeleteEducation(education.id)
     }
 
-    for (const experience of cvData.experience) {
-      await cvBLL.UpdateExperience(experience.id, experience)
+    for (const experience of cvOld.experience) {
+      if (experience.id) await cvBLL.DeleteExperience(experience.id)
     }
 
-    for (const skill of cvData.skill) {
-      await cvBLL.UpdateSkill(skill.id, skill)
+    for (const skill of cvOld.skill) {
+      if (skill.id) await cvBLL.DeleteSkill(skill.id)
+    }
+////////////////////////
+
+    if (cvData.activity) {
+      for (const activity of cvData.activity) {
+        const activityParams: CvNS.CreateActivityParams = {
+          cv_id,
+          ...activity
+        };
+        cvBLL.CreateActivity(activityParams)
+      }
+    }
+
+    if (cvData.education) {
+      for (const education of cvData.education) {
+        const educationParams: CvNS.CreateEducationParams = {
+          cv_id,
+          ...education
+        };
+        cvBLL.CreateEducation(educationParams)
+      }
+    }
+
+    if (cvData.experience) {
+      for (const experience of cvData.experience) {
+        const experienceParams: CvNS.CreateExperienceParams = {
+          cv_id,
+          ...experience
+        };
+        cvBLL.CreateExperience(experienceParams)
+      }
+    }
+
+    if (cvData.skill) {
+      for (const skill of cvData.skill) {
+        const skillParams: CvNS.CreateSkillParams = {
+          cv_id,
+          ...skill
+        };
+        cvBLL.CreateSkill(skillParams)
+      }
     }
     res.json(1);
   });

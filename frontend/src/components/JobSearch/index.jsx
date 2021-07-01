@@ -15,20 +15,30 @@ const { Panel } = Collapse;
 const { Meta } = Card;
 const { Title, Text } = Typography;
 
-const Home = () => {
+const Home = (props) => {
     const [jobList, setJobList] = useState([])
     const [pageIndex, setPageIndex] = useState(0)
     const [total, setTotal] = useState(1)
+    const [searchInfo, setSearchInfo] = useState("")
+    useEffect(() => {
+        const { location, history } = props;
+        //use the state via location.state
+        //and replace the state via
+        history.replace()
+    },[])
+    useEffect(() => {
+        setSearchInfo(props.location.state?.textSearch)
+    }, [props.location.state?.textSearch])
     return (
         <>
             <HomeSlider />
-            <div style={{paddingTop: 25, backgroundColor: "#f0f2f5"}}>
+            <div style={{ paddingTop: 25, backgroundColor: "#f0f2f5" }}>
                 <Row gutter={30}>
                     <Col sm={16}>
                         <InterestJobList jobList={jobList} setPageIndex={setPageIndex} total={total}></InterestJobList>
                     </Col>
                     <Col sm={8}>
-                        <FormSearch setJobList={setJobList} pageIndex={pageIndex} setTotal={setTotal}></FormSearch>
+                        <FormSearch setJobList={setJobList} pageIndex={pageIndex} setTotal={setTotal} searchInfo={searchInfo}></FormSearch>
                     </Col>
                 </Row>
             </div>

@@ -12,13 +12,24 @@ const { Title, Text } = Typography;
 const SearchJobForm = (props) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useState({}); // To disable submit button at the beginning.
-    const { setJobList, pageIndex, setTotal } = props
+    const { setJobList, pageIndex, setTotal, searchInfo } = props
     useEffect(() => {
         forceUpdate({});
     }, []);
 
     useEffect(() => {
-        handleSearch()
+        if (searchInfo) {
+            jobApi.searchJob({ textSearch: searchInfo, index: 0 }).then((res) => {
+                console.log(searchInfo)
+                console.log(res.data)
+                setJobList(res.data.data)
+                setTotal(res.data.total)
+            })
+        }
+    }, [searchInfo]);
+
+    useEffect(() => {
+        if (!searchInfo) handleSearch()
         console.log("hahaha")
     }, [pageIndex]);
     const onFinish = (values) => {

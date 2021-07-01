@@ -43,7 +43,7 @@ const CandidateCard = (props) => {
 
                     <Col>
 
-                        <Title level={4} className="m-0">{profile.name}</Title>
+                        <Title level={4} className="m-0">{cv.name}</Title>
                         <Title level={5} className="m-0"> {cv.jobPosition}</Title>
 
                         <div>
