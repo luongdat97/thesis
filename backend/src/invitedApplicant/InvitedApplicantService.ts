@@ -35,6 +35,12 @@ export class InvitedApplicantBLLBase implements InvitedApplicantNS.BLL {
         return detailList
     }
 
+    async ListInvitedApplicantByApplicant(applicant_id: string) {
+
+        let invitedList = await this.dal.ListInvitedApplicantByApplicant(applicant_id);
+        return invitedList
+    }
+
     async ListInvitedApplicantByRecruiterAndApplicant(recruiter_id: string, applicant_id: string) {
         return this.dal.ListInvitedApplicantByRecruiterAndApplicant(recruiter_id, applicant_id);
     }

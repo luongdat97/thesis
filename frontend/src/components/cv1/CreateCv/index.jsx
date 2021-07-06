@@ -55,7 +55,7 @@ const Home = (props) => {
                     <Title level={3}>Tạo CV cá nhân</Title>
                     <Row gutter={30}>
                         <Col>
-                            <div id="html2canvas" style={{ width: 794, height: 1123, backgroundColor: "#fff", paddingTop: 25 }}>
+                            <div id="html2canvas" style={{ width: 794, minHeight: 1123, backgroundColor: "#fff", paddingTop: 25 }}>
 
                                 <Form
                                     {...layout}

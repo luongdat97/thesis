@@ -22,6 +22,9 @@ export function NewInvitedApplicantAPI(invitedApplicantBLL: InvitedApplicantNS.B
     } else if (applicant_id && recruiter_id) {
       const docs = await invitedApplicantBLL.ListInvitedApplicantByRecruiterAndApplicant(recruiter_id as string, applicant_id as string);
       res.json(docs);
+    } else if (applicant_id){
+      const docs = await invitedApplicantBLL.ListInvitedApplicantByApplicant(applicant_id as string);
+      res.json(docs);
     } else {
       const docs = await invitedApplicantBLL.ListInvitedApplicant();
       res.json(docs);

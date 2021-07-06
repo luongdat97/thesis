@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import SavedJobPage from '../../../components/Applicant/SavedJob'
 import AppliedJobPage from '../../../components/Applicant/AppliedJob'
+import InvitedJob from "../../../components/Applicant/InvitedJob"
 import SettingJobPage from '../../../components/Applicant/SettingJob'
 import SuitableJobPage from '../../../components/Applicant/SuitableJob'
 import RecruiterVisitPage from '../../../components/Applicant/RecruiterVisit'
@@ -26,6 +27,11 @@ export const routes = [
   {
     path: '/applied-job',
     component: AppliedJobPage,
+    exact: true
+  },
+  {
+    path: '/invited-job',
+    component: InvitedJob,
     exact: true
   },
   {

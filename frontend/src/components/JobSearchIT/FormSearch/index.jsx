@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, Row, Col, Collapse, Card, Typography, List, Space } from 'antd';
 import { provice, career, province } from "../../../Constances/const"
+import util from "../../../helper/util"
 import styled from 'styled-components'
 import jobApi from "../../../api/jobApi"
 import {tag} from "../../../Constances/const"
@@ -36,10 +37,9 @@ const SearchJobForm = (props) => {
         style: { width: "100%" },
         optionFilterProp: "children",
         filterOption: (input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
+            util.normalString(option.children).indexOf(util.normalString(input)) >= 0,
         filterSort: (optionA, optionB) =>
             optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-
     }
 
     return (

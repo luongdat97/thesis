@@ -121,6 +121,9 @@ export class JobDALMongo implements JobNS.DAL {
 
     async DeleteJob(id: string) {
         await this.col_job.deleteOne({ _id: id });
+        this.db.collection("applied_job").deleteMany({job_id: id})
+        this.db.collection("saved_job").deleteMany({job_id: id})
+        this.db.collection("notification").deleteMany({source_id: id})
     }
 
     async CreateJob(job: JobNS.Job) {

@@ -21,6 +21,11 @@ export class InvitedApplicantDALMongo implements InvitedApplicantNS.DAL {
         return FromMongoData.Many<InvitedApplicantNS.InvitedApplicant>(docs);
     }
 
+    async ListInvitedApplicantByApplicant(applicant_id: string) {
+        const docs = await this.col_invitedApplicant.find({applicant_id}).toArray();
+        return FromMongoData.Many<InvitedApplicantNS.InvitedApplicant>(docs);
+    }
+
     async ListInvitedApplicantByRecruiterAndApplicant(recruiter_id: string, applicant_id: string) {
         const docs = await this.col_invitedApplicant.find({recruiter_id, applicant_id}).toArray();
         return FromMongoData.Many<InvitedApplicantNS.InvitedApplicant>(docs);

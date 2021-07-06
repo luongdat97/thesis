@@ -37,6 +37,7 @@ export namespace InvitedApplicantNS {
   export interface BLL {
     ListInvitedApplicant(): Promise<InvitedApplicant[]>;
     ListInvitedApplicantByJob(job_id: string): Promise<InvitedApplicantDetail[]>;
+    ListInvitedApplicantByApplicant(applicant_id: string): Promise<InvitedApplicant[]>;
     ListInvitedApplicantByRecruiterAndApplicant(recruiter_id: string, applicant_id: string): Promise<InvitedApplicant[]>;
     GetInvitedApplicant(id: string): Promise<InvitedApplicant>;
     GetInvitedApplicantByRecruiter(recruiter_id: string, applicant_id): Promise<InvitedApplicant>;
@@ -49,6 +50,7 @@ export namespace InvitedApplicantNS {
   export interface DAL {
     ListInvitedApplicant(): Promise<InvitedApplicant[]>;
     ListInvitedApplicantByJob(job_id: string): Promise<InvitedApplicant[]>;
+    ListInvitedApplicantByApplicant(applicant_id: string): Promise<InvitedApplicant[]>;
     ListInvitedApplicantByRecruiterAndApplicant(recruiter_id: string, applicant_id: string): Promise<InvitedApplicant[]>;
     GetInvitedApplicant(id: string): Promise<InvitedApplicant>;
     GetInvitedApplicantByRecruiter(recruiter_id: string, applicant_id: string): Promise<InvitedApplicant>;

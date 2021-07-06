@@ -146,8 +146,8 @@ const CandidateTable = (props) => {
 
   const approvedColumns = [
     {
-      title: 'Tên ứng viên',
-      dataIndex: 'name',
+      title: 'Mã ứng viên',
+      dataIndex: 'id',
       key: 'name',
     },
     {
@@ -190,8 +190,8 @@ const CandidateTable = (props) => {
 
   const rejectedColumns = [
     {
-      title: 'Tên ứng viên',
-      dataIndex: 'name',
+      title: 'Mã ứng viên',
+      dataIndex: 'id',
       key: 'name',
     },
     {
@@ -225,8 +225,8 @@ const CandidateTable = (props) => {
 
   const waitedColumns = [
     {
-      title: 'Tên ứng viên',
-      dataIndex: 'name',
+      title: 'Mã ứng viên',
+      dataIndex: 'id',
       key: 'name',
     },
     {
@@ -262,8 +262,8 @@ const CandidateTable = (props) => {
   ];
   const savedColumns = [
     {
-      title: 'Tên ứng viên',
-      dataIndex: 'name',
+      title: 'Mã ứng viên',
+      dataIndex: 'id',
       key: 'name',
     },
     {
@@ -298,8 +298,8 @@ const CandidateTable = (props) => {
 
   const invitedColumns = [
     {
-      title: 'Tên ứng viên',
-      dataIndex: 'name',
+      title: 'Mã ứng viên',
+      dataIndex: 'id',
       key: 'name',
     },
     {

@@ -28,6 +28,8 @@ export default function MainHeader(props) {
             setSelectedKey("6")
         } else if (pathname.startsWith("/applicant/individual/applied-job")) {
             setSelectedKey("7")
+        } else if (pathname.startsWith("/applicant/individual/invited-job")) {
+            setSelectedKey("11")
         } else if (pathname.startsWith("/applicant/individual/setting-job")) {
             setSelectedKey("8")
         } else if (pathname.startsWith("/applicant/profile")) {
@@ -62,10 +64,11 @@ export default function MainHeader(props) {
                     <Menu.Item key="5"><Link to={`/applicant/individual/manage-cv`}></Link>CV đã lưu</Menu.Item>
                     <Menu.Item key="6"><Link to={`/applicant/individual/saved-job`}></Link>Việc làm đã lưu</Menu.Item>
                     <Menu.Item key="7"><Link to={`/applicant/individual/applied-job`}></Link>Việc ứng tuyển</Menu.Item>
+                    <Menu.Item key="11"><Link to={`/applicant/individual/invited-job`}></Link>Lời mời ứng tuyển</Menu.Item>
                     <Menu.Item key="8"><Link to={`/applicant/individual/setting-job`}></Link>Chế độ tìm việc</Menu.Item>
                     <Menu.Item key="9"><Link to={`/applicant/profile`}></Link>Thông tin cá nhân</Menu.Item>
                     <Menu.Item key="10"><Link to={`/applicant/change-pass`}></Link>Đổi mật khẩu</Menu.Item>
-                    <Menu.Item key="11" className="border-top" onClick={() => auth.signout(() => history.push("/"))}><i className="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>
+                    <Menu.Item key="12" className="border-top" onClick={() => auth.signout(() => history.push("/"))}><i className="fas fa-sign-out-alt text-white"></i> Đăng xuất</Menu.Item>
                 </Menu.SubMenu>
             </Menu>
             <div className="position-relative">
